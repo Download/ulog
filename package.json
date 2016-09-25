@@ -1,0 +1,62 @@
+{
+  "name": "ulog",
+  "version": "0.1.0",
+  "description": "Microscopically small universal logging library",
+  "main": "node.js",
+  "browser": "browser.js",
+  "scripts": {
+    "clean": "rimraf ulog.umd.js && rimraf ulog.min.js",
+    "build-umd": "webpack --optimize-occurence-order --devtool source-map --output-path . --output-filename ulog.umd.js --output-library-target umd \"./browser.js\" ",
+    "build-min": "webpack -p --devtool hidden-source-map --output-path . --output-filename ulog.min.js --output-library-target this \"./browser.js\" ",
+    "build-all": "npm run -S build-umd && npm run -S build-min",
+    "build": "cross-env NODE_ENV=production npm run -S build-all",
+    "release": "npm run -S clean && npm run -S build",
+    "test": "mocha *.spec.js",
+    "test-dev": "webpack-dev-server --output-path test --output-filename ulog.spec.js \"mocha!./ulog.spec.js\" --content-base test --port 8888"
+  },
+  "keywords": [
+    "universal-components",
+    "microscopically small",
+    "small",
+    "tiny",
+    "universal",
+    "isomorphic",
+    "logging",
+    "logger",
+    "browser",
+    "node",
+    "nashorn",
+    "console",
+    "polyfill",
+    "1kB"
+  ],
+  "author": {
+    "name": "Stijn de Witt",
+    "email": "StijnDeWitt@hotmail.com",
+    "url": "http://StijnDeWitt.com"
+  },
+  "copyright": "Copyright 2016 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/download/ulog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/download/ulog/issues"
+  },
+  "homepage": "http://github.com/download/ulog",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "cross-env": "^1.0.8",
+    "mocha": "^2.3.4",
+    "mocha-loader": "^0.7.1",
+    "path": "^0.12.7",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.36.0",
+    "sinon": "^2.0.0-pre",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {}
+}
