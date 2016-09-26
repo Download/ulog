@@ -1,4 +1,4 @@
-# ulog <sub><sup>v0.2.0</sup></sub>
+# ulog <sub><sup>v0.3.0</sup></sub>
 Microscopically small universal logging library
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -17,8 +17,8 @@ from [debug](https://npmjs.com/package/debug) that I missed. Even with these ext
 still **very** small, weighing in just over 1 kB minified and gzipped.
 
 ## Download
-* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/0.2.0/ulog.umd.js) (~2kB, source)
-* [ulog.min.js](https://cdn.rawgit.com/download/ulog/0.2.0/ulog.min.js) (~1kB, minified)
+* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/0.3.0/ulog.umd.js) (~3kB, source)
+* [ulog.min.js](https://cdn.rawgit.com/download/ulog/0.3.0/ulog.min.js) (~2kB, minified)
 
 ## Install
 ```sh
@@ -53,7 +53,7 @@ define(['ulog'], function(ulog){
 
 ### Script tag
 ```html
-<script src="https://cdn.rawgit.com/download/ulog/0.2.0/ulog.min.js"></script>
+<script src="https://cdn.rawgit.com/download/ulog/0.3.0/ulog.min.js"></script>
 ```
 
 ## Logging methods
@@ -238,8 +238,11 @@ Add an issue in this project's [issue tracker](https://github.com/download/ulog/
 to let me know of any problems you find, or questions you may have.
 
 ## Credits
-Credits go to TJ Holowaychuk for creating [debug](https://github.com/visionmedia/debug), which was
-a great inspiration for ulog.
+Credits go to:
+* Felix Geisendörfer from [debuggable.com](http://debuggable.com/) for kindly giving up
+  the `ulog` namespace on NPM. Thanks Felix!
+* TJ Holowaychuk for creating [debug](https://github.com/visionmedia/debug), which was
+  a great inspiration for ulog.
 
 ## Copyright
 Copyright 2016 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.
