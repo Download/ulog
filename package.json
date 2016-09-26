@@ -1,16 +1,16 @@
 {
   "name": "ulog",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
   "browser": "browser.js",
   "scripts": {
     "clean": "rimraf ulog.umd.js && rimraf ulog.min.js",
-    "build-umd": "webpack --optimize-occurence-order --devtool source-map --output-path . --output-filename ulog.umd.js --output-library-target umd \"./browser.js\" ",
-    "build-min": "webpack -p --devtool hidden-source-map --output-path . --output-filename ulog.min.js --output-library-target this \"./browser.js\" ",
+    "build-umd": "node ./build/build-umd.js",
+    "build-min": "uglifyjs ./ulog.umd.js -o ulog.min.js -c -m --screw-ie8",
     "build-all": "npm run -S build-umd && npm run -S build-min",
     "build": "cross-env NODE_ENV=production npm run -S build-all",
-    "release": "npm run -S clean && npm run -S build",
+    "release": "npm run -S clean && npm run -S build && npm run -S test",
     "test": "mocha *.spec.js",
     "test-dev": "webpack-dev-server --output-path test --output-filename ulog.spec.js \"mocha!./ulog.spec.js\" --content-base test --port 8888"
   },
@@ -53,7 +53,6 @@
     "mocha-loader": "^0.7.1",
     "path": "^0.12.7",
     "rimraf": "^2.5.4",
-    "rollup": "^0.36.0",
     "sinon": "^2.0.0-pre",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"

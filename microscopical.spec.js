@@ -3,7 +3,7 @@ var fs = require('fs')
 var node = typeof window != 'object'
 
 describe('ulog', function(){
-	it('is microscopically small (less than 2000 bytes minified, about 1kB when gzipped)', function(){
+	it('is microscopically small (~2kB minified, ~1kB gzipped)', function(){
 		var stats = fs.statSync("ulog.min.js")
 		expect(stats.size).to.be.below(2000)
 	})

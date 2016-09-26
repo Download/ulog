@@ -1,3 +1,8 @@
+
+// ulog - microscopically small universal logging library
+// © 2016 by Stijn de Witt, some rights reserved
+// License: CC-BY-4.0
+
 function log(name){
 	return name
 		? (mods[name] ? mods[name] : (mods[name] = enhance({name:name}, log)))
@@ -15,7 +20,7 @@ log.enable = function(str) {
 			else dbgMods.push(new RegExp('^' + str + '$'))
 		}
 	}
-	for (i in mods) patch(mods[i], log)
+	for (i in mods) patch(mods[i])
 }
 
 log.enabled = function(name) {
@@ -27,8 +32,6 @@ log.enabled = function(name) {
 }
 
 log.disable = log.enable.bind(log, '')
-
-module.exports = log
 
 var LVL = {ERROR:1, WARN:2, INFO:3, LOG:4, DEBUG:5, TRACE:6},
 		names = Object.keys(LVL).map(function(x){return x.toLowerCase()}),
@@ -45,8 +48,8 @@ function enhance(o, parent, level) {
 				var lvl = n && (Number(n)!==Number(n) ? o[n.toUpperCase()] : Number(n))
 				if (lvl >= 0 && lvl <= 6) {level = lvl}
 			}
-			patch(o, parent)
-			if (!parent) {for (mod in mods) {patch(mods[mod], o)}}
+			patch(o)
+			if (!parent) {for (mod in mods) {patch(mods[mod])}}
 		}
 	})
 	patch(o, parent)
@@ -60,7 +63,7 @@ function enhance(o, parent, level) {
 	return o
 }
 
-function patch(o, parent) {
+function patch(o) {
 	var lvl = Math.max(o.name && log.enabled(o.name) && o.DEBUG || o.level, o.level)
 	for (var i=0,name; name=names[i]; i++) {
 		o[name] = lvl <= i
@@ -80,3 +83,4 @@ function patch(o, parent) {
 
 function bnd(n,c){return (c = log.con()) && (c[n]||c.log).bind(c)}
 function nop(){}
+module.exports = log

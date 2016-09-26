@@ -1,4 +1,4 @@
-# ulog <sub><sup>v0.1.0</sup></sub>
+# ulog <sub><sup>v0.2.0</sup></sub>
 Microscopically small universal logging library
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -17,8 +17,8 @@ from [debug](https://npmjs.com/package/debug) that I missed. Even with these ext
 still **very** small, weighing in just over 1 kB minified and gzipped.
 
 ## Download
-* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/0.1.0/ulog.umd.js) (~2kB, source)
-* [ulog.min.js](https://cdn.rawgit.com/download/ulog/0.1.0/ulog.min.js) (~1.1kB, minified)
+* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/0.2.0/ulog.umd.js) (~2kB, source)
+* [ulog.min.js](https://cdn.rawgit.com/download/ulog/0.2.0/ulog.min.js) (~1kB, minified)
 
 ## Install
 ```sh
@@ -53,18 +53,18 @@ define(['ulog'], function(ulog){
 
 ### Script tag
 ```html
-<script src="https://cdn.rawgit.com/download/ulog/0.1.0/ulog.min.js"></script>
+<script src="https://cdn.rawgit.com/download/ulog/0.2.0/ulog.min.js"></script>
 ```
 
 ## Logging methods
 ulog defines 6 logging methods, which correspond with available log levels:
 ```js
-log.error('This logs an ERROR message');
-log.warn('This logs a WARN message');
-log.info('This logs an INFO message');
-log.log('This logs a LOG message');
-log.debug('This logs a DEBUG message');
-log.trace('This logs a TRACE message');
+log.error('This logs an ERROR message')
+log.warn('This logs a WARN message')
+log.info('This logs an INFO message')
+log.log('This logs a LOG message')
+log.debug('This logs a DEBUG message')
+log.trace('This logs a TRACE message')
 ```
 ulog does **not** mess with your stacktrace or line numbers. Line numbers shown in the console
 will be from your code, not from some wrapper function..
@@ -72,27 +72,27 @@ will be from your code, not from some wrapper function..
 ## Logging levels
 ulog defines 6 logging levels, which correspond with the available logging methods:
 ```js
-log.ERROR; // 1
-log.WARN;  // 2
-log.INFO;  // 3
-log.LOG;   // 4
-log.DEBUG; // 5
-log.TRACE; // 6
+log.ERROR // 1
+log.WARN  // 2
+log.INFO  // 3
+log.LOG   // 4
+log.DEBUG // 5
+log.TRACE // 6
 ```
 In addition, there is a 7th level that completely disables all logging:
 ```js
-log.NONE;  // 0
+log.NONE  // 0
 ```
 To get or set the log level, we use the `log.level` property:
 ```js
 if (log.level >= log.INFO) {
-	log.info('This message will be logged');
+	log.info('This message will be logged')
 }
-log.level = log.WARN;
-log.info('This info message will NOT be logged.');
-log.warn('This warning message WILL be logged.');
-log.level = log.NONE;
-log.error('Logging is completely disabled.');
+log.level = log.WARN
+log.info('This info message will NOT be logged.')
+log.warn('This warning message WILL be logged.')
+log.level = log.NONE
+log.error('Logging is completely disabled.')
 ```
 
 
@@ -111,7 +111,7 @@ default settings and this did not feel right.
 ### In the browser
 In the browser the log level defaults to `log.WARN`. This means INFO messages will be excluded,
 but for most users these messages won't be relevant anyway and we can easily change the
-log level in the browser using a query parameter in the URL.
+log level in the browser using a query parameter in the URL (see next section).
 
 ## Changing the log level
 Changing the log level can be done in two ways:
@@ -133,7 +133,7 @@ var log = ulog('my-module')
 log.level = ulog.DEBUG
 ```
 
-### Changing the log level via a startup paramter
+### Changing the log level via a startup parameter
 We can set the initial global log level with a startup parameter. In Node we use
 an environment variable, whereas in the browser we use a querystring parameter in the url.
 
@@ -156,12 +156,47 @@ Add the parameter `log` to the querystring of the page:
 Both the uppercase and lowercase names of the log levels work,
 as well as their numerical value.
 
-### Setting modules to DEBUG with a startup parameter
-We can set some modules to DEBUG using a startup parameter. In this mode, they
-will log any messages of level DEBUG or higher.
+## Debug mode
+In addition to setting the global log level and setting the log levels of
+individual loggers, you can also enable debug mode for a group of loggers.
+When in debug mode, the logger's individual log level will only be used if
+it is set to TRACE. Otherwise it will be ignored and the module will behave
+as if its level was set to DEBUG.
+
+### Enabling debug mode via the API
+The `ulog` function has 3 methods that allow us to control debug mode:
+* `ulog.enable(str)` - Enables debug mode for the loggers listed in `str`
+* `ulog.enabled(name)` - Tests whether the logger is currently in debug mode
+* `ulog.disable()` - Disables debug mode for all loggers
+
+The `*` character may be used as a wildcard. Suppose for example your module has
+loggers named "connect:bodyParser", "connect:compress" and "connect:session".
+Instead of listing all three with `connect:bodyParser,connect:compress,connect:session`,
+you may simply use `connect:*`.
+
+You can also exclude specific loggers by prefixing them with a "-" character.
+For example, `*,-connect:*` would include all debuggers except those
+starting with "connect:".
+
+```js
+// given modules app, lib, connect:bodyParser, connect:compress and connect:session
+ulog.enable('app,connect:*')
+ulog.enabled('app') // true
+ulog.enabled('lib') // false
+ulog.enabled('connect:compress') // true
+ulog.enable('app,connect:*,-connect:compress') // negation symbol means 'except'
+ulog.enabled('app') // true
+ulog.enabled('lib') // false
+ulog.enabled('connect:compress') // false
+ulog.disable()
+ulog.enabled('app') // false
+```
+### Enabling debug mode via a startup parameter
+We can enable debug mode for some loggers using a startup parameter. On Node
+we use environment variables and on the browser we use querystring parameters.
 
 #### Environment variable
-Set the environment variable `DEBUG` to the module names:
+Set the environment variable `DEBUG` to the string with logger names:
 
 ```sh
 $ DEBUG=my-module && node ./myapp.js
@@ -175,15 +210,6 @@ $ set DEBUG=my-module && node ./myapp.js
 Add the parameter `debug` to the querystring of the page:
 
 `http://www.example.com/?`**`debug=my-module`**
-
-The `*` character may be used as a wildcard. Suppose for example your module has
-loggers named "connect:bodyParser", "connect:compress" and "connect:session".
-Instead of listing all three with `DEBUG=connect:bodyParser,connect:compress,connect:session`,
-you may simply do `DEBUG=connect:*`.
-
-You can also exclude specific loggers by prefixing them with a "-" character.
-For example, `DEBUG=*,-connect:*` would include all debuggers except those
-starting with "connect:".
 
 ## Using ulog as a polyfill
 ulog supports all functions in the [NodeJS Console API](https://nodejs.org/api/console.html),
@@ -206,6 +232,14 @@ if (log.level >= log.INFO) {
 	log.info(message);
 }
 ```
+
+## Issues
+Add an issue in this project's [issue tracker](https://github.com/download/ulog/issues)
+to let me know of any problems you find, or questions you may have.
+
+## Credits
+Credits go to TJ Holowaychuk for creating [debug](https://github.com/visionmedia/debug), which was
+a great inspiration for ulog.
 
 ## Copyright
 Copyright 2016 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.
