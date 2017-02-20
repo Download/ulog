@@ -6,10 +6,11 @@ if (process.env.LOG  ) {level = process.env.LOG}
 if (process.env.DEBUG) {debug = process.env.DEBUG}
 
 var fd = process.env.DEBUG_FD && parseInt(process.env.DEBUG_FD, 10),
-		c = console;
+	c = console;
 if (typeof fd == 'number') {
-	var stream = createWritableStdioStream(fd),
-			logger = function(){stream.write(util.format.apply(this, arguments) + '\n')}
+	var util = require('util'),
+		stream = createWritableStdioStream(fd),
+		logger = function(){stream.write(util.format.apply(this, arguments) + '\n')}
 	c = {error:logger, warn:logger, info:logger, log:logger, trace:logger}
 }
 
