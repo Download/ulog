@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
   "browser": "browser.js",
@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production npm run -S build-all",
     "release": "npm run -S clean && npm run -S build && npm run -S test",
     "test": "mocha *.spec.js",
-    "test-dev": "webpack-dev-server --output-path test --output-filename ulog.spec.js \"mocha!./ulog.spec.js\" --content-base test --port 8888"
+    "test-dev": "webpack-dev-server --output-path /test --output-filename ulog.spec.js \"mocha-loader!./ulog.spec.js\" --content-base test --port 8888"
   },
   "keywords": [
     "universal-components",
@@ -48,14 +48,14 @@
   "homepage": "http://github.com/download/ulog",
   "devDependencies": {
     "chai": "^3.4.1",
-    "cross-env": "^3.0.0",
-    "mocha": "^3.0.2",
-    "mocha-loader": "^1.0.0",
+    "cross-env": "^3.1.4",
+    "mocha": "^3.2.0",
+    "mocha-loader": "^1.1.0",
     "path": "^0.12.7",
-    "rimraf": "^2.5.4",
-    "sinon": "^2.0.0-pre",
+    "rimraf": "^2.6.0",
+    "sinon": "^2.0.0-pre.5",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {}
 }
