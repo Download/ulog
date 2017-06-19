@@ -54,7 +54,7 @@
     "path": "^0.12.7",
     "rimraf": "^2.6.0",
     "sinon": "^2.0.0-pre.5",
-    "webpack": "^2.2.1",
+    "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {}
