@@ -1,6 +1,8 @@
 # ulog <sub><sup>v1.0.2</sup></sub>
 ### Microscopically small universal logging library
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Download/ulog.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
 [![license](https://img.shields.io/npm/l/ulog.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![travis](https://img.shields.io/travis/Download/ulog.svg)](https://travis-ci.org/Download/ulog)
