@@ -47,14 +47,14 @@
   },
   "homepage": "http://github.com/download/ulog",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "cross-env": "^3.1.4",
+    "chai": "^4.0.2",
+    "cross-env": "^5.0.1",
     "mocha": "^3.2.0",
     "mocha-loader": "^1.1.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.0",
     "sinon": "^2.0.0-pre.5",
-    "webpack": "^2.2.1",
+    "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {}
