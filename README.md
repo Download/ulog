@@ -1,4 +1,4 @@
-# ulog <sub><sup>v1.0.2</sup></sub>
+# ulog <sub><sup>v1.0.3</sup></sub>
 ### Microscopically small universal logging library
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -17,8 +17,8 @@ from [debug](https://npmjs.com/package/debug) that I missed. Even with these ext
 still **very** small, weighing in just over 1 kB minified and gzipped.
 
 ## Download
-* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/1.0.2/ulog.umd.js) (~3kB, source)
-* [ulog.min.js](https://cdn.rawgit.com/download/ulog/1.0.2/ulog.min.js) (~2kB, minified)
+* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/1.0.3/ulog.umd.js) (~3kB, source)
+* [ulog.min.js](https://cdn.rawgit.com/download/ulog/1.0.3/ulog.min.js) (~2kB, minified)
 
 ## Install
 ```sh
@@ -53,7 +53,7 @@ define(['ulog'], function(ulog){
 
 ### Script tag
 ```html
-<script src="https://cdn.rawgit.com/download/ulog/1.0.2/ulog.min.js"></script>
+<script src="https://cdn.rawgit.com/download/ulog/1.0.3/ulog.min.js"></script>
 ```
 
 ## Logging methods

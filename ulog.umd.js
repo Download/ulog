@@ -14,7 +14,7 @@ function log(name){
 		: (log.debug ? log : enhance(log))
 }
 
-log.ulog = {version:'0.1.0'}
+log.ulog = {version:'1.0.3'}
 
 log.enable = function(str) {
 	var i, split = (str || '').split(/[\s,]+/);
