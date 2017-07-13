@@ -1,6 +1,14 @@
 language: node_js
 node_js:
   - "node"
+  - "6"
+  - "5"
   - "4"
   - "0.10"
   - "iojs"
+# https://github.com/greenkeeperio/greenkeeper-lockfile
+before_install:
+- npm install -g npm@5
+- npm install -g greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
+after_script: greenkeeper-lockfile-upload
