@@ -5,7 +5,7 @@
 })(this, 'ulog', function(){'use strict'
 
 // ulog - microscopically small universal logging library
-// © 2016 by Stijn de Witt, some rights reserved
+// © 2017 by Stijn de Witt, some rights reserved
 // License: CC-BY-4.0
 
 function log(name){
@@ -14,7 +14,7 @@ function log(name){
 		: (log.debug ? log : enhance(log))
 }
 
-log.ulog = {version:'1.0.3'}
+log.ulog = {version:'1.1.0'}
 
 log.enable = function(str) {
 	var i, split = (str || '').split(/[\s,]+/);
@@ -58,10 +58,12 @@ function enhance(o, parent, level) {
 		}
 	})
 	patch(o, parent)
-	o.dir = bnd('dir') || nop
+	o.dir =  bnd('dir') || nop
+	o.table = bnd('table') || nop
 	o.time = bnd('time') || nop
 	o.timeEnd = bnd('timeEnd') || nop
-	o.assert = function(){
+	// makes Node behave like browsers 
+	o.assert = typeof window == 'object' && bnd('assert') || function(){
 		var a=[].concat.apply([], arguments), ok=a.shift()
 		if (!ok) {o.error.apply(o, a)}
 	}
@@ -76,12 +78,7 @@ function patch(o) {
 			: (
 				bnd(name) ||
 				(typeof print == 'function' && print) ||
-				function(){
-					if (log.con()) {
-						patch(o)
-						o[name].apply(o, arguments)
-					}
-				}
+				nop
 			)
 	}
 }
@@ -90,9 +87,15 @@ function bnd(n,c){return (c = log.con()) && (c[n]||c.log).bind(c)}
 function nop(){}
 
 
+
 var qs = location.search.substring(1),
 		args = qs && qs.split('&'),
 		lvl, dbg, i, m
+
+try {
+	lvl = localStorage.getItem('log')
+	dbg = localStorage.getItem('debug')
+} catch(e) {}
 
 for (i=0; m=args && args[i] && args[i].split('='); i++) {
 	m[0] == 'log' ? lvl = m[1] : 0

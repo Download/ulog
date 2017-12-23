@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
   "browser": "browser.js",

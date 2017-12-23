@@ -1,4 +1,4 @@
-# ulog <sub><sup>v1.0.3</sup></sub>
+# ulog <sub><sup>v1.1.0</sup></sub>
 ### Microscopically small universal logging library
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -9,16 +9,18 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://cdn.rawgit.com/download/ulog/0.1.0/ulog.png)
+![logo](https://cdn.rawgit.com/download/ulog/1.0.0/ulog.png)
 
-Ulog builds on the experience gained building and using [Picolog](https://npmjs.com/package/picolog),
-possibly the smallest universal logging library on NPM that supports levels, and adds some features
-from [debug](https://npmjs.com/package/debug) that I missed. Even with these extra features, ulog is
-still **very** small, weighing in just over 1 kB minified and gzipped.
+Ulog builds on the experience gained building and using 
+[Picolog](https://npmjs.com/package/picolog), possibly the smallest 
+universal logging library on NPM that supports levels, and adds some 
+features from [debug](https://npmjs.com/package/debug) that I missed. 
+Even with these extra features, ulog is still **very** small, weighing 
+in just over 1 kB minified and gzipped.
 
 ## Download
-* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/1.0.3/ulog.umd.js) (~3kB, source)
-* [ulog.min.js](https://cdn.rawgit.com/download/ulog/1.0.3/ulog.min.js) (~2kB, minified)
+* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/1.1.0/ulog.umd.js) (~3kB, source)
+* [ulog.min.js](https://cdn.rawgit.com/download/ulog/1.1.0/ulog.min.js) (~2kB, minified)
 
 ## Install
 ```sh
@@ -53,7 +55,7 @@ define(['ulog'], function(ulog){
 
 ### Script tag
 ```html
-<script src="https://cdn.rawgit.com/download/ulog/1.0.3/ulog.min.js"></script>
+<script src="https://cdn.rawgit.com/download/ulog/1.1.0/ulog.min.js"></script>
 ```
 
 ## Logging methods
@@ -66,8 +68,8 @@ log.log('This logs a LOG message')
 log.debug('This logs a DEBUG message')
 log.trace('This logs a TRACE message')
 ```
-ulog does **not** mess with your stacktrace or line numbers. Line numbers shown in the console
-will be from your code, not from some wrapper function..
+ulog does **not** mess with your stacktrace or line numbers. Line numbers shown 
+in the console will be from your code, not from some wrapper function..
 
 ## Logging levels
 ulog defines 6 logging levels, which correspond with the available logging methods:
@@ -95,23 +97,25 @@ log.level = log.NONE
 log.error('Logging is completely disabled.')
 ```
 
-
 ## Default log level
-I've found that it makes sense to have different default log levels in the browser
-and in Node. In Node, logging is often the only UI we have available and we (the devs)
-are the only ones that will see that logging. In the browser, we have an alternative
-UI (the webpage itself), so logging will be less useful for normal users.
+I've found that it makes sense to have different default log levels in 
+the browser and in Node. In Node, logging is often the only UI we have 
+available and we (the devs) are the only ones that will see that logging. 
+In the browser, we have an alternative UI (the webpage itself), so 
+logging will be less useful for normal users.
 
 ### In Node
-In Node, the log level defaults to `log.INFO`. This allows you to use INFO, WARN and ERROR
-when informing the user of stuff that happened. With Picolog I found I had to resort
-to logging informational messages at WARN because I wanted them to be visible with the
-default settings and this did not feel right.
+In Node, the log level defaults to `log.INFO`. This allows you to use 
+INFO, WARN and ERROR when informing the user of stuff that happened. 
+With Picolog I found I had to resort to logging informational messages 
+at WARN because I wanted them to be visible with the default settings 
+and this did not feel right.
 
 ### In the browser
-In the browser the log level defaults to `log.WARN`. This means INFO messages will be excluded,
-but for most users these messages won't be relevant anyway and we can easily change the
-log level in the browser using a query parameter in the URL (see next section).
+In the browser the log level defaults to `log.WARN`. This means INFO 
+messages will be excluded, but for most users these messages won't be 
+relevant anyway and we can easily change the log level in the browser 
+using a query parameter in the URL or localStorage (see next section).
 
 ## Changing the log level
 Changing the log level can be done in two ways:
@@ -134,8 +138,9 @@ log.level = ulog.DEBUG
 ```
 
 ### Changing the log level via a startup parameter
-We can set the initial global log level with a startup parameter. In Node we use
-an environment variable, whereas in the browser we use a querystring parameter in the url.
+We can set the initial global log level with a startup parameter. In 
+Node we use an environment variable, whereas in the browser we use a 
+querystring parameter in the url or a key in localStorage.
 
 #### Environment variable
 Set the environment variable `LOG` to the desired log level.
@@ -152,6 +157,16 @@ $ set LOG=INFO && node ./myapp.js
 Add the parameter `log` to the querystring of the page:
 
 `http://www.example.com/?`**`log=debug`**
+
+Both the uppercase and lowercase names of the log levels work,
+as well as their numerical value.
+
+#### localStorage key
+Add the key `log` to the localStorage of the page:
+```js
+localStorage.setItem('log', 'info')
+```
+then refresh the page.
 
 Both the uppercase and lowercase names of the log levels work,
 as well as their numerical value.
@@ -193,7 +208,8 @@ ulog.enabled('app') // false
 ```
 ### Enabling debug mode via a startup parameter
 We can enable debug mode for some loggers using a startup parameter. On Node
-we use environment variables and on the browser we use querystring parameters.
+we use environment variables and on the browser we use querystring parameters
+or localStorage keys.
 
 #### Environment variable
 Set the environment variable `DEBUG` to the string with logger names:
@@ -211,6 +227,13 @@ Add the parameter `debug` to the querystring of the page:
 
 `http://www.example.com/?`**`debug=my-module`**
 
+#### localStorage key
+Add the key `debug` to the localStorage of the page:
+```js
+localStorage.setItem('debug', 'my-module')
+```
+then refresh the page.
+
 ## Using ulog as a polyfill
 ulog supports all functions in the [NodeJS Console API](https://nodejs.org/api/console.html),
 so you should be able to use it as a polyfill in environments where there is no `console` available (e.g. Nashorn):
@@ -220,12 +243,19 @@ global.console = log;
 console.info('Nashorn can do logging to!');
 ```
 
+## assert does not throw
+ulog patches the [different behavior](https://github.com/jasnell/node/blob/master/doc/api/console.md#consoleassertvalue-message-args) 
+of `console.assert` in Node compared to browsers. 
+In ulog, `assert` behaves just like in the browsers and never throws.
+
 ## Performance considerations
-The logging methods on the `log` object that correspond to a log level which is higher than the
-currently set level, are replaced by no-op methods. As such, you generally don't have to worry
-about the performance overhead of leaving the log statements in the production code. There is
-one exception to this rule though. If preparing the message itself is a costly operation, you
-may want to surround the log code with an `if (log.level >= myLevel)` statement:
+The logging methods on the `log` object that correspond to a log 
+level which is higher than the currently set level, are replaced 
+by no-op methods. As such, you generally don't have to worry about 
+the performance overhead of leaving the log statements in the 
+production code. There is one exception to this rule though. If 
+preparing the message itself is a costly operation, you may want 
+to surround the log code with an `if (log.level >= myLevel)` statement:
 ```js
 if (log.level >= log.INFO) {
 	var message = doLotsOfWorkToGenerateLogMessage();
@@ -234,18 +264,18 @@ if (log.level >= log.INFO) {
 ```
 
 ## Issues
-Add an issue in this project's [issue tracker](https://github.com/download/ulog/issues)
+Add an issue in the [issue tracker](https://github.com/download/ulog/issues)
 to let me know of any problems you find, or questions you may have.
 
 ## Credits
 Credits go to:
-* Felix Geisendörfer from [debuggable.com](http://debuggable.com/) for kindly giving up
-  the `ulog` namespace on NPM. Thanks Felix!
-* TJ Holowaychuk for creating [debug](https://github.com/visionmedia/debug), which was
-  a great inspiration for ulog.
+* Felix Geisendörfer from [debuggable.com](http://debuggable.com/) for kindly 
+  giving up the `ulog` namespace on NPM. Thanks Felix!
+* TJ Holowaychuk for creating [debug](https://github.com/visionmedia/debug), 
+  which was a great inspiration for ulog.
 
 ## Copyright
-Copyright 2016 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.
+Copyright 2017 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.
 
 ## License
 Licensed under the [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/) Open Source license.

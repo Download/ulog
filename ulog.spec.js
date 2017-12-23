@@ -56,6 +56,10 @@ describe('log', function(){
 		expect(log.assert).to.be.a('function')
 	})
 
+	it('has a method `assert` that does not throw', function(){
+		expect(function(){log.assert(false, 'assert does not throw')}).to.not.throw()
+	})
+
 	it('has an additional logging method named `debug`', function(){
 		expect(log).to.have.a.property('debug')
 		expect(log.debug).to.be.a('function')
@@ -237,7 +241,6 @@ describe('log', function(){
 		expect(testConsole.trace.callCount).to.equal(0)
 		testConsole.reset()
 	})
-
 
 	it('has a method `enabled`', function(){
 		expect(log).to.have.a.property('enabled')
