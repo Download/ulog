@@ -243,7 +243,7 @@ global.console = log;
 console.info('Nashorn can do logging to!');
 ```
 
-## assert does not throw
+## `assert` does not throw
 ulog patches the [different behavior](https://github.com/jasnell/node/blob/master/doc/api/console.md#consoleassertvalue-message-args) 
 of `console.assert` in Node compared to browsers. 
 In ulog, `assert` behaves just like in the browsers and never throws.
