@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.1",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
   "browser": "browser.js",
@@ -12,7 +12,8 @@
     "build": "cross-env NODE_ENV=production npm run -S build-all",
     "release": "npm run -S clean && npm run -S build && npm run -S test",
     "test": "mocha *.spec.js",
-    "dev": "webpack-dev-server --output-path /test --output-filename ulog.spec.js \"mocha-loader!./ulog.spec.js\" --content-base test --port 8888"
+    "dev": "webpack-dev-server --output-path /test --output-filename ulog.spec.js \"mocha-loader!./ulog.spec.js\" --content-base test --port 8888",
+    "debug": "webpack-dev-server --output-path /test --output-filename debug.spec.js \"mocha-loader!./debug.spec.js\" --content-base test --port 8888"
   },
   "keywords": [
     "universal-components",
@@ -35,7 +36,7 @@
     "email": "StijnDeWitt@hotmail.com",
     "url": "http://StijnDeWitt.com"
   },
-  "copyright": "Copyright 2016 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.",
+  "copyright": "Copyright 2017 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.",
   "license": "CC-BY-4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
   "repository": {

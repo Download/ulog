@@ -3,78 +3,70 @@
 // © 2017 by Stijn de Witt, some rights reserved
 // License: CC-BY-4.0
 
-function log(name){
-	return name
-		? (mods[name] ? mods[name] : (mods[name] = enhance({name:name}, log)))
-		: (log.debug ? log : enhance(log))
+function log(n){
+	return !n ? extend(log) : mods[n] || (mods[n] = extend(create(n), log))
 }
 
-log.ulog = {version:'1.1.0'}
+log.formats = []
+log.extends = []
 
-log.enable = function(str) {
-	var i, split = (str || '').split(/[\s,]+/);
+log.enable = function(s) {
+	var i, split = (s || '').split(/[\s,]+/);
 	for (i=0; i<split.length; i++) {
 		if (split[i]) {
-			str = split[i].replace(/\*/g, '.*?')
-			if (str[0] === '-') skipMods.push(new RegExp('^' + str.substr(1) + '$'))
-			else dbgMods.push(new RegExp('^' + str + '$'))
+			s = split[i].replace(/\*/g, '.*?')
+			if (s[0] === '-') skipMods.push(new RegExp('^' + s.substr(1) + '$'))
+			else dbgMods.push(new RegExp('^' + s + '$'))
 		}
 	}
 	for (i in mods) patch(mods[i])
 }
 
-log.enabled = function(name) {
+log.enabled = function(s) {
 	var i;
 	for (i=0; i<skipMods.length; i++)
-		if (skipMods[i].test(name)) return
+		if (skipMods[i].test(s)) return
 	for (i=0; i<dbgMods.length; i++)
-		if (dbgMods[i].test(name)) {return true}
+		if (dbgMods[i].test(s)) {return true}
 }
 
 log.disable = log.enable.bind(log, '')
 
 var LVL = {ERROR:1, WARN:2, INFO:3, LOG:4, DEBUG:5, TRACE:6},
-		names = Object.keys(LVL).map(function(x){return x.toLowerCase()}),
+		names = {error:1, warn:2, info:3, log:4, verbose:4, debug:5, trace:6, silly:6, dir:0, table:0, time:0, timeEnd:0, assert:0}
 		mods = {}, dbgMods = [], skipMods = []
 
-function enhance(o, parent, level) {
+function create(n,r) {
+	eval("r = {'" + n + "': function() {var a = [].slice.call(arguments), m = a.length > 1 && names[a[0]] ? a.shift() : 'debug'; for (var i=0; i<log.formats.length; i++) log.formats[i](mods[n],m,a); return mods[n][m].apply(mods[n], a)}}[n]")
+	return r.name ? r : Object.defineProperty(r, 'name', {get:function(){return n}})
+}
+		
+function extend(o,p,l) {
+	if (o.log) return
 	o.NONE = 0
+	o.ulog = {version:'2.0.0-beta.1'}
 	for (var key in LVL) {o[key] = LVL[key]}
 	Object.defineProperty(o, 'level', {
-		get: function(){return level !== undefined ? level : parent && parent.level},
+		get: function(){return l !== undefined ? l : p && p.level},
 		set: function(n) {
-			if ((n === undefined) && parent) {level = undefined}
+			if ((n === undefined) && p) l = undefined
 			else {
 				var lvl = n && (Number(n)!==Number(n) ? o[n.toUpperCase()] : Number(n))
-				if (lvl >= 0 && lvl <= 6) {level = lvl}
+				if (lvl >= 0 && lvl <= 6) l = lvl
 			}
 			patch(o)
-			if (!parent) {for (mod in mods) {patch(mods[mod])}}
+			if (!p) {for (mod in mods) {patch(mods[mod])}}
 		}
 	})
-	patch(o, parent)
-	o.dir =  bnd('dir') || nop
-	o.table = bnd('table') || nop
-	o.time = bnd('time') || nop
-	o.timeEnd = bnd('timeEnd') || nop
-	// makes Node behave like browsers 
-	o.assert = typeof window == 'object' && bnd('assert') || function(){
-		var a=[].concat.apply([], arguments), ok=a.shift()
-		if (!ok) {o.error.apply(o, a)}
-	}
+	patch(o)
+	for (var i=0; i<log.extends.length; i++) log.extends[i](o,p)
 	return o
 }
 
 function patch(o) {
 	var lvl = Math.max(o.name && log.enabled(o.name) && o.DEBUG || o.level, o.level)
-	for (var i=0,name; name=names[i]; i++) {
-		o[name] = lvl <= i
-			? nop
-			: (
-				bnd(name) ||
-				(typeof print == 'function' && print) ||
-				nop
-			)
+	for (var n in names) {
+		o[n] = lvl < names[n] ? nop : bnd(n) ||	(typeof print == 'function' && print) || nop
 	}
 }
 

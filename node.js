@@ -1,12 +1,11 @@
 var log = require('./ulog')
 
-var level, debug
-
-if (process.env.LOG  ) {level = process.env.LOG}
-if (process.env.DEBUG) {debug = process.env.DEBUG}
+var lvl, dbg
+if (process.env.LOG  ) {lvl = process.env.LOG}
+if (process.env.DEBUG) {dbg = process.env.DEBUG}
 
 var fd = process.env.DEBUG_FD && parseInt(process.env.DEBUG_FD, 10),
-	c = console;
+    c = console;
 if (typeof fd == 'number') {
 	var util = require('util'),
 		stream = createWritableStdioStream(fd),
@@ -14,10 +13,20 @@ if (typeof fd == 'number') {
 	c = {error:logger, warn:logger, info:logger, log:logger, trace:logger}
 }
 
+log.extends.push(function(o,p){
+	// makes Node behave like browsers 
+	o.assert = function(){
+		var a=[].slice.call(arguments), ok=a.shift()
+		if (!ok) {o.error.apply(o, a)}
+	}
+})
+
 log.con = function(){return c}
-if (debug) {log.enable(debug)}
-module.exports = log()
-log.level = level || log.INFO
+if (dbg) {log.enable(dbg)}
+log()
+log.level = lvl || log.INFO
+
+module.exports = log
 
 // SEE https://github.com/visionmedia/debug/blob/2.2.0/node.js#L144
 function createWritableStdioStream (fd) {

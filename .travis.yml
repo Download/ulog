@@ -4,6 +4,7 @@ node_js:
   - "6"
   - "5"
   - "4"
+  - "0.10"
 # https://github.com/greenkeeperio/greenkeeper-lockfile
 before_install:
 - npm install -g npm@5
