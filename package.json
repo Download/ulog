@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
   "unpkg": "ulog.min.js",
