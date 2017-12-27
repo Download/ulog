@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.1",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
+  "unpkg": "ulog.min.js",
   "browser": "browser.js",
   "scripts": {
     "clean": "rimraf ulog.umd.js && rimraf ulog.min.js",

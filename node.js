@@ -12,6 +12,7 @@ if (typeof fd == 'number') {
 		logger = function(){stream.write(util.format.apply(this, arguments) + '\n')}
 	c = {error:logger, warn:logger, info:logger, log:logger, trace:logger}
 }
+if (fd !== undefined) c.fd = fd
 
 log.extends.push(function(o,p){
 	// makes Node behave like browsers 
