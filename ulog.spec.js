@@ -1,24 +1,7 @@
 var expect = require('chai').expect
 var sinon = require('sinon')
 
-
-function nop(){}
-var testConsole = {
-	error: sinon.spy(nop), //console.error.bind(console)),
-	warn: sinon.spy(nop), //console.warn.bind(console)),
-	info: sinon.spy(nop), //console.info.bind(console)),
-	log: sinon.spy(nop), //console.log.bind(console)),
-	debug: sinon.spy(nop), //console.log.bind(console)),
-	trace: sinon.spy(nop), //console.trace.bind(console)),
-	reset: function(){
-		testConsole.error.reset()
-		testConsole.warn.reset()
-		testConsole.info.reset()
-		testConsole.log.reset()
-		testConsole.debug.reset()
-		testConsole.trace.reset()
-	}
-}
+var testConsole = require('./test/console')
 
 var log = require('./')
 var oldLevel = log.level
@@ -247,6 +230,7 @@ describe('log', function(){
 	})
 })
 
+
 describe('var log = require(\'ulog\')(\'my-module-name\')', function(){
 	it('yields a named log function', function(){
 		expect(named).to.be.a('function')
@@ -279,6 +263,48 @@ describe('var log = require(\'ulog\')(\'my-module-name\')', function(){
 		} finally {
 			named.level = oldNamed
 			testConsole.reset()
+		}
+	})
+
+	it('can apply formatting to the log messages', function(){
+		testConsole.reset()
+		format = sinon.spy()
+		log.formats.push(format)
+		try {
+			named.level = named.DEBUG
+			expect(named.level).to.equal(named.DEBUG)
+			expect(testConsole.debug.callCount).to.equal(0)
+			var message = 'Message logged at level DEBUG with formatter set'
+			named(message)
+			expect(testConsole.debug.callCount).to.equal(1)
+			expect(format.callCount).to.equal(1)
+		} finally {
+			named.level = oldNamed
+			testConsole.reset()
+			log.formats.pop()
+		}
+	})
+
+	it('can prefix log messages with the logger name', function(){
+		testConsole.reset()
+		format = sinon.spy(function(l,m,a){
+			console.info('format before', a)
+			a.splice(0,0,l.name)
+			console.info('format after', a)
+		})
+		log.formats.push(format)
+		try {
+			named.level = named.DEBUG
+			expect(named.level).to.equal(named.DEBUG)
+			expect(testConsole.debug.callCount).to.equal(0)
+			var message = 'Message logged at level DEBUG with formatter set'
+			named(message)
+			expect(testConsole.debug.callCount).to.equal(1)
+			expect(format.callCount).to.equal(1)
+		} finally {
+			named.level = oldNamed
+			testConsole.reset()
+			log.formats.pop()
 		}
 	})
 })

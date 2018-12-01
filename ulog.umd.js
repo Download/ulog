@@ -1,7 +1,6 @@
 (function(u,m,d){
 	typeof define == 'function' && define.amd ? define(m,[],d) : (u[m] = d())
 })(this, 'ulog', function(){'use strict'
-
 // ulog - microscopically small universal logging library
 // © 2017 by Stijn de Witt, some rights reserved
 // License: CC-BY-4.0
@@ -47,7 +46,7 @@ function create(n,r) {
 function extend(o,p,l) {
 	if (o.log) return
 	o.NONE = 0
-	o.ulog = {version:'2.0.0-beta.2'}
+	o.ulog = {version:'2.0.0-beta.3'}
 	for (var key in LVL) {o[key] = LVL[key]}
 	Object.defineProperty(o, 'level', {
 		get: function(){return l !== undefined ? l : p && p.level},
