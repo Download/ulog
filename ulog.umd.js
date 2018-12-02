@@ -35,7 +35,7 @@ log.enabled = function(s) {
 log.disable = log.enable.bind(log, '')
 
 var LVL = {ERROR:1, WARN:2, INFO:3, LOG:4, DEBUG:5, TRACE:6},
-		names = {error:1, warn:2, info:3, log:4, verbose:4, debug:5, trace:6, silly:6, dir:0, table:0, time:0, timeEnd:0, assert:0}
+		names = {error:1, warn:2, info:3, log:4, verbose:4, debug:5, trace:6, silly:6, dir:0, table:0, time:0, timeEnd:0, assert:0},
 		mods = {}, dbgMods = [], skipMods = []
 
 function create(n,r) {
@@ -46,7 +46,7 @@ function create(n,r) {
 function extend(o,p,l) {
 	if (o.log) return
 	o.NONE = 0
-	o.ulog = {version:'2.0.0-beta.4'}
+	o.ulog = {version:'2.0.0-beta.5'}
 	for (var key in LVL) {o[key] = LVL[key]}
 	Object.defineProperty(o, 'level', {
 		get: function(){return l !== undefined ? l : p && p.level},
