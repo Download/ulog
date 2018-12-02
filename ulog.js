@@ -43,7 +43,7 @@ function create(n,r) {
 function extend(o,p,l) {
 	if (o.log) return
 	o.NONE = 0
-	o.ulog = {version:'2.0.0-beta.3'}
+	o.ulog = {version:'2.0.0-beta.4'}
 	for (var key in LVL) {o[key] = LVL[key]}
 	Object.defineProperty(o, 'level', {
 		get: function(){return l !== undefined ? l : p && p.level},

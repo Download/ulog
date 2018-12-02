@@ -5,7 +5,6 @@ ulog.formats.push(format);
 module.exports = ulog;
 
 function format(logger, method, args) {
-  console.info('format', 'logger', logger, 'method', method, 'args', args)
   args.unshift(time(), logger.name.substring(0,18).padEnd(20, ' '))
 }
 
