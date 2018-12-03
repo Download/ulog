@@ -288,9 +288,7 @@ describe('var log = require(\'ulog\')(\'my-module-name\')', function(){
 	it('can prefix log messages with the logger name', function(){
 		testConsole.reset()
 		format = sinon.spy(function(l,m,a){
-			console.info('format before', a)
 			a.splice(0,0,l.name)
-			console.info('format after', a)
 		})
 		log.formats.push(format)
 		try {

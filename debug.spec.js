@@ -31,7 +31,24 @@ describe('debug = require(\'ulog/debug\')(named)', function(){
 			debug(message)
 			expect(testConsole.debug.callCount).to.equal(1)
 			expect(testConsole.debug.getCall(0).args[0]).to.be.a('string')
-			expect(testConsole.debug.getCall(0).args[0].length).to.equal(6)
+			expect(testConsole.debug.getCall(0).args[0].length).to.equal(8)
+		} finally {
+			debug.level = oldLevel
+			testConsole.reset()
+		}
+	})
+
+	it('adds the time elapsed since the previous call to the log call', function(){
+		testConsole.reset()
+		try {
+			debug.level = ulog.DEBUG
+			expect(debug.level).to.equal(debug.DEBUG)
+			expect(testConsole.debug.callCount).to.equal(0)
+			var message = 'Message'
+			debug(message)
+			expect(testConsole.debug.callCount).to.equal(1)
+			expect(testConsole.debug.getCall(0).args[1]).to.be.a('string')
+			expect(testConsole.debug.getCall(0).args[1].length).to.equal(5)
 		} finally {
 			debug.level = oldLevel
 			testConsole.reset()
@@ -47,9 +64,9 @@ describe('debug = require(\'ulog/debug\')(named)', function(){
 			var message = 'Message'
 			debug(message)
 			expect(testConsole.debug.callCount).to.equal(1)
-			expect(testConsole.debug.getCall(0).args[1]).to.be.a('string')
-			expect(testConsole.debug.getCall(0).args[1].length).to.equal(20)
-			expect(testConsole.debug.getCall(0).args[1]).to.equal(debug.name.padEnd(20, ' '))
+			expect(testConsole.debug.getCall(0).args[2]).to.be.a('string')
+			expect(testConsole.debug.getCall(0).args[2].length).to.equal(24)
+			expect(testConsole.debug.getCall(0).args[2]).to.equal(debug.name.padEnd(24, ' '))
 		} finally {
 			debug.level = oldLevel
 			testConsole.reset()
