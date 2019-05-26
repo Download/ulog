@@ -14,7 +14,7 @@ for (i=0; m=args && args[i] && args[i].split('='); i++) {
 	m[0] == 'debug' ? dbg = m[1] : 0
 }
 
-log.con = function(){return window.console}
+log.con = function(){return window.console || self.console}
 dbg && log.enable(dbg)
 log()
 log.level = lvl || log.WARN
