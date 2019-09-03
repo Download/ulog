@@ -54,7 +54,7 @@ function extend(o,p,l) {
 				if (lvl >= 0 && lvl <= 6) l = lvl
 			}
 			patch(o)
-			if (!p) {for (mod in mods) {patch(mods[mod])}}
+			if (!p) {for (var mod in mods) {patch(mods[mod])}}
 		}
 	})
 	patch(o)
