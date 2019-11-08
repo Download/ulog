@@ -1,10 +1,10 @@
 var log = require('./ulog')
 
 var qs
-if (!location) {
-	qs = '';
-} else {
-	qs = location.search.substring(1)
+try {
+  qs = location.search.substring(1)
+} catch(e) {
+  qs = '';
 }
 
 var args = qs && qs.split('&'),
