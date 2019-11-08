@@ -78,9 +78,15 @@ function nop(){}
 module.exports = log
 
 
-var qs = location.search.substring(1),
-		args = qs && qs.split('&'),
-		lvl, dbg, i, m
+var qs
+if (!location) {
+	qs = '';
+} else {
+	qs = location.search.substring(1)
+}
+
+var args = qs && qs.split('&'),
+lvl, dbg, i, m
 
 try {
 	lvl = localStorage.getItem('log')
