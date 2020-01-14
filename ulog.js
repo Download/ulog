@@ -35,9 +35,8 @@ var LVL = {ERROR:1, WARN:2, INFO:3, LOG:4, DEBUG:5, TRACE:6},
 		names = {error:1, warn:2, info:3, log:4, verbose:4, debug:5, trace:6, silly:6, dir:0, table:0, time:0, timeEnd:0, assert:0},
 		mods = {}, dbgMods = [], skipMods = []
 
-function create(n,r) {
-	eval("r = {'" + n + "': function() {var a = [].slice.call(arguments), m = a.length > 1 && names[a[0]] ? a.shift() : 'debug'; for (var i=0; i<log.formats.length; i++) log.formats[i](mods[n],m,a); return mods[n][m].apply(mods[n], a)}}[n]")
-	return r.name ? r : Object.defineProperty(r, 'name', {get:function(){return n}})
+function create(n) {
+        return new Function("return function " + n + "() {var a = [].slice.call(arguments), m = a.length > 1 && names[a[0]] ? a.shift() : 'debug'; for (var i=0; i<log.formats.length; i++) log.formats[i](mods[n],m,a); return mods[n][m].apply(mods[n], a);}")()
 }
 		
 function extend(o,p,l) {
