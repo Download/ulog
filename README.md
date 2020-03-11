@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.6</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.7</sup></sub>
 ### Microscopically small universal logging library
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -65,8 +65,8 @@ You should also be able to use e.g. Yarn etc.
 If you want the file for the browser to include in your project yourself,
 you can download it from here.
 
-* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/2.0.0-beta.6/ulog.umd.js) (~3kB, source)
-* [ulog.min.js](https://cdn.rawgit.com/download/ulog/2.0.0-beta.6/ulog.min.js) (~2kB, minified)
+* [ulog.umd.js](https://cdn.rawgit.com/download/ulog/2.0.0-beta.7/ulog.umd.js) (~3kB, source)
+* [ulog.min.js](https://cdn.rawgit.com/download/ulog/2.0.0-beta.7/ulog.min.js) (~2kB, minified)
 
 
 ## Include in your app
@@ -94,7 +94,7 @@ const log = ulog('my-module')
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://cdn.rawgit.com/download/ulog/2.0.0-beta.6/ulog.min.js"></script>
+<script src="https://cdn.rawgit.com/download/ulog/2.0.0-beta.7/ulog.min.js"></script>
 <script src="myscript.js"></script>
 ```
 *myscript.js*

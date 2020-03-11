@@ -29,21 +29,31 @@ log.enabled = function(s) {
 		if (dbgMods[i].test(s)) {return true}
 }
 
+log.invoke = function(name,args) {
+	var method = args.length > 1 && names[args[0]] ? args.shift() : 'debug'
+	for (var i=0; i<log.formats.length; i++) {
+		log.formats[i](mods[name],method,args)
+	}
+	mods[name][method].apply(mods[name], args)
+}
+
 log.disable = log.enable.bind(log, '')
 
 var LVL = {ERROR:1, WARN:2, INFO:3, LOG:4, DEBUG:5, TRACE:6},
 		names = {error:1, warn:2, info:3, log:4, verbose:4, debug:5, trace:6, silly:6, dir:0, table:0, time:0, timeEnd:0, assert:0},
 		mods = {}, dbgMods = [], skipMods = []
 
+
 function create(n,r) {
-	eval("r = {'" + n + "': function() {var a = [].slice.call(arguments), m = a.length > 1 && names[a[0]] ? a.shift() : 'debug'; for (var i=0; i<log.formats.length; i++) log.formats[i](mods[n],m,a); return mods[n][m].apply(mods[n], a)}}[n]")
-	return r.name ? r : Object.defineProperty(r, 'name', {get:function(){return n}})
+	r = (new Function('n', 'log', "return {'" + n + "':function(){log.invoke(n,[].slice.call(arguments))}}[n]"))(n, log)
+  try {Object.defineProperty(r, 'name', {get:function(){return n}})} catch(e) {}
+  return r	
 }
 		
 function extend(o,p,l) {
 	if (o.log) return
 	o.NONE = 0
-	o.ulog = {version:'2.0.0-beta.6'}
+	o.ulog = {version:'2.0.0-beta.7'}
 	for (var key in LVL) {o[key] = LVL[key]}
 	Object.defineProperty(o, 'level', {
 		get: function(){return l !== undefined ? l : p && p.level},
