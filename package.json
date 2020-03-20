@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.7",
   "description": "Microscopically small universal logging library",
   "main": "node.js",
+  "typings": "ulog.d.ts",
   "unpkg": "ulog.min.js",
   "browser": "browser.js",
   "scripts": {
