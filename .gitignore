@@ -1,2 +1,5 @@
-node_modules
-npm-debug.log*
+/dist
+/node_modules
+/ulog.min.js
+/.nyc_output
+/test.min.js

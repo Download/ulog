@@ -1,20 +1,15 @@
-﻿var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var dir = path.resolve(__dirname)
 
 module.exports = {
-	// The base directory (absolute path!) for resolving the entry option.
-	// If output.pathinfo is set, the included pathinfo is shortened to this directory.
-	context: path.resolve('.'),
-
-	module: {
-		noParse: /\.min\.js/,
-	},
-
-	devtool: 'inline-source-map',
-
-	devServer: {
-		stats: {
-			chunks: false,
-		}
-	}
-};
+  node: false,
+  context: dir,
+  entry: {
+    ulog: './main.bundle.js',
+    full: './full.bundle.js',
+  },
+  output: {
+    path: dir,
+    filename: '[name].min.js',
+  },
+}
