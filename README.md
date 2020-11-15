@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.8</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.9</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,14 +8,14 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.8/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.9/ulog.png)
 
 
 ## The logger for applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.8/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.9/screenshot.jpg)
 
 
 ## Install
@@ -85,7 +85,7 @@ In our library code:
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.8"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.9"></script>
 <!-- includes `anylogger` and publishes to `window.anylogger` and `window.ulog`. -->
 <script src="myscript.js"></script>
 ```
@@ -98,7 +98,7 @@ If you want, you can import `ulog` with a script tag:
 Or, if you want the full version:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.8/full.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.9/full.min.js"></script>
 ```
 
 
@@ -106,8 +106,8 @@ Or, if you want the full version:
 
 If you want the file for the browser to include in your project yourself, you can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.8) (~2.8kB minified and gzipped)
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.8/full.min.js) (~3.5kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.9) (~2.8kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.9/full.min.js) (~3.5kB minified and gzipped)
 
 
 ## Why `ulog`
@@ -460,7 +460,10 @@ You can easily add your own custom format to the list above. To do so, just `ulo
 *index.js*
 ```js
 import ulog from 'ulog'
+import formats from 'ulog/mods/formats'
+
 ulog.use({
+  use: [ formats ],
   formats: {
     cool: function(logger) {
       // will be called on logger creation/extension
@@ -468,8 +471,8 @@ ulog.use({
       // use bind so we leave the call stack intact.
       // only works for static info like our 'Cool!' message
       for (var level in this.levels) logger[level] = logger[level].bind(logger, 'Cool!')
-      // don't forget to format the drain as well!
-      logger.drain = logger.drain.bind(logger, 'Cool!')
+      // don't forget to format the method to discard to the drain as well!
+      logger.discard = logger.discard.bind(logger, 'Cool!')
     }
   }
 })

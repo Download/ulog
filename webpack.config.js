@@ -5,7 +5,7 @@ module.exports = {
   node: false,
   context: dir,
   entry: {
-    ulog: './main.bundle.js',
+    ulog: './ulog.bundle.js',
     full: './full.bundle.js',
   },
   output: {
