@@ -2,8 +2,83 @@
 <html>
   <head>
     <title>ulog</title>
+    <style>
+      output {font-family: 'Consolas', monospace}
+      output.error {color: red}
+      output.success {color: green}
+      .alert {padding: 1.5em; background: #ffe9e2;}
+    </style>
     <script src="full.min.js"></script>
     <script>
+      var log = anylogger('ulog:tutorial')
+      log.warn('test')
+      log.info('test')
+      log.log('test')
+
+      var tutorial = window.tutorial = {
+        step: 0,
+        steps: [
+          {
+            title: 'Named loggers',
+            explanation: 'In ulog all loggers have a name. To create a new logger, call the factory function, passing the logger name as an argument. It\'s recommended to use anylogger to create and use loggers, so your code will remain independent of ulog and will be compatible with any logging library out there.',
+            assignment: 'Creating loggers',
+            challenge: 'Create a logger named \'test\'',
+            check: function(){return anylogger().test},
+            hint: 'anylogger(\'test\')',
+            completed: 'Great! You created a new logger. Now let\'s use it.'
+          },
+          {
+            title: 'Configuration',
+            explanation: '',
+            assignment: 'Creating loggers',
+            challenge: 'Create a logger named \'test\'',
+            check: function(){return anylogger().test},
+            hint: 'anylogger(\'test\')',
+            completed: 'Great! You created a new logger. Now let\'s use it.'
+          },
+        ]
+      }
+
+      function check() {
+        var step = tutorial.steps[tutorial.step]
+        if (step) {
+          var input = document.querySelector('.tutorial textarea').value
+          log('Got input', input)
+          log('Evaluating...')
+          var result
+          var output = document.querySelector('.tutorial output')
+          output.classList.remove('error')
+          output.classList.remove('success')
+          try {
+            input && eval('result = ' + input)
+            output.textContent = result
+            log('Checking whether tutorial step ' + (tutorial.step + 1) + ': ' + step.title + ' is completed...')
+            var completed = step.check(result)
+            update(completed)
+            if (completed) {
+              output.classList.add('success')
+              log('Completed tutorial step ' + (tutorial.step + 1) + ': ' + step.title + ' succesfully!')
+            }
+          } catch(e) {
+            output.classList.add('error')
+            output.textContent = e.message
+          }
+        }
+      }
+
+      function update(completed){
+        log('update')
+        var step = tutorial.steps[tutorial.step]
+        if (step) {
+          for (var n in step) {
+            if ((typeof step[n] == 'string') && ((n != 'completed') || completed)) {
+              var node = document.querySelector('.tutorial .' + n)
+              node && (node.textContent = step[n])
+            }
+          }
+        }
+      }
+
       function test(){
         var log
         for (var name in anylogger()) {
@@ -20,15 +95,15 @@
 
       function create() {
         anylogger(document.querySelector('#loggerName').value)
-        update()
+        updateList()
       }
 
       function remove(name) {
         delete anylogger()[name]
-        update()
+        updateList()
       }
 
-      function update(){
+      function updateList(){
         var list = document.querySelector('#loggers')
         while (list.firstChild) {
           list.removeChild(list.firstChild)
@@ -49,6 +124,36 @@
     </style>
   </head>
   <body>
+    <blockquote class="alert no-http" style="display:none">
+      Service worker support requires files to be served over HTTP.
+      Run <tt>npm run serve</tt> and open <a href="http://localhost:8080"
+      >http://localhost:8080</a> to access this file over HTTP.
+    </blockquote>
+
+    <div class="tutorial">
+      <header>
+        <h2>Tutorial</h2>
+        <h3 class="title">Named loggers</h3>
+      </header>
+      <p class="explanation">Explanation</p>
+      <h3>Test yourself</h3>
+      <p class="challenge">Create a logger named 'test'</p>
+      <div><textarea placeholder="Write code here..."></textarea></div>
+      <button onclick="log('check'); check()">Try it!</button>
+      <div class="result">
+        <output></output>
+        <p>Need some help? <button>Give me a hint</button></p>
+      </div>
+      <p class="hint"><tt>anylogger(\'test\')</tt></p>
+      <p class="completed"></p>
+    </div>
+
+    <button onclick="log('clicked', update); update()">UPDATE</button>
+
+    <blockquote class="alert no-workers" style="display:none">
+      This browser does not seem to support service workers.
+    </blockquote>
+
     <h1>ulog</h1>
     <h2>Press button, open console</h2>
     <p>Press the button, then open the developer tools (F12) and check the console for messages.</p>
@@ -211,6 +316,24 @@
       </pre></code>
     </details>
 
+    <details>
+      <summary>
+        <b>Service workers</b>
+      </summary>
+      <blockquote class="alert no-http" style="display:none">
+        Service worker support requires files to be served over HTTP.
+        Run <tt>npm run serve</tt> and open <a href="http://localhost:8080"
+        >http://localhost:8080</a> to access this file over HTTP.
+      </blockquote>
+      <p>Ulog works from within service workers too. Not only that, but it also
+        sets up a mechanism where any configuration changes are broadcasted to
+        the service workers so the loggers there use the same configuration as
+        the main window.</p>
+      <p>Press the button to try it out!</p>
+      <button onclick="navigator.serviceWorker.getRegistrations().then(function(registrations){registrations.forEach(function(reg){reg.active && reg.active.postMessage({ cmd: 'ulog:log', level:'all', message:'Hello from worker' })})})">TEST WORKERS</button>
+    </details>
+
+
     <h2>Configuration</h2>
     <p>In browsers, ulog accepts configuration from the querystring and from localStorage.
       These correspond to the program arguments, environment variables and config file on Node JS.
@@ -218,5 +341,33 @@
       You can use simple but powerful expressions in your configuration. These expressions are
       an extension on the configuration mechanism of <a href="https://npmjs.com/package/debug"><tt>debug</tt></a>.
     </p>
+
+
+    <script>
+      var log = anylogger('ulog:test:workers')
+      if (! ('serviceWorker' in navigator)) {
+        document.querySelector('.no-workers').style.display = 'block'
+      } else {
+        if (location.href.indexOf('http') !== 0) {
+          document.querySelector('.no-http').style.display = 'block'
+        } else {
+          navigator.serviceWorker.register('/worker-test.js', { scope: '/' })
+          .then(function(reg) {
+            if(reg.installing) {
+              log('Service worker installing...')
+            } else if(reg.waiting) {
+              log('Service worker installed.')
+            } else if(reg.active) {
+              log('Service worker active')
+            }
+          }).catch(function(error) {
+            // registration failed
+            log.error('Registration failed.', error)
+          })
+
+        }
+      }
+    </script>
+
   </body>
 </html>

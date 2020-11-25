@@ -31,27 +31,29 @@
     "webpack.config.js"
   ],
   "scripts": {
-    "build": "webpack --mode production --display-modules && node ./build.js",
-    "clean": "rimraf ulog.min.js test.min.js",
+    "build": "npm run test -S && webpack --mode production && node ./build.js",
+    "clean": "rimraf ulog.min.js full.min.js",
     "test": "nyc tape test.js 2>&1 | tap-nirvana",
-    "prepare": "npm run test -S && npm run clean -S && npm run build -S"
+    "serve": "http-server",
+    "prepare": "npm run clean -S && npm run build -S"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "anylogger": "^1.0.5",
+    "anylogger": "^1.0.7",
     "kurly": "^1.0.0"
   },
   "devDependencies": {
-    "gzip-size": "^5.1.1",
+    "gzip-size": "^6.0.0",
+    "http-server": "^0.12.3",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "sinon": "^9.2.1",
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.0.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0"
   },
   "peerDependencies": {
     "anylogger": "^1.0.5"

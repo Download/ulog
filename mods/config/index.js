@@ -20,14 +20,6 @@ module.exports = {
       var settings = grab(ulog, 'settings', {})
       name = settings[name] && settings[name].config || name
     }
-    result || ulog.config[name] || args[name] || env[name]
-
-    // var settings = this.grab('settings')
-    // name = settings[name] && settings[name].config || name
     return result || ulog.config[name] || args[name] || env[name]
   },
-
-  set: function(name) {
-    if (name === 'log_config') this.config = read(this)
-  }
 }

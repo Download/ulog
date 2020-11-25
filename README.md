@@ -86,7 +86,7 @@ If you want, you can import `ulog` with a script tag:
 
 ```html
 <script src="https://unpkg.com/ulog@2.0.0-beta.9"></script>
-<!-- includes `anylogger` and publishes to `window.anylogger` and `window.ulog`. -->
+<!-- includes `anylogger` and publishes to `self.anylogger` and `self.ulog`. -->
 <script src="myscript.js"></script>
 ```
 *myscript.js*
@@ -136,7 +136,7 @@ What I want is a logging library that combines the best aspects of both these lo
 * Decoupled from client code
 * Compact
 
-`ulog` is my attempt at building this library. It's base API is compatible with that of `debug` and `loglevel` and with the console, making it a drop-in replacement for all of these in many cases. It does not support 'anonymous' logging, so no hunting down where a log message came from and no log messages that cannot be suppressed. And it has a configuration mechanism that is compatible with that of `debug`, but that is more powerful and is monitored for changes at runtime. It accepts configuration from the querystring allowing you to craft URLs with log config embedded in it. And even though it uses a simple formatter by default, I found a way to do this without mangling the call stack, so the filename/line number entries in the browser console remain unharmed. You can specify where the log output should go and where it should drain. It's completely modular, so you can not only easily add features through 'mods', but you can actually even drop features you don't need by not loading the mods those features are in. It has native `anylogger` support, decoupling the client code from the logger. And even with `anylogger` included, it still weighs just 2.8kB. Substantially smaller than `debug`, but offering way more features.
+`ulog` is my attempt at building this library. It's base API is compatible with that of `debug` and `loglevel` and with the console, making it a drop-in replacement for all of these in many cases. It does not support 'anonymous' logging, so no hunting down where a log message came from and no log messages that cannot be suppressed. And it has a configuration mechanism that is compatible with that of `debug`, but that is more powerful and is monitored for changes at runtime. It accepts configuration from the querystring allowing you to craft URLs with log config embedded in it. And even though it uses a simple formatter by default, I found a way to do this without mangling the call stack, so the filename/line number entries in the browser console remain unharmed. You can specify where the log output should go and where it should drain. It's completely modular, so you can not only easily add features through 'mods', but you can actually even drop features you don't need by not loading the mods those features are in. It has native `anylogger` support, decoupling the client code from the logger. And even with `anylogger` included, it still weighs just 2.8kB. Smaller than `debug`, but offering way more features.
 
 
 ## API
