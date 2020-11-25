@@ -8,7 +8,7 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.9/ulog.png)
+![logo](https://raw.githubusercontent.com/Download/ulog/beta10/ulog.png)
 
 
 ## The logger for applications
