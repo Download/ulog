@@ -67,7 +67,7 @@ var options = module.exports = {
   parse: function(value, name) {
     var d = (name == 'debug') && name
     var settings = []
-    var items = (value||'').trim().split(/(?<!\\);/).map(function(x){return x.replace('\\;', ';')})
+    var items = (value||'').trim().split(';').map(function(x){return x.replace('\\;', ';')})
     // parse `ulog` style settings, include support for `debug` style
     var implied = []
     for (var i=0,item,idx; item=items[i]; i++) {

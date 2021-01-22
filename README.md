@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.10</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.11</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,14 +8,14 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.10/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.11/ulog.png)
 
 
 ## The logger for applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.10/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.11/screenshot.jpg)
 
 
 ## Install
@@ -85,7 +85,7 @@ In our library code:
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.10"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.11"></script>
 <!-- includes `anylogger` and publishes to `window.anylogger` and `window.ulog`. -->
 <script src="myscript.js"></script>
 ```
@@ -98,7 +98,7 @@ If you want, you can import `ulog` with a script tag:
 Or, if you want the full version:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.10/full.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.11/full.min.js"></script>
 ```
 
 
@@ -106,8 +106,8 @@ Or, if you want the full version:
 
 If you want the file for the browser to include in your project yourself, you can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.10) (~2.8kB minified and gzipped)
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.10/full.min.js) (~3.5kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.11) (~2.6kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.11/full.min.js) (~3.4kB minified and gzipped)
 
 
 ## Why `ulog`

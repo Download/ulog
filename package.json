@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.10",
+  "version": "2.0.0-beta.11",
   "description": "The universal logger",
   "main": "./ulog.js",
   "browser": {
@@ -31,7 +31,7 @@
     "webpack.config.js"
   ],
   "scripts": {
-    "build": "webpack --mode production --display-modules && node ./build.js",
+    "build": "webpack --mode production && node ./build.js",
     "clean": "rimraf ulog.min.js test.min.js",
     "test": "nyc tape test.js 2>&1 | tap-nirvana",
     "prepare": "npm run test -S && npm run clean -S && npm run build -S"
@@ -40,18 +40,18 @@
   "license": "MIT",
   "dependencies": {
     "anylogger": "^1.0.9",
-    "kurly": "^1.0.0"
+    "kurly": "^1.0.1"
   },
   "devDependencies": {
     "gzip-size": "^5.1.1",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "sinon": "^9.2.1",
+    "sinon": "^9.2.3",
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
-    "tape": "^5.0.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "tape": "^5.1.1",
+    "webpack": "^5.16.0",
+    "webpack-cli": "^4.4.0"
   },
   "peerDependencies": {
     "anylogger": "^1.0.9"
