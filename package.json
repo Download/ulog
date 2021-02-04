@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.14",
+  "version": "2.0.0-beta.15",
   "description": "The universal logger",
   "main": "./ulog.js",
   "unpkg": "ulog.min.js",
@@ -22,6 +22,7 @@
     "ulog.lazy.min.js",
     "ulog.min.js",
     "screenshot.jpg",
+    "screenshot-beta.11.jpg",
     "ulog.png",
     "webpack.config.js"
   ],
