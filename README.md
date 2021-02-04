@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.12</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.13</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,14 +8,14 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.12/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.13/ulog.png)
 
 
 ## The logger for applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.12/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.13/screenshot.jpg)
 
 
 ## Features
@@ -107,7 +107,7 @@ log('Logging is easy')
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.12/ulog.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.13/ulog.min.js"></script>
 <!-- publishes to `self.anylogger` and `self.ulog`. -->
 <!-- lazy loads ulog.lazy.min.js on demand. -->
 <script src="myscript.js"></script>
@@ -122,12 +122,12 @@ log('Logging is easy!')
 
 If you want the file for the browser to include in your project yourself, you can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.12/ulog.min.js) (~2.8kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.12/ulog.lazy.min.js) (~4.3kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.13/ulog.min.js) (~2.8kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.13/ulog.lazy.min.js) (~4.3kB minified and gzipped)
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.12/full.min.js) (~5.7kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.13/full.min.js) (~5.7kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
