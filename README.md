@@ -399,12 +399,13 @@ Formats come in two flavors:
 
 **dynamic**
 
-Dynamic formatters have full access to the message. But they do mess up the call stack. A dynamic formatter has this signature:
+Dynamic formats have full access to the message. But they do mess up the call stack. A dynamic format has this signature:
 
 ```js
 ulog.use({
-  formatters: {
-    dynamicFormatter: function(ctx) {
+  use: [ require('ulog/mods/formats') ],
+  format: {
+    dynamicFormat: function(ctx) {
       // one-time init here
       return function(rec) {
         // rec.message contains full message
@@ -417,14 +418,15 @@ ulog.use({
 
 **static**
 
-Static formatters do not have access to the message. But they do not break the call stack! So prefer static formatters if possible.
+Static formats do not have access to the message. But they do not break the call stack! So prefer static formats if possible.
 
-Static formatters have this signature:
+Static formats have this signature:
 
 ```js
 ulog.use({
-  formatters: {
-    staticFormatter: function(ctx, rec) {
+  use: [ require('ulog/mods/formats') ],
+  format: {
+    staticFormat: function(ctx, rec) {
       // one-time init here
       return function(){
         // rec.message is undefined
@@ -488,9 +490,7 @@ You can easily add your own custom format to the list above. To do so, just `ulo
 ```js
 var ulog = require('ulog')
 ulog.use({
-  use: [
-    require('ulog/mods/formats')
-  ],
+  use: [ require('ulog/mods/formats') ],
   formats: {
     cool: function(ctx) {
       return function(rec) {
@@ -624,11 +624,11 @@ log_output=my:*,-my:lib=console
 
 ### Config option `log_drain`
 
-Specify the name of the output logs should be drained to. Defaults to `drain`.
-When log messages are filtered out, they are sent to the drain instead of to the normal output. The default `drain` output is just a noop, but you could override this to send them to a separate file for example.
+Specify the name of the output logs should be drained to. Defaults to `noop`.
+When log messages are filtered out, they are sent to the drain instead of to the normal output. The default `noop` output is just a noop, but you could override this to send them to a separate file for example.
 
 ```sh
-log_drain=my:*,-my:lib=console
+log_drain=my:*,-my:lib=noop
 ```
 
 ### Config option `log_format`
@@ -636,9 +636,9 @@ log_drain=my:*,-my:lib=console
 Specify the format to use. Defaults to `lvl name message perf` on Node JS and `lvl name perf` on browsers.
 
 ```sh
-log_format=lvl name perf message;some-lib=none;my:*=lvl name perf
+log_format=lvl name perf message;my:*=lvl name perf
 ```
-This sets `lvl name perf message` as the default format, while assigning `none` to `some-lib` and a different format string to all loggers starting with `my:`.
+This sets `lvl name perf message` as the default format, while assigning a different format string to all loggers starting with `my:`.
 
 For more details, refer to the [section on formatting](#formatting)
 
