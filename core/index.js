@@ -1,9 +1,7 @@
 var ulog = require('anylogger')
 var grab = require('./grab')
 
-// ulog.levels.none = 0
-// ulog.levels.all = 9007199254740991 // Number.MAX_SAFE_INTEGER
-// var ext = ulog.ext // save for later
+var ext = ulog.ext
 
 /**
  * `ulog.ext(logger) => logger`
@@ -19,9 +17,12 @@ var grab = require('./grab')
  */
 ulog.ext = function(logger) {
 	if (logger) {
-//		ext(logger) // create default methods
+		ext(logger)
 		grab(ulog, 'ext', []).map(function(ext){
-			ext.call(ulog, logger) // call hook on registered mods
+			ext.call(ulog, logger)
+		})
+		grab(ulog, 'after', []).map(function(ext){
+			ext.call(ulog, logger)
 		})
 		return logger
 	} else {
@@ -69,7 +70,7 @@ ulog.use = function(mod) {
 	if (Array.isArray(mod)) {
 		return mod.reduce(function(r,mod){return r + ulog.use(mod)}, 0)
 	}
-	// handle mod being a single mod
+	// // handle mod being a single mod
 	var result = ulog.mods.indexOf(mod) === -1 ? 1 : 0
 	if (result) {
 		if (mod.use) {

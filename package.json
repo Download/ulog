@@ -1,34 +1,50 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.11",
+  "version": "2.0.0-beta.12",
   "description": "The universal logger",
   "main": "./ulog.js",
+  "unpkg": "ulog.min.js",
+  "author": "Stijn de Witt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/download/ulog.git"
+  },
+  "files": [
+    "core",
+    "mods",
+    "base.js",
+    "build.js",
+    "full.bundle.js",
+    "full.min.js",
+    "ulog.bundle.js",
+    "ulog.js",
+    "ulog.lazy.min.js",
+    "ulog.min.js",
+    "screenshot.jpg",
+    "ulog.png",
+    "webpack.config.js"
+  ],
   "browser": {
+    "./mods/align/utils.js": "./mods/align/utils.browser.js",
+    "./mods/colors/utils.js": "./mods/colors/utils.browser.js",
     "./mods/config/args.js": "./mods/config/args.browser.js",
     "./mods/config/env.js": "./mods/config/env.browser.js",
     "./mods/config/read.js": "./mods/config/read.browser.js",
     "./mods/config/watch.js": "./mods/config/watch.browser.js",
     "./mods/levels/default.js": "./mods/levels/default.browser.js",
-    "./mods/formats/simple.js": "./mods/formats/simple.browser.js"
+    "./mods/formats/aligned.js": "./mods/formats/aligned.browser.js",
+    "./mods/formats/default.js": "./mods/formats/default.browser.js",
+    "./mods/formats/utils.js": "./mods/formats/utils.browser.js"
   },
-  "unpkg": "ulog.min.js",
-  "files": [
-    "core",
-    "mods",
-    "build.js",
-    "example.js",
-    "full.js",
-    "full.bundle.js",
-    "full.min.js",
-    "LICENSE",
-    "ulog.js",
-    "ulog.bundle.js",
-    "ulog.min.js",
-    "screenshot.jpg",
-    "test.js",
-    "tutorial.html",
-    "ulog.png",
-    "webpack.config.js"
+  "keywords": [
+    "log",
+    "logging",
+    "console",
+    "debug",
+    "loglevel",
+    "anylogger",
+    "ulog"
   ],
   "scripts": {
     "build": "webpack --mode production && node ./build.js",
@@ -36,24 +52,22 @@
     "test": "nyc tape test.js 2>&1 | tap-nirvana",
     "prepare": "npm run test -S && npm run clean -S && npm run build -S"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
-    "anylogger": "^1.0.9",
-    "kurly": "^1.0.1"
+    "anylogger": "^1.0.10",
+    "kurly": "^2.0.0-beta.2"
   },
   "devDependencies": {
-    "gzip-size": "^5.1.1",
+    "gzip-size": "^6.0.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "sinon": "^9.2.3",
+    "sinon": "^9.2.4",
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.1.1",
-    "webpack": "^5.16.0",
-    "webpack-cli": "^4.4.0"
+    "webpack": "^5.20.1",
+    "webpack-cli": "^4.5.0"
   },
   "peerDependencies": {
-    "anylogger": "^1.0.9"
+    "anylogger": "^1.0.10"
   }
 }

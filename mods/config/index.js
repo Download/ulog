@@ -1,7 +1,9 @@
 var grab = require('../../core/grab')
-var args = require('./args')
-var env = require('./env')
+// var args = require('./args')
+// var env = require('./env')
 var read = require('./read')
+var update = require('./update')
+var notify = require('./notify')
 var watch = require('./watch')
 
 module.exports = {
@@ -9,22 +11,31 @@ module.exports = {
     require('../settings'),
   ],
 
+  settings: {
+    config: {
+      config: 'log_config'
+    }
+  },
+
+  ext: function(logger){
+    this.get('config')
+  },
+
   get: function(result, name) {
     var ulog = this
     if (!ulog.config) {
       ulog.config = {};
-      ulog.config = read(ulog)
+      var newCfg = read(ulog)
+      var changed = update(ulog.config, newCfg)
+      if (changed.length) notify(ulog, changed)
       watch(ulog)
     }
     if (!result) {
       var settings = grab(ulog, 'settings', {})
       name = settings[name] && settings[name].config || name
+      result = ulog.config[name]
     }
-    result || ulog.config[name] || args[name] || env[name]
-
-    // var settings = this.grab('settings')
-    // name = settings[name] && settings[name].config || name
-    return result || ulog.config[name] || args[name] || env[name]
+    return result
   },
 
   set: function(name) {

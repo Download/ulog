@@ -29,6 +29,17 @@ var props = module.exports = {
     }
   },
 
+
+  // contribute props to log records
+  record: function(logger, rec) {
+    var settings = grab(this, 'settings', {})
+    for (var name in settings) {
+      if (settings[name].prop) {
+        rec['log_' + name] = this.get(name, logger.name)
+      }
+    }
+  },
+
   /**
    * `new(logger, name, prop)`
    *

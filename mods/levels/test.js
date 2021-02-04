@@ -15,7 +15,7 @@ test('mod: levels', function (t) {
   t.equal(typeof levels.ext, 'function', 'has a method `ext()')
 
   t.test('levels.use', function(t){
-    t.deepEqual(levels.use, [ props, outputs ], 'contains dependencies on `props` and `outputs`')
+//    t.deepEqual(levels.use, [ outputs ], 'contains a dependency on `outputs`')
     t.end()
   })
 
@@ -38,9 +38,9 @@ test('mod: levels', function (t) {
       var prop = lvl.toUpperCase()
       t.equal(logger[prop], ulog.levels[lvl], 'creates a property `' + prop + '`')
     }
-    t.equal(logger.ALL, Number.MAX_SAFE_INTEGER, 'creates a property `ALL`')
-    t.equal(logger.log, logger.discard, 'log methods that are outside the logger\'s level lead to the drain')
-    t.notEqual(logger.error, logger.noop, 'log methods that are within the logger\'s level do not lead to the drain')
+    t.equal(logger.ALL, 7, 'creates a property `ALL`')
+    t.equal(logger.error, logger.channels.output.fns.error, 'log methods that are within the logger\'s level lead to output')
+    t.equal(logger.log, logger.channels.drain.fns.log, 'log methods that are outside the logger\'s level lead to the drain')
 
     ulog.mods.splice(0, ulog.mods.length)
     delete ulog().test

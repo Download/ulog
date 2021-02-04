@@ -1,5 +1,7 @@
-var pad = require('../formats/pad')
+var formatter = require('./formatter')
 
-module.exports = function(rec) {
-  return pad(rec.name, 19)
+module.exports = function(ctx, rec) {
+  return formatter(ctx, rec, { color: 'logger', padding: 16 }, function(){
+    return rec.logger.name
+  })
 }

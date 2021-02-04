@@ -1,4 +1,4 @@
-var grab = require("../../core/grab")
+var grab = require('../../core/grab')
 
 module.exports = {
   extend: {

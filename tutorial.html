@@ -2,20 +2,35 @@
 <html>
   <head>
     <title>ulog</title>
-    <script src="full.min.js"></script>
+    <script src="ulog.min.js"></script>
     <script>
       function test(){
-        var log
-        for (var name in anylogger()) {
-          log = anylogger(name)
-          log.trace('This is a TRACE message')
-          log.debug('This is a DEBUG message')
-          log.log('This is a LOG message')
-          log.info('This is an INFO message')
-          log.warn('This is a WARN message')
-          log.error('This is an ERROR message')
-        }
-        setTimeout(function(){log.info('Delayed INFO message')}, 50)
+        ulog('my-app').debug('Starting...')
+        ulog('my-lib').debug('Initialized')
+        ulog('module').debug('Initialized')
+        ulog('other').debug('Initialized')
+        ulog('db').debug('Initialized')
+        ulog('http').debug('Accepting connections on port 8080')
+        ulog('my-app').info('My app started')
+        ulog('http').debug('GET /easy')
+        ulog('my-app').debug('Logging is easy!')
+        ulog('http').debug('GET /levels')
+        ulog('ulog').info('Ulog supports levels')
+        ulog('ulog').trace('trace')
+        ulog('ulog').debug('debug')
+        ulog('ulog').log('log')
+        ulog('ulog').info('info')
+        ulog('ulog').warn('warn')
+        ulog('ulog').error('error')
+        ulog('http').debug('GET /colors')
+        ulog('ulog').info('Ulog supports colors')
+        ulog('http').debug('GET /formatting')
+        ulog('ulog').info('Ulog supports formatting')
+        ulog('http').debug('GET /callstack')
+        ulog('ulog').info('Ulog preserves the call stack')
+        setTimeout(function(){
+          ulog('ulog').debug('A delayed message')
+        }, 1256)
       }
 
       function create() {
@@ -35,7 +50,7 @@
         }
         for (var name in anylogger()) {
           var item = document.createElement('li')
-          item.innerHTML = `<tt>${name}</tt> <button onclick="remove('${name}')" title="remove">x</button>`
+          item.innerHTML = '<tt>' + name + '</tt> <button onclick="remove(\'' + name + '\')" title="remove">x</button>'
           list.appendChild(item)
         }
       }

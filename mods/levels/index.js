@@ -1,7 +1,7 @@
 module.exports = {
   use: [
     require('../props'),
-    require('../outputs'),
+    require('../channels'),
   ],
 
   settings: {
@@ -26,22 +26,17 @@ module.exports = {
           return Math.max(ulog.get('debug', this.name) && this.DEBUG || this.NONE, v)
         },
       },
-    }
+    },
   },
 
   ext: function(logger) {
     logger.NONE = 0
-    logger.ALL = 9007199254740991 // Number.MAX_SAFE_INTEGER
-    logger.levels = ['none']
-    for (var name in this.levels) {
-      logger[name.toUpperCase()] = this.levels[name]
-      logger.levels[this.levels[name]] = name
+    logger.ALL = 7
+    for (var level in this.levels) {
+      logger[level.toUpperCase()] = this.levels[level]
     }
-    logger.enabledFor = function(name){
-      return logger.level >= logger[name.toUpperCase()]
-    }
-    for (var name in this.levels) {
-      if (!logger.enabledFor(name)) logger[name] = logger.discard
+    logger.enabledFor = function(level){
+      return logger.level >= logger[level.toUpperCase()]
     }
   },
 }

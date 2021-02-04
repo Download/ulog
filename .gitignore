@@ -1,6 +1,6 @@
 /dist
 /node_modules
 /ulog.min.js
+/ulog.lazy.min.js
 /.nyc_output
-/test.min.js
 /full.min.js

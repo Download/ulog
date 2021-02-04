@@ -1,13 +1,18 @@
-var grab = require('../../core/grab')
+
+var configure = require('./configure')
+var watched = require('./watched')
 
 module.exports = function(ulog, callback) {
-  var settings = grab(ulog, 'settings', {})
+  var watches = watched(ulog)
+
   var cfg = {}
-  for (var setting in settings) {
+  for (var name in watches) {
     try {
-      var name = settings[setting].config || setting
-      if (name in localStorage) cfg[name] = localStorage.getItem(name)
+      var value = localStorage.getItem(name)
+      if (value) cfg[name] = value
     } catch(ignore){}
   }
+
+  cfg = configure(watches, cfg)
   return callback ? callback(cfg) : cfg
 }

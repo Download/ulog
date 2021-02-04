@@ -1,19 +1,23 @@
 var fs = require('fs')
 var path = require('path')
+
+var grab = require('../../core/grab')
 var parse = require('./parse')
+var watched = require('./watched')
+var configure = require('./configure')
 
 module.exports = function(ulog, callback) {
-  var filename = path.resolve(ulog.get('log_config') || 'log.config')
+  var settings = grab(ulog, 'settings', {})
+  var log_config = ulog.get('log_config') || 'log.config'
+  var filename = path.resolve(log_config)
   if (callback) {
     fs.readFile(filename, 'utf8', function(e, data){
-      if (e) return {}
-      else callback(parse(lines(data)))
+      callback(configure(watched(ulog, settings), data && parse(lines(data))))
     })
   } else {
-    try {
-      var data = fs.readFileSync(filename, 'utf8')
-      return parse(lines(data))
-    } catch(e) {return {}}
+    var data
+    try {data = fs.readFileSync(filename, 'utf8')} catch(e){}
+    return configure(watched(ulog, settings), data && parse(lines(data)))
   }
 }
 

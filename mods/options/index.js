@@ -35,8 +35,7 @@ var options = module.exports = {
    * `ulog.get('level', '') == 'info'`
    */
   get: function(result, name, loggerName) {
-    if (loggerName === undefined) return result
-    return options.eval(options.parse(result, name), loggerName)
+    return (loggerName === undefined) ? result : options.eval(options.parse(result, name), loggerName)
   },
 
   /**

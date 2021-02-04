@@ -1,15 +1,19 @@
 module.exports = function(cfg, newCfg) {
-  var prop, changes = 0
-  for (prop in cfg) {
-    if (! (prop in newCfg)) {
-      delete cfg[prop]
-      changes++
+  var name, changes = []
+  for (name in cfg) {
+    if (! (name in newCfg)) {
+      changes.push({ name: name, old: cfg[name] })
+      delete cfg[name]
     }
   }
-  for (prop in newCfg) {
-    if ((! (prop in cfg)) || (cfg[prop] !== newCfg[prop])) {
-      cfg[prop] = newCfg[prop]
-      changes++
+  for (name in newCfg) {
+    if ((! (name in cfg)) || (cfg[name] !== newCfg[name])) {
+      if (! (name in cfg)) {
+        changes.push({ name: name, new: newCfg[name] })
+      } else {
+        changes.push({ name: name, old: cfg[name], new: newCfg[name] })
+      }
+      cfg[name] = newCfg[name]
     }
   }
   return changes

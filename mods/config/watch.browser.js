@@ -1,5 +1,6 @@
 var read = require('./read')
 var update = require('./update')
+var notify = require('./notify')
 
 module.exports = function(ulog) {
   // storage events unfortunately only fire on events triggered by other windows...
@@ -7,9 +8,12 @@ module.exports = function(ulog) {
   setInterval(function(){
     if (ulog.config) {
       var cfg = read(ulog)
-      if (update(ulog.config, cfg)) {
-        ulog.ext()
-      }
+      setTimeout(function(){
+        var changed = update(ulog.config, cfg)
+        if (changed.length) setTimeout(function(){
+          notify(ulog, changed)
+        }, 0)
+      }, 0)
     }
   }, 350)
 }

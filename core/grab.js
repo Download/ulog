@@ -1,11 +1,11 @@
+var merge = require('./merge')
+
 module.exports = function(ulog, name, result) {
-	ulog.mods.reduce(function(r,item) {
-		if (Array.isArray(r) && (name in item)) {
-			r.push(item[name])
+	ulog.mods.reduce(function(r,mod){
+		if (Array.isArray(r) && (name in mod)) {
+			r.push(mod[name])
 		} else {
-			for (var o in item[name]) {
-				r[o] = item[name][o]
-			}
+			merge(r, mod[name])
 		}
 		return r
 	}, result)
