@@ -5,8 +5,7 @@ var read = require('./read')
 var update = require('./update')
 var notify = require('./notify')
 var watch = require('./watch')
-
-module.exports = {
+var config = module.exports = {
   use: [
     require('../settings'),
   ],
@@ -22,23 +21,26 @@ module.exports = {
   },
 
   get: function(result, name) {
-    var ulog = this
-    if (!ulog.config) {
-      ulog.config = {};
-      var newCfg = read(ulog)
-      var changed = update(ulog.config, newCfg)
-      if (changed.length) notify(ulog, changed)
-      watch(ulog)
+    if (! this.config) {
+      config.update(this)
     }
     if (!result) {
-      var settings = grab(ulog, 'settings', {})
+      var settings = grab(this, 'settings', {})
       name = settings[name] && settings[name].config || name
-      result = ulog.config[name]
+      result = this.config[name]
     }
     return result
   },
 
+  update: function(ulog) {
+    ulog.config = ulog.config || {}
+    var newCfg = read(ulog)
+    var changed = update(ulog.config, newCfg)
+    if (changed.length) notify(ulog, changed)
+    watch(ulog)
+  },
+
   set: function(name) {
-    if (name === 'log_config') this.config = read(this)
+    if (name === 'log_config') config.update(this)
   }
 }
