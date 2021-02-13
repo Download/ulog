@@ -2,11 +2,11 @@
 <html class="solid">
   <head>
     <meta charset=utf8 />
-    <title>debug vs ulog</title>
+    <title>ulog vs debug</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="../style.css">
     <script src="debug-3.4.2.min.js"></script>
-    <script src="../ulog.min.js"></script>
+    <script src="https://unpkg.com/ulog@2.0.0-beta.17/ulog.min.js"></script>
     <!-- load some small script files with logging in them -->
     <!-- to better illustrate if the callstack gets mangled -->
     <script src="debug.js"></script>
@@ -42,15 +42,19 @@
       <h2>Open devtools</h2>
       <p>Open the browser developer tools (F12).</p>
       <h2>Enable logging</h2>
-      <p>No output will be visible until you enable logging, by adding a
-        configuration key to <code>localStorage</code>. To enable logging
-        in both <code>debug</code> and <code>ulog</code>, add this to <code>localStorage</code>:</p>
-      <p><pre><code>debug=*
-  </code></pre></p>
-      <p>To add this to localStorage, you can use the developer tools (for Chrome, tab Application)
-        or in the Console tab, run this command:</p>
-      <p><pre><code>localStorage.setItem('debug', '*')
-  </code></pre></p>
+      <p>No output will be visible until you enable logging. To enable
+        logging in both <code>debug</code> and <code>ulog</code>, set
+        <code>debug=*</code>.</p>
+      <img src="enable-debug.jpg">
+      <p>You can do this using the developer tools GUI (tab Application in
+        Chrome), or in the Console tab run this command:
+        <code>localStorage.setItem('debug', '*')</code>,
+        or you can press the button below:</p>
+      <p><button onclick="localStorage.setItem('debug', '*')">
+        <i>⚙</i>
+        <b>debug=*</b>
+      </button></p>
+      <br>
       <h2>Log some messages</h2>
       Press the buttons to log messages with both loggers:</p>
       <button onclick="logWithDebug()">
@@ -61,19 +65,42 @@
         <i>⚙</i>
         <b>With ulog</b>
       </button>
-      <p>Paragraph text</p>
-      Body text
-      <h6>Heading 6</h6>
-      <p>Paragraph text</p>
-      <h5>Heading 5</h5>
-      <p>Paragraph text</p>
-      <h4>Heading 4</h4>
-      <p>Paragraph text</p>
-      <h3>Heading 3</h3>
-      <p>Paragraph text</p>
-      <h2>Heading 2</h2>
-      <p>Paragraph text</p>
-      <h1>Heading 1</h1>
+      <p>You should get output like this:</p>
+      <img src="ulog-only.jpg">
+      <h2><code>ulog</code> monitors the config</h2>
+      <p>You may notice that <code>debug</code> is not producing any output,
+        whereas <code>ulog</code> is. That's because <code>ulog</code> monitors
+        the configuration at runtime but <code>debug</code> doesn't. So to get
+        <code>debug</code> to pick up our configuration change, reload the
+        page (F5). Then, press both buttons again. This time, we can see
+        <code>debug</code> and <code>ulog</code> output side by side:</p>
+      <img src="callstack.jpg">
+      <p>The output of <code>ulog</code> and <code>debug</code> is very similar.
+        Both loggers add the name of the logger to the message and both loggers
+        show some timing information. Also, both loggers use colors to produce
+        more clear output. But, there are actually more differences here than
+        initially meet the eye.
+      <h2><code>ulog</code> preserves the callstack</h2>
+      <p>One big difference between <code>debug</code> and <code>ulog</code>
+        is marked with arrows in the screenshot. <code>ulog</code> preserves
+        the callstack, meaning file names and line numbers shown in the
+        console point to the client code. This is in big contrast to
+        <code>debug</code>, which injects it's own formatting function in
+        the callstack, meaning all file names and line numbers point to that
+        function in the <code>debug</code> minified source file. Not very
+        convenient!</p>
+      <h2><code>ulog</code> has configurable formatting</h2>
+      <p><code>debug</code> only allows some tweaks to it's formatting.
+        <code>ulog</code> allows you to take full control of formatting.
+        You can change the format for all or some loggers using config
+        option log_format. For example, let's try adding the time to the
+        message. Set <code>log_format=time lvl name perf</code> in the
+        devtools or press the button below:</p>
+      <button onclick="localStorage.setItem('log_format', 'time lvl name perf')">
+        <i>⚙</i>
+        <b>log_format=time lvl name perf</b>
+      </button>
+
     </main>
   </body>
 </html>

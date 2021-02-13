@@ -44,6 +44,22 @@ var v = pkg.version
   fs.writeFileSync(file, data, 'utf8')
   log.info(`README.md (~${(data.length / 1024).toFixed(1)} kB)`)
 
+  file = path.resolve(__dirname, 'tutorial', 'index.html')
+  log(`Reading ${file}`)
+  data = fs.readFileSync(file, 'utf-8')
+  data = data.replace(/ulog@\d(\d)?\.\d(\d)?\.\d(\d)?(-[a-z]+\.\d(\d)?)?/g, `ulog@${v}`)
+  log(`Writing ${file}`)
+  fs.writeFileSync(file, data, 'utf8')
+  log.info(`tutorial/index.html (~${(data.length / 1024).toFixed(1)} kB)`)
+
+  file = path.resolve(__dirname, 'vs', 'debug.html')
+  log(`Reading ${file}`)
+  data = fs.readFileSync(file, 'utf-8')
+  data = data.replace(/ulog@\d(\d)?\.\d(\d)?\.\d(\d)?(-[a-z]+\.\d(\d)?)?/g, `ulog@${v}`)
+  log(`Writing ${file}`)
+  fs.writeFileSync(file, data, 'utf8')
+  log.info(`vs/debug.html (~${(data.length / 1024).toFixed(1)} kB)`)
+
   ulog('a:one').debug('A debug message')
   ulog('a:two').debug('A debug message')
   ulog('a:three').debug('A debug message')
