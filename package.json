@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.15",
+  "version": "2.0.0-beta.16",
   "description": "The universal logger",
   "main": "./ulog.js",
   "unpkg": "ulog.min.js",
@@ -39,17 +39,17 @@
     "./mods/formats/utils.js": "./mods/formats/utils.browser.js"
   },
   "keywords": [
+    "ulog",
     "log",
     "logging",
     "console",
     "debug",
     "loglevel",
-    "anylogger",
-    "ulog"
+    "anylogger"
   ],
   "scripts": {
     "build": "webpack --mode production && node ./build.js",
-    "clean": "rimraf ulog.min.js test.min.js",
+    "clean": "rimraf ulog.min.js ulog.lazy.min.js full.min.js",
     "test": "nyc tape test.js 2>&1 | tap-nirvana",
     "prepare": "npm run test -S && npm run clean -S && npm run build -S"
   },
@@ -65,7 +65,7 @@
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.1.1",
-    "webpack": "^5.20.1",
+    "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0"
   },
   "peerDependencies": {

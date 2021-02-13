@@ -1,4 +1,3 @@
-var ulog = module.exports = require('./core')
-ulog.use([
-  require('./mods/config'),
-])
+(module.exports = require('./core')).use(
+  require('./mods/config')
+)

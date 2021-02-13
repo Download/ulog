@@ -17,7 +17,7 @@ module.exports = {
     }
   },
 
-  ext: function(logger){
+  init: function(){
     this.get('config')
   },
 

@@ -1,10 +1,10 @@
 module.exports = {
   use: [
-    require('../props'),
     require('../channels'),
   ],
 
   settings: {
+    debug: {},
     level: {
       config: 'log',
       // level property

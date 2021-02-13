@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ulog tutorial</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../ulog.min.js"></script>
+    <script src="test.js"></script>
+    <script src="my-lib.js"></script>
+    <script src="my-other-lib.js"></script>
+    <script>
+      function test(){
+        for (var logger in ulog()) {
+          for (var level in ulog.levels) {
+            anylogger(logger)[level]('This is a' + ((level == 'info') || (level == 'error') ? 'n' : '') + ' ' + level.toUpperCase() + ' message')
+          }
+        }
+      }
+
+      function testCallstack(){
+        myTest.log()
+        myLib.log()
+        myOtherLib.log()
+      }
+
+      function create() {
+        anylogger(document.querySelector('#loggerName').value)
+        update()
+      }
+
+      function remove(name) {
+        delete anylogger()[name]
+        update()
+      }
+
+      function update(){
+        var list = document.querySelector('#loggers')
+        while (list.firstChild) {
+          list.removeChild(list.firstChild)
+        }
+        for (var name in anylogger()) {
+          var item = document.createElement('li')
+          item.innerHTML = '<tt>' + name + '</tt> <button onclick="remove(\'' + name + '\')" title="remove">x</button>'
+          list.appendChild(item)
+        }
+      }
+
+      // create the initial loggers
+      anylogger('test:log1')
+      anylogger('test:log2')
+    </script>
+    <style>
+      th {text-align: left; font: monospace; padding-right: 2em}
+      #loggers button {padding: 0 .5rem; margin-left: .5rem; font-weight: bold}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1><img src="../ulog.png"> Tutorial</h1>
+      <p>Follow the instructions to learn <code>ulog</code> as you read.</p>
+      <p class="h4">Have fun!</p>
+      <h2>Open devtools</h2>
+      <p>Open the developer tools (F12)</p>
+      <h2>Check the Network tab</h2>
+      <p>Switch to the Network tab, reload the page and note that `ulog.min.js`
+        has loaded.</p>
+      <img src="network-tab.jpg" />
+      <h2>Enable logging</h2>
+      <p><code>ulog.min.js</code> uses <i>lazy loading</i> to only load the
+        bulk of the logging code once logging has been enabled.</p>
+      <p>To enable logging, add one of these keys to localStorage:
+        <dl>
+          <dt><code>debug</code></dt>
+          <dd>This key sets the selected loggers to debug mode. For example,
+            <code>debug=my-app</code> will set the logger named 'my-app' to
+            debug mode, <code>debug=test:*</code> will set all loggers with
+            names starting with 'test:' to debug and <code>debug=*</code> will
+            set all loggers to debug.
+          </dd>
+          <dt><code>log</code></dt>
+          <dd>This key is like an advanced version of the <code>debug</code>
+            key, that let's you specify the level to set the loggers to. For
+            example, <code>log=my-app=info</code> will set the level of the
+            logger named 'my-app' to info, <code>log=test:*=debug</code> sets
+            the levels of all loggers with names starting with 'test:' to debug
+            and <code>log=*=info</code> (or <code>log=info</code> for short)
+            will set the levels of all loggers to info.
+          </dd>
+        </dl>
+      </p>
+
+      <h3>Try it</h3>
+      <p>Enable logging by setting the log level to warn.</p>
+      <p>You can set localStorage keys in the developer tools:</p>
+      <img src="local-storage.jpg">
+      <p>Alternatively, you can enter the
+        command <code>localStorage.setItem('log', 'warn')</code> in the
+        console, or simply press this button:</p>
+      <button onclick="localStorage.setItem('log', 'warn');">
+        <i>⚙</i>
+        <b>log=warn</b>
+      </button>
+      <p>Enable logging now.</p>
+
+      <h2>Check the network tab again</h2>
+
+      <p>Notice how <code>ulog.lazy.min.js</code> has been loaded?
+      That's <i>lazy loading</i> in action! This allows <code>ulog</code>
+      to keep a tiny footprint while giving you powerful logging.</p>
+      <img src="lazy-loading.jpg">
+      <h2 id="log-some-messages">Log some messages</h2>
+      <p>Press the button to log some messages</p>
+      <button onclick="test()"><i>⚙</i> <b>Press me</b></button>
+      <p>If you followed the steps so far, you should see 4 log messages:</p>
+      <img src="log-messages.jpg">
+
+      <p>Initially there are 2 loggers defined, <tt>test:log1</tt> and
+        <tt>test:log2</tt>. When you press the button, the test code loops
+        through all loggers and logs a message at all levels with each of them.
+      </p>
+
+      <p>Browse the sections below for details and experiment with creating
+        loggers, changing config etc. Every time you want to test the new
+        situation, press the button again.
+      </p>
+
+      <h2>Named loggers</h2>
+
+      <p>In ulog all loggers have a name. Currently these loggers are defined: </p>
+
+      <ul id="loggers">
+        <li><tt>test:log1</tt> <button onclick="remove('test:log1')">x</button></li>
+        <li><tt>test:log2</tt> <button onclick="remove('test:log2')">x</button></li>
+      </ul>
+
+      <p>You can remove them by pressing the 'x' button.</p>
+
+      <h3>Creating a new logger</h3>
+
+      <p>You can create a new logger with this code:</p>
+      <p><code><pre>anylogger('my:logger')</pre></code></p>
+      You can try this out for yourself in the console, or
+      you can add new loggers with the text field and button
+      below:</p>
+      <input type="text" id="loggerName" value="my:logger">
+      <button onclick="create()">
+        <i>+</i>
+        <b>Create a logger</b>
+      </button>
+      <p><a href="#log-some-messages">Log some more messages</a> to see the
+        new logger in action. If you followed the steps, you should see
+        extra messages from the new logger appear.</p>
+      <img src="named-loggers.jpg">
+
+
+      <h2>Levels</h2>
+
+      <p>In <code>ulog</code>, there are 6 log levels:</p>
+      <table style="width: 20rem; max-width:85vw">
+        <tr><th>Level</th> <th>Value</th></tr>
+        <tr><td>error</td> <td>1</td></tr>
+        <tr><td>warn</td>  <td>2</td></tr>
+        <tr><td>info</td>  <td>3</td></tr>
+        <tr><td>log</td>   <td>4</td></tr>
+        <tr><td>debug</td> <td>5</td></tr>
+        <tr><td>trace</td> <td>6</td></tr>
+      </table>
+      <p>In addition there are the pseudo-levels <code>none</code>
+        (<code>0</code>) and <code>all</code> (<code>7</code>).</p>
+      <p>To change the level, you can set the key <code>log</code> to
+        a different value. Let's start by setting the level to
+        <code>all</code> to see all messages. Enter this code in the
+        console: <code>localStorage.setItem('log', 'all')</code>, or
+        press this button:</p>
+      <p><button onclick="localStorage.setItem('log', 'all')">
+        <i>⚙</i>
+        <b>log=all</b>
+      </button></p>
+      <p>Then, <a href="#log-some-messages">Log some messages</a> again.
+        You should now see a lot more messages appear.</p>
+      <img src="trace-messages.jpg">
+
+      <h3>Native level filters</h3>
+
+      <p>Possibly, you are not seeing the <code>debug</code> messages; that's
+        because Chromium-based browsers these days have their own built-in level
+        filter and by default, 'Verbose' messages are filtered away.</p>
+      <img src="native-level-filters.jpg">
+      <p>For clarity, it's probably best if you enable Verbose messages in
+        the browser. <code>ulog</code> gives you much finer control anyway.</p>
+      <h3>Setting levels individually</h3>
+      <p>Until now, we only set the global log level. But <code>ulog</code>
+        gives us fine-grained control over the levels of each individual
+        logger. We do this by specifying patterns and values in the
+        <code>log</code> configuration. For example, to set the global level to
+        <code>info</code>, but the level for all loggers whose name starts with
+        'test:' to <code>debug</code>, we set
+        <code>log=info;test:*=debug</code>.</p>
+      <p>You can enter this command in the console:</p>
+      <p><code>localStorage.setItem('log', 'info;test:*=debug')</code></p>
+      <p>Or press the button below:</p>
+      <p><button onclick="localStorage.setItem('log', 'info;test:*=debug')">
+        <i>⚙</i>
+        <b>log=info;test:*=debug</b>
+      </button></p>
+      <p><a href="#log-some-messages">Log more messages</a> and check the
+        results.</p>
+      <img src="filtered-levels.jpg">
+
+
+      <h2>Colors</h2>
+
+      <p><code>ulog</code> supports colored logging if the output supports it.
+        By default this setting is enabled and will give us colors in all modern
+        browsers and the terminal in Node JS. The colors are based on the
+        logger name and are consistent across outputs. So if your logger is
+        blue in one browser, it should also be blue in other browsers and the
+        terminal. To disable colors, we can set <code>log_color=off</code> by
+        running this command in the console:</p>
+      <p><code>localStorage.setItem('log_color', 'off')</code></p>
+      <p>Or by pressing this button:</p>
+      <p><button onclick="localStorage.setItem('log_color', 'off')">
+        <i>⚙</i>
+        <b>log_color=off</b>
+      </button></p>
+      <p><a href="#log-some-messages">Log some messages</a> again to see
+        the difference. Personally I think colors make the output easier
+        to read, but <code>ulog</code> leaves the choice to you.</p>
+      <img src="no-colors.jpg">
+      <p><i>The orange and red colors for the <code>warn</code> and
+        <code>error</code> messages in the screenshot above are a native
+        feature of Chromium-based browsers that are not controlled by
+        <code>ulog</code>.</i></p>
+      <p>You can target individual loggers here in the same way as with
+        levels. For example <code>log_color=off;test:*=on</code> would
+        enable colors only for those loggers with names starting with
+        <code>'test:'</code>.</p>
+      <p>Set <code>log_color=on</code> or press the button below to enable
+        colors again.</p>
+      <p><button onclick="localStorage.setItem('log_color', 'on')">
+        <i>⚙</i>
+        <b>log_color=on</b>
+      </button></p>
+      <br>
+
+
+      <h2>Alignment</h2>
+
+      <p>By default, most browsers add some extra information to
+        <code>error</code>, <code>warn</code> and sometimes
+        <code>info</code> messages. While providing useful information,
+        they influence message indentation, making output harder to read.</p>
+      <p>For those outputs that support it, <code>ulog</code> emits
+        formatting that compensates for the indentation difference, nicely
+        aligning the log messages.</p>
+      <p>You can disable this feature by setting <code>log_align=off</code>
+        by entering the command</p>
+      <p><code>localStorage.setItem('log_align', 'off')</code> in the console,
+        or pressing the button below:</p>
+      <p><button onclick="localStorage.setItem('log_align', 'off')">
+        <i>⚙</i>
+        <b>log_align=off</b>
+      </button></p>
+      <p><a href="#log-some-messages">Log more messages</a> and see
+        the difference.</p>
+      <img src="no-align.jpg">
+      <p>I think alignment makes the output easier to read. Set
+        <code>log_align=on</code> again or press the button below to
+        turn alignment back on:</p>
+      <p><button onclick="localStorage.setItem('log_align', 'on')">
+        <i>⚙</i>
+        <b>log_align=on</b>
+      </button></p>
+      <br>
+
+
+      <h2>Formatting</h2>
+
+      <p>Let's talk about formatting. It's here where <code>ulog</code> really
+        sets itself apart from the crowd. We can easily change the formatting
+        of the messages emitted by <code>ulog</code> loggers by changing the
+        <code>log_format</code> setting.</p>
+      <p>For example, let's change the format to include the date and time
+        a message was logged. We do this by setting
+        <code>log_format=date time lvl name</code>.</p>
+      <p><button onclick="localStorage.setItem('log_format', 'date time lvl name')">
+        <i>⚙</i>
+        <b>log_format=date time lvl name</b>
+      </button></p>
+      <p>Now <a href="#log-some-messages">log some messages</a> and check the
+        resuls.</p>
+      <img src="date-and-time.jpg">
+      <p><code>date</code>, <code>time</code>, <code>lvl</code> and
+        <code>name</code> are all names of formats that come with
+        <code>ulog</code>. Check the documentation for a list of
+        <a href="https://ulog.js.org/#included-formats">included formats</a>.</p>
+      <p>Click the button below to restore the default format:</p>
+      <p><button onclick="localStorage.removeItem('log_format')">
+        <i>⚙</i>
+        <b>Restore default</b>
+      </button></p>
+      <br>
+      <h3 id="test-callstack">Preserves callstack</h3>
+      <p><code>ulog</code>'s formatting system has a unique feature: whenever
+        possible, it preserves the call stack. This may sound like a very
+        technical feature, but it has very practical consequences. To see what
+        this is all about, first let's log some messages that are coming from
+        different files:</p>
+      <p><button onclick="testCallstack()">
+        <i>⚙</i>
+        <b>Test callstack</b>
+      </button></p>
+      <p>Have a close look at the results. On the right of each message, the
+        browser adds the filename and line number of the source file where the
+        message originated from. This is a very useful feature!</p>
+      <img src="callstack-preserved.jpg">
+      <p><code>ulog</code> uses
+        <a href="https://npmjs.com/package/kurly"><code>kurly</code></a> to
+        handle formatting and as long as your format only contains
+        <a href="https://www.npmjs.com/package/kurly/v/2.0.0-beta.2#static-tags"
+        >static tags</a> the callstack will be preserved. For comparison,
+        let's log some messages with a format that includes
+        <code>message</code>, a dynamic tag, to see the difference.</p>
+      <p>First, set the format to <code>lvl name message</code>:</p>
+      <p><button onclick="localStorage.setItem('log_format', 'lvl name message')">
+        <i>⚙</i>
+        <b>log_format=lvl name message</b>
+      </button></p>
+      <p>Then, <a href="#test-callstack">test the callstack again</a>
+        and compare:</p>
+      <img src="callstack-mangled.jpg">
+      <p>Because <code>message</code> is a dynamic tag, <code>ulog</code> was
+        unable to preserve the callstack and the result is that now, the
+        filename and line numbers all point to <code>ulog.lazy.min.js</code>,
+        which is a lot less useful. But the message is now formatted and
+        the <code>info</code> messages are colored green. Whatever your
+        formatting preferences, <code>ulog</code> will always give you the
+        optimal results.</p>
+      <h2>Further reading</h2>
+      <p>You have now touched upon most of the features that <code>ulog</code>
+        includes out of the box. But <code>ulog</code> was written to be
+        completely modular and extensible. So if you are willing to write
+        some code, there is a whole lot more you can do with it. For example,
+        you can add custom formats, custom outputs, or indeed you can write
+        your own mods that can do... whatever you come up with!</p>
+      <p>Have a look at these sections of
+        <a href="https://ulog.js.org">the documentation</a> if you want to
+        learn more about that:</p>
+      <ul>
+        <li><a href="https://ulog.js.org/#custom-formats">Custom formats</a></li>
+        <li><a href="https://ulog.js.org/#custom-outputs">Custom outputs</a></li>
+        <li><a href="https://ulog.js.org/#mods">Mods</a></li>
+      </ul>
+      <p class="h4">Thanks for trying <code>ulog</code>!</p>
+      <br>
+      <br>
+    </main>
+  </body>
+</html>

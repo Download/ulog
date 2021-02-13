@@ -18,7 +18,7 @@ var method = require('./method')
 module.exports = {
   use: [
     require('../config'),
-    require('../options'),
+    // require('../options'),
     require('../props'),
   ],
 
@@ -56,13 +56,12 @@ module.exports = {
           return rec
         }, { channel: channel, level: level })
         ch.fns[level] = (function(ch,rec){
-          return (
-            typeof ch.out == 'function' ? function(){
+          return (typeof ch.out == 'function'
+            ? function(){
               rec.message = [].slice.call(arguments)
               ch.out(rec)
             }
-            :
-            method(ch.out, rec)
+            : method(ch.out, rec)
           )
         })(ch,rec)
       }

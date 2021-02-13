@@ -24,7 +24,8 @@ module.exports = {
       var name = args[0]
       if (! name) return ulog.settings
       args.unshift(ulog.settings[name])
-      grab(ulog, 'get', []).map(function(get){
+      var getters = grab(ulog, 'get', [])
+      getters.map(function(get){
         args[0] = get.apply(ulog, args)
       })
       return args[0]

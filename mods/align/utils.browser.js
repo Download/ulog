@@ -1,4 +1,4 @@
-var ZWSP = '​'; // zero-width space
+﻿var ZWSP = '​' // zero-width space
 var firefox = require('../colors/utils').firefox
 
 module.exports = {

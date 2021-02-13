@@ -28,6 +28,7 @@ module.exports = {
 
   formats: {
     // add a bunch of formats
+    cr: function(ctx,rec){return function(){return '\r\n'}},
     date: require('./date'),
     lvl: require('./lvl'),
     message: require('./message'),

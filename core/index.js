@@ -82,10 +82,10 @@ ulog.use = function(mod) {
 				ulog[name] = mod.extend[name]
 			}
 		}
+		ulog.mods.push(mod)
 		if (mod.init) {
 			mod.init.call(ulog)
 		}
-		ulog.mods.push(mod)
 	}
 	return result
 }

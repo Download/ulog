@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.15</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.16</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,14 +8,14 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.15/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.16/ulog.png)
 
 
 ## The logger for javascript applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.15/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.16/screenshot.jpg)
 
 
 ## Features
@@ -24,7 +24,7 @@ Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug) an
 
 | Feature                                     | &nbsp; debug &nbsp; |      loglevel       | &nbsp; ulog &nbsp; |
 | ------------------------------------------- | ------------------- | ------------------- | ------------------ |
-| [Footprint](#footprint)                     |        3.2kB        |        1.4kB        |        2.8kB       |
+| [Footprint](#footprint)                     |        3.2 kB       |        1.4 kB       |        2.7 kB      |
 | [Debug mode](#debug-mode)                   |         ✓           |          ✓ (1)      |          ✓         |
 | [Levels](#levels)                           |                     |          ✓          |          ✓         |
 | [Configurable](#configure)                  |         ✓           |          ✓ (2)      |          ✓         |
@@ -46,6 +46,20 @@ Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug) an
 (2) in browser only
 (3) via an adapter
 
+## Try it
+
+Have a look at the interactive
+<a href="https://ulog.js.org/tutorial/index.html">tutorial</a>. It's the
+fastest way to get a quick taste of `ulog`.
+
+
+## Compare it
+
+Want to check how `ulog` measures up to it's competitors? Check out these
+loggers side-by-side:
+
+* [`ulog` vs `debug`](https://ulog.js.org/vs/debug.html)
+* [`ulog` vs `loglevel`](https://ulog.js.org/vs/loglevel.html)
 
 
 ## Install
@@ -116,7 +130,7 @@ log('Logging is easy')
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.15/ulog.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.16/ulog.min.js"></script>
 <!-- publishes to `self.anylogger` and `self.ulog`. -->
 <!-- lazy loads ulog.lazy.min.js on demand. -->
 <script src="myscript.js"></script>
@@ -132,12 +146,12 @@ log('Logging is easy!')
 If you want the file for the browser to include in your project yourself, you
 can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.15/ulog.min.js) (~2.8kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.15/ulog.lazy.min.js) (~4.3kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.16/ulog.min.js) (~2.7kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.16/ulog.lazy.min.js) (~4.3kB minified and gzipped)
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.15/full.min.js) (~5.7kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.16/full.min.js) (~5.7kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
@@ -207,6 +221,7 @@ log.NONE  // 0
 ```
 
 ### `log.enabledFor`
+
 `anylogger` defines `log.enabledFor` and `ulog` implements it by checking the logger's current log level and whether it's in debug mode. Normally, you should not have to use this method, unless you are doing some expensive calculations only to write log output. In such a case you can write:
 
 ```js
@@ -218,6 +233,7 @@ if (log.enabledFor('info')) {
 ```
 
 ### `log.level`
+
 `ulog` adds a property `level` to each logger that is a numeric representation of the current log level.
 
 ```js
@@ -235,8 +251,8 @@ log.error('Logging is completely disabled.')
 
 > To check the log level, `enabledFor` is preferred over the `level` property as it is within the `anylogger` API.
 
-
 ### Default log level
+
 I've found that it makes sense to have different default log levels in the
 browser and in Node. In Node, logging is often the only UI we have available
 and we (the devs/admins) are the only ones that will see that logging.
@@ -337,13 +353,16 @@ the logging to all specified outputs.
 By default, the following outputs are included:
 
 ### Output `console`
+
 This actually is the native console object. Using the native console directly is
 what allows us to leave the call stack intact in the browser developer tools.
 
 ### Output `noop`
+
 This is just an object with a noop `log` function
 
 ### Custom outputs
+
 The default outputs are not very special, but the entire machinery is in place for
 you to easily add any custom outputs you could ever need. You can define additional
 outputs by making `ulog` use a mod with an `outputs` key:
@@ -408,12 +427,12 @@ configuration mechanism.
 The default format string on Node is:
 
 ```sh
-lvl name:22 message perf
+lvl name:20 message perf
 ```
 
-This makes the output closely match that of debug. It sacrifices the callstack
-for a colored and formatted `message` and having the `perf` measurements after
-the message i.s.o before it.
+This sacrifices the callstack for a colored and formatted `message` and having
+the `perf` measurements after the message i.s.o before it. The Node JS doesn't
+output any file name / line number information anyway.
 
 On browsers, we want to spare the call stack, so there the default is:
 
@@ -422,21 +441,22 @@ lvl name perf
 ```
 
 We don't include the `message`, but it will be appended as the last argument
-automatically. The result is nicely formatted messages with the filename/line
-number entries in the browser debug console intact.
+automatically. The result is nicely formatted messages with the file name /
+line number entries in the browser debug console intact.
 
 To override the default format, just set
 [config option `log_format`](#config-option-log_format) to the format you want.
 
 Formats available out of the box include:
 
-* [x] [Format `date`](#format-date)
-* [x] [Format `lvl`](#format-lvl)
-* [x] [Format `message`](#format-message)
-* [x] [Format `name`](#format-name)
-* [x] [Format `perf`](#format-perf)
-* [x] [Format `time`](#format-time)
-* [x] [Fallback format](#fallback-format)
+* [Format `cr`](#format-cr)
+* [Format `date`](#format-date)
+* [Format `lvl`](#format-lvl)
+* [Format `message`](#format-message)
+* [Format `name`](#format-name)
+* [Format `perf`](#format-perf)
+* [Format `time`](#format-time)
+* [Fallback format](#fallback-format)
 
 
 ### Format syntax
@@ -465,12 +485,14 @@ are used as formats, the call stack can remain unharmed.
 
 Except for the `message` format, all included formats are static.
 
+#### Format `cr`
+Prints a 'carriage return line feed'
+
 #### Format `date`
-Returns the date part of the time the message was logged as `yyyy/MM/dd`.
-Prints the date the message was logged
+Prints the date the message was logged as `yyyy/MM/dd`.
 
 #### Format `lvl`
-Returns the level of the message as a single character:
+Prints the level of the message as a single character:
 * `'x'` for error messages
 * `'!'` for warning messages
 * `'i'` for info messages
@@ -483,14 +505,13 @@ Prints the message, formatted and colored.
 Using this format breaks the callstack as it is dynamic.
 
 #### Format `name`
-Prints the current logger name
+Prints the logger name
 
 #### Format `perf`
 Prints the time difference between two invocations to the same logger, only if this difference is larger than 1ms. Produces output that looks like `+62ms`.
 
 #### Format `time`
-Returns the time part of the time the message was logged as `hh:mm`.
-Prints the time the message was logged
+Prints the time the message was logged as `hh:mm`.
 
 #### Fallback format
 Any unrecognized tags are being interpreted by the fallback format. This just
@@ -532,13 +553,12 @@ These tags then become available in the format string.
 Formats come in two flavors:
 
 #### Dynamic formats
-
 Dynamic formats have full access to the message. But they do mess up the call stack. A dynamic format has this signature:
 
 ```js
 ulog.use({
   use: [ require('ulog/mods/formats') ],
-  format: {
+  formats: {
     dynamicFormat: function(ctx) {
       // one-time init here
       return function(rec) {
@@ -551,7 +571,6 @@ ulog.use({
 ```
 
 #### Static formats
-
 Static formats do not have access to the message. But they do not break the call stack! So prefer static formats if possible.
 
 Static formats have this signature:
@@ -559,7 +578,7 @@ Static formats have this signature:
 ```js
 ulog.use({
   use: [ require('ulog/mods/formats') ],
-  format: {
+  formats: {
     staticFormat: function(ctx, rec) {
       // one-time init here
       return function(){
@@ -574,7 +593,9 @@ ulog.use({
 
 To read more about kurly and custom kurly tags, refer to the kurly documentation on [creating kurly tags](https://www.npmjs.com/package/kurly#creating-tags)
 
+
 ## Colors
+
 Who doesn't like some colors?! Apart from making things prettier, when used
 correctly they can actually also make our logs *easier* to read. Now I don't
 know about you, but I find reading logs hard, so I'll take all the help I can
@@ -585,18 +606,19 @@ If you don't want colors, you can suppress them using
 
 
 ## Alignment
+
 Browsers have great debug consoles these days. They even include stacktrace
 info for higher-level messages. But they did mess one thing up imho; the
 messages at these higher levels are indented a bit more than the other
 messages, making the logging harder to read. This can be clearly seen in the
 screenshot from `ulog` v2.0.0-beta-11, which did not yet have alignment:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.15/screenshot-beta.11.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.16/screenshot-beta.11.jpg)
 
 `ulog` now automatically adds some formatting that negates the extra indentation
 the messages at these higher levels get, so all messages are nicely aligned:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.15/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.16/screenshot.jpg)
 
 You can control alignment with [config option `log_align`](#config-option-log_align).
 
@@ -630,6 +652,7 @@ We configure `ulog` by adjusting configuration options.
 * [`log_align`](#config_option_log_align): To enable or disable alignment
 
 ### Log configuration syntax
+
 `debug` has a simple but powerful configuration mechanism. You set an environment variable or localStorage option named `DEBUG` and you assign it a value that expresses which loggers to enable. E.g.:
 
 ```sh
@@ -661,8 +684,8 @@ A special case is the config option [debug](#config_option_debug), which is desi
 
 Most of the config options support this syntax.
 
-
 ### Via program arguments
+
 On Node JS we can pass log configuration options as program arguments:
 
 ```sh
@@ -671,6 +694,7 @@ node ./myapp log=debug
 This should be helpful when making CLI applications. These strongly rely on console messages, but are also often used in scripted setups where we would actually want to suppress that logging. Don't go and build in all kinds of custom methods to configure the logging but just use `ulog` and rely on it's powerful configuration mechanism instead.
 
 ### Via environment variables
+
 On Node JS we can pass log configuration options via environment variables:
 
 ```sh
@@ -678,6 +702,7 @@ log=debug node ./myapp
 ```
 
 ### Via a config file
+
 On Node JS we can place our log configuration in a file that will be read at startup and monitored for changes at runtime:
 
 *./log.config*
@@ -687,6 +712,7 @@ log=debug
 ```
 
 ### Via querystring parameters
+
 In browsers, we can pass log configuration options as querystring parameters in the URL:
 
 ```
@@ -694,6 +720,7 @@ https://example.com/page?log=debug
 ```
 
 ### Via localStorage
+
 In browsers, we can place our log configuration in localStorage and it will be read at startup and monitored for changes at runtime:
 
 ```js
@@ -701,6 +728,7 @@ localStorage.setItem('log', 'debug')
 ```
 
 ### Dynamic config
+
 `ulog`'s configuration mechanism watches the configuration for changes while
 the program is running and reacts to them in real-time. No more restarting your
 application just to change some log level! On Node JS, `ulog` watches a
@@ -778,6 +806,7 @@ Specify whether messages should be aligned. Defaults to `on`.
 ```sh
 log_align=off
 ```
+
 
 ## Mods
 
@@ -876,43 +905,24 @@ var ulog = require('ulog/base')
 
 // add a mod to ulog to load logging on-demand
 ulog.use({
-
   watch: {
     // watch for changes in these config keys
-    'debug,log,log_output,log_format,log_color,log_align':
-
+    'debug,log':
     // when changes happen, load the other mods if needed
     function(){
-      var ulog = this
       // webpack specific API to lazy load modules
       require.ensure(
         // ensure these modules are loaded
-        [
-          'ulog/mods/debug',
-          'ulog/mods/levels',
-          'ulog/mods/outputs',
-          'ulog/mods/formats',
-          'ulog/mods/colors',
-          'ulog/mods/align',
-        ],
+        [ 'ulog/mods/lazy' ],
         // then execute this function, notice require being overridden
         function(require){
-          // add the mods to ulog
-          if (ulog.use([
-            // use the overridden require to lazy load the modules
-            require('ulog/mods/debug'),
-            require('ulog/mods/levels'),
-            require('ulog/mods/outputs'),
-            require('ulog/mods/formats'),
-            require('ulog/mods/colors'),
-            require('ulog/mods/align'),
-          ])) {
+          // use the overridden require to lazy load the modules
+          if (ulog.use(require('ulog/mods/lazy'))) {
             // re-initialize the loggers if mods were added
             ulog.ext()
           }
         },
-        // chunkname webpack will use for these lazy modules: ulog.lazy.min.js
-        'ulog.lazy'
+        'ulog.lazy' // chunkname webpack will use: ulog.lazy.min.js
       )
     },
   }

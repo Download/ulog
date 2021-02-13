@@ -1,4 +1,4 @@
-// ulog - the universal logger
+﻿// ulog - the universal logger
 // © 2021 by Stijn de Witt
 // License: MIT
 

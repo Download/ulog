@@ -1,0 +1,155 @@
+/* world's smalles reset? */
+*, *::before, *::after {box-sizing: border-box;}
+img { max-width: 100%; }
+
+/* theming */
+:root {
+  --root-font-family: "Roboto";
+
+  --root-font-size:     16px;
+  --body-font-size:     min(max( .875rem, calc(.75rem + .6vw)), 1.175rem);
+  --p-font-size:        var(--body-font-size);
+  --button-font-size:   min(max( .875rem, calc(.725rem + 0.62vw)), 1.175rem);
+  --h6-font-size:       min(max( .9rem, calc(.725rem + 1vw)), 1.45rem);
+  --h5-font-size:       min(max( 1rem,   calc(.825rem +  1.25vw)),  1.75rem);
+  --h4-font-size:       min(max(1.1rem,   calc(0.95rem + 1.5vw)),   2.05rem);
+  --h3-font-size:       min(max(1.25rem,   calc(1.1rem + 1.75vw)),  2.37rem);
+  --h2-font-size:       min(max(1.5rem,   calc(1.3rem + 2.05vw)),  2.8rem);
+  --h1-font-size:       min(max(1.75rem,   calc(1.58rem + 2.5vw)),  3.4rem);
+
+  --main-max-width:     min(max( 30rem, calc(20rem + 50vw)), 50rem);
+
+  --body-font-weight:   normal;
+  --p-font-weight:      normal;
+  --button-font-weight: normal;
+  --h6-font-weight:     500;
+  --h5-font-weight:     500;
+  --h4-font-weight:     normal;
+  --h3-font-weight:     normal;
+  --h2-font-weight:     normal;
+  --h1-font-weight:     normal;
+
+  --body-color:         #444;
+  --p-color:            #444;
+  --button-color:       #000;
+  --h6-color:           #444;
+  --h5-color:           #444;
+  --h4-color:           #111;
+  --h3-color:           #111;
+  --h2-color:           #000;
+  --h1-color:           #000;
+
+  --body-margin-v:      min(max(.5rem,   calc(.25rem +  3vw)),  2.5rem);
+  --body-margin-h:      var(--body-margin-v);
+  --body-margin:        var(--body-margin-v) var(--body-margin-h);
+
+  --p-margin-v:         min(max(.25rem,   calc(.1rem +  1vw)),  .75rem);
+  --p-margin-h:         0;
+  --p-margin:           var(--p-margin-v) var(--p-margin-h);
+
+  --h6-margin-v:        min(max(.125rem,   calc(.1rem +  .1vw)),  .25rem);
+  --h6-margin-h:        0;
+  --h6-margin:          var(--h6-margin-v) var(--h6-margin-h);
+
+  --h5-margin-v:        min(max(.25rem,   calc(.1rem +  .25vw)),  .5rem);
+  --h5-margin-h:        0;
+  --h5-margin:          var(--h5-margin-v) var(--h5-margin-h);
+
+  --h4-margin-v:        min(max(.5rem,   calc(.1rem +  .5vw)),  .75rem);
+  --h4-margin-h:        0;
+  --h4-margin:          var(--h4-margin-v) var(--h4-margin-h);
+
+  --h3-margin-v:        min(max(.75rem,   calc(.1rem +  .75vw)),  1rem);
+  --h3-margin-h:        0;
+  --h3-margin:          var(--h3-margin-v) var(--h3-margin-h);
+
+  --h2-margin-v:        min(max(1rem,   calc(.1rem +  1vw)),  1.25rem);
+  --h2-margin-h:        0;
+  --h2-margin:          var(--h2-margin-v) var(--h2-margin-h);
+
+  --h1-margin-v:        min(max(1.25rem,   calc(.1rem +  1.25vw)),  1.5rem);
+  --h1-margin-h:        0;
+  --h1-margin:          var(--h1-margin-v) var(--h1-margin-h);
+
+  --button-margin-v:    min(max(.25rem, calc(.1rem +  .25vw)), .5rem);
+  --button-margin-h:    0;
+  --button-margin-l:    var(--button-margin-h);
+  --button-margin-r:    min(max(.25rem, calc(.1rem +  .25vw)), .5rem);
+  --button-margin:      var(--button-margin-v) var(--button-margin-r) var(--button-margin-h) var(--button-margin-l);
+
+  --img-margin-v:       min(max(.25rem, calc(.1rem +  2.5vw)), 1rem);
+  --img-margin-h:       0;
+  --img-margin:         var(--img-margin-v) var(--img-margin-h);
+
+  --body-padding:       0;
+  --p-padding:          0;
+  --h6-padding:         0;
+  --h5-padding:         0;
+  --h4-padding:         0;
+  --h3-padding:         0;
+  --h2-padding:         0;
+  --h1-padding:         0;
+  --button-padding-v:   0.5rem;
+  --button-padding-h:   1rem;
+  --button-padding:     var(--button-padding-v) var(--button-padding-h);
+
+  --body-line-height:   1.5;
+  --p-line-height:      1.5;
+  --h6-line-height:     1.5;
+  --h5-line-height:     1.45;
+  --h4-line-height:     1.4;
+  --h3-line-height:     1.35;
+  --h2-line-height:     1.3;
+  --h1-line-height:     1.25;
+  --button-line-height: 24px;
+}
+
+html {
+  font-family: var(--root-font-family);
+  font-size: var(--root-font-size);
+}
+
+body,
+.body   {font-size: var(--body-font-size);   font-weight: var(--body-font-weight);   margin: var(--body-margin);   padding: var(--body-padding);   color: var(--body-color);   line-height: var(--body-line-height)}
+main,
+.main   {max-width: var(--main-max-width); margin: 0 auto;}
+p,  .p  {font-size: var(--p-font-size);      font-weight: var(--p-font-weight);      margin: var(--p-margin);      padding: var(--p-padding);      color: var(--p-color);      line-height: var(--p-line-height)}
+h6, .h6 {font-size: var(--h6-font-size);     font-weight: var(--h6-font-weight);     margin: var(--h6-margin);     padding: var(--h6-padding);     color: var(--h6-color);     line-height: var(--h6-line-height)}
+h5, .h5 {font-size: var(--h5-font-size);     font-weight: var(--h5-font-weight);     margin: var(--h5-margin);     padding: var(--h5-padding);     color: var(--h5-color);     line-height: var(--h5-line-height)}
+h4, .h4 {font-size: var(--h4-font-size);     font-weight: var(--h4-font-weight);     margin: var(--h4-margin);     padding: var(--h4-padding);     color: var(--h4-color);     line-height: var(--h4-line-height)}
+h3, .h3 {font-size: var(--h3-font-size);     font-weight: var(--h3-font-weight);     margin: var(--h3-margin);     padding: var(--h3-padding);     color: var(--h3-color);     line-height: var(--h3-line-height)}
+h2, .h2 {font-size: var(--h2-font-size);     font-weight: var(--h2-font-weight);     margin: var(--h2-margin);     padding: var(--h2-padding);     color: var(--h2-color);     line-height: var(--h2-line-height)}
+h1, .h1 {font-size: var(--h1-font-size);     font-weight: var(--h1-font-weight);     margin: var(--h1-margin);     padding: var(--h1-padding);     color: var(--h1-color);     line-height: var(--h1-line-height)}
+button,
+.button {font-size: var(--button-font-size); font-weight: var(--button-font-weight); margin: var(--button-margin); padding: var(--button-padding); color: var(--button-color); line-height: var(--button-line-height);
+  text-transform: uppercase;
+}
+img,
+.img    {margin: var(--img-margin)}
+
+button > i:first-of-type,
+button > b:first-of-type {
+  vertical-align: middle;
+}
+button > i:first-of-type {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+  margin-right: 8px;
+}
+button > b:first-of-type {
+  font-style: normal;
+}
+summary:hover,
+summary:focus,
+summary:active {
+  outline: none;
+}
+h1 > img,
+.h1 > img,
+h1 > .img,
+.h1 > .img {
+  max-height: calc(1.2 * var(--h1-font-size));
+  margin: 0px var(--button-margin-r) calc(0px - 0.33 * var(--h1-font-size)) 0px;
+}
+
