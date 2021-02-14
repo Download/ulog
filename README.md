@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.17</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.18</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,14 +8,14 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.17/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.18/ulog.png)
 
 
 ## The logger for javascript applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.17/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.18/screenshot.jpg)
 
 
 ## Features
@@ -130,7 +130,7 @@ log('Logging is easy')
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.17/ulog.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js"></script>
 <!-- publishes to `self.anylogger` and `self.ulog`. -->
 <!-- lazy loads ulog.lazy.min.js on demand. -->
 <script src="myscript.js"></script>
@@ -146,12 +146,12 @@ log('Logging is easy!')
 If you want the file for the browser to include in your project yourself, you
 can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.17/ulog.min.js) (~2.7kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.17/ulog.lazy.min.js) (~4.3kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js) (~2.7kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.lazy.min.js) (~4.3kB minified and gzipped)
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.17/full.min.js) (~5.7kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.18/full.min.js) (~5.7kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
@@ -613,12 +613,12 @@ messages at these higher levels are indented a bit more than the other
 messages, making the logging harder to read. This can be clearly seen in the
 screenshot from `ulog` v2.0.0-beta-11, which did not yet have alignment:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.17/screenshot-beta.11.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.18/screenshot-beta.11.jpg)
 
 `ulog` now automatically adds some formatting that negates the extra indentation
 the messages at these higher levels get, so all messages are nicely aligned:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.17/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.18/screenshot.jpg)
 
 You can control alignment with [config option `log_align`](#config-option-log_align).
 

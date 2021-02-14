@@ -1,6 +1,6 @@
 {
   "name": "ulog",
-  "version": "2.0.0-beta.17",
+  "version": "2.0.0-beta.18",
   "description": "The universal logger",
   "main": "./ulog.js",
   "unpkg": "ulog.min.js",
@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "anylogger": "^1.0.10",
-    "kurly": "^2.0.0-beta.2"
+    "kurly": "^2.0.0-beta.3"
   },
   "devDependencies": {
     "gzip-size": "^6.0.0",
