@@ -32,6 +32,8 @@ test('mod: levels', function (t) {
 
   t.test('levels.ext(logger: Function)', function (t) {
     ulog.use(levels)
+    //simple workaround to fix test problem in pull request #58
+    ulog.set('level', 'info')
     var logger = ulog('test')
     t.equal(logger.NONE, 0, 'creates a property `NONE`')
     for (lvl in ulog.levels) {
