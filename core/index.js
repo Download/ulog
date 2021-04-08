@@ -27,7 +27,9 @@ ulog.ext = function(logger) {
 		return logger
 	} else {
 		for (logger in ulog()) {
-			ulog.ext(ulog(logger))
+			setTimeout(function updateLogger() {
+        ulog.ext(ulog(logger))
+      }, 0);
 		}
 	}
 }
