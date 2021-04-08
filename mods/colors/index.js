@@ -1,7 +1,6 @@
-var grab = require('../../core/grab')
+var boolean = require('../props/boolean')
 var palette = require('./utils').palette
 var levels = require('./utils').levels
-var boolean = require('../props/boolean')
 
 module.exports = {
   use: [
@@ -23,7 +22,7 @@ module.exports = {
   record: function(logger, rec) {
     if (logger.colored) {
       if (!logger.colors) {
-        logger.colors = grab(this, 'colors', {})
+        logger.colors = this.grab('colors', {})
         logger.colors.index = hash(logger.name) % logger.colors.palette.length
       }
       if (!logger.color) {

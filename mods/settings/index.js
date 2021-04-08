@@ -1,5 +1,3 @@
-var grab = require('../../core/grab')
-
 module.exports = {
   extend: {
     settings: {},
@@ -24,7 +22,7 @@ module.exports = {
       var name = args[0]
       if (! name) return ulog.settings
       args.unshift(ulog.settings[name])
-      var getters = grab(ulog, 'get', [])
+      var getters = ulog.grab('get', [])
       getters.map(function(get){
         args[0] = get.apply(ulog, args)
       })
@@ -72,7 +70,7 @@ module.exports = {
       var ulog = this
       var changed = ulog.settings[name] !== value
       ulog.settings[name] = value
-      grab(ulog, 'set', []).map(function(set){
+      ulog.grab('set', []).map(function(set){
         set.call(ulog, name, value)
       })
       if (changed) ulog.ext()

@@ -1,6 +1,6 @@
 var parse = require('kurly/parse')
 var pipe = require('kurly/pipe')
-var grab = require('../../core/grab')
+
 var console = require('../channels/console')
 var method = require('../channels/method')
 const noop = require('../channels/noop')
@@ -43,7 +43,7 @@ module.exports = {
   // override the channel output constructor to take logger props into account
   channelOutput: function(logger, ch){
     if (! (ch.cfg = logger[ch.name])) return
-    ch.outputs = grab(this, 'outputs', {})
+    ch.outputs = this.grab('outputs', {})
     var ast = parse(ch.cfg, { optional: true })
         .filter(function(node){return typeof node == 'object'})
     var outs = pipe(ast, ch.outputs)
@@ -54,7 +54,7 @@ module.exports = {
       function(rec) {
         for (var i=0,out; out=outs[i]; i++) {
           if (typeof out == 'function') out(rec)
-          else method(out, rec).apply(out, rec.message)
+          else method(out, rec).apply(out, rec.msg)
         }
       }
     )

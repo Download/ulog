@@ -1,13 +1,12 @@
 var fs = require('fs')
 var path = require('path')
 
-var grab = require('../../core/grab')
 var parse = require('./parse')
 var watched = require('./watched')
 var configure = require('./configure')
 
 module.exports = function(ulog, callback) {
-  var settings = grab(ulog, 'settings', {})
+  var settings = ulog.grab('settings', {})
   var log_config = ulog.get('log_config') || 'log.config'
   var filename = path.resolve(log_config)
   if (callback) {

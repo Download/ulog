@@ -1,5 +1,5 @@
-var ulog = require('anylogger')
-var grab = require('./grab')
+﻿var ulog = require('anylogger')
+var merge = require('./merge')
 
 var ext = ulog.ext
 
@@ -18,10 +18,10 @@ var ext = ulog.ext
 ulog.ext = function(logger) {
 	if (logger) {
 		ext(logger)
-		grab(ulog, 'ext', []).map(function(ext){
+		ulog.grab('ext', []).map(function(ext){
 			ext.call(ulog, logger)
 		})
-		grab(ulog, 'after', []).map(function(ext){
+		ulog.grab('after', []).map(function(ext){
 			ext.call(ulog, logger)
 		})
 		return logger
@@ -33,6 +33,18 @@ ulog.ext = function(logger) {
 }
 
 ulog.mods = []
+
+ulog.grab = function(name, result) {
+	this.mods.reduce(function(r,mod){
+		if (Array.isArray(r) && (name in mod)) {
+			r.push(mod[name])
+		} else {
+			merge(r, mod[name])
+		}
+		return r
+	}, result)
+	return result
+}
 
 /**
  * ### `ulog.use(mod: Object|Array<Object>): Number`
@@ -89,24 +101,5 @@ ulog.use = function(mod) {
 	}
 	return result
 }
-
-// ulog.grab = function(name){
-// 	return ulog.mods.reduce(function(r,mod){
-// 		for (var o in mod[name]) {
-// 			r[o] = mod[name][o]
-// 		}
-// 		return r
-// 	}, {})
-// }
-
-// var recorders = []
-// for (var i=0,mod; mod=ulog.mods[i]; i++) {
-// 	if (mod.record) recorders.push(mod.record)
-// }
-
-
-// ulog.enabled = ulog.get.bind(ulog, 'debug')
-// ulog.enable = ulog.set.bind(ulog, 'debug')
-// ulog.disable = ulog.set.bind(ulog, 'debug', undefined)
 
 module.exports = ulog

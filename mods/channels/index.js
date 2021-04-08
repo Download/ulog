@@ -1,4 +1,3 @@
-var grab = require('../../core/grab')
 var console = require('./console')
 var noop = require('./noop')
 var method = require('./method')
@@ -35,9 +34,9 @@ module.exports = {
   // enhance the given loggers with channels
   ext: function(logger) {
     var ulog = this
-    var channels = grab(ulog, 'channels', {})
-    var channelOutputs = grab(ulog, 'channelOutput', [])
-    var recorders = grab(ulog, 'record', [])
+    var channels = ulog.grab('channels', {})
+    var channelOutputs = ulog.grab('channelOutput', [])
+    var recorders = ulog.grab('record', [])
     logger.channels = {}
     for (var channel in channels) {
       var ch = logger.channels[channel] = {
@@ -58,7 +57,7 @@ module.exports = {
         ch.fns[level] = (function(ch,rec){
           return (typeof ch.out == 'function'
             ? function(){
-              rec.message = [].slice.call(arguments)
+              rec.msg = [].slice.call(arguments)
               ch.out(rec)
             }
             : method(ch.out, rec)

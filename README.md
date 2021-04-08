@@ -146,12 +146,12 @@ log('Logging is easy!')
 If you want the file for the browser to include in your project yourself, you
 can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js) (~2.7kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.lazy.min.js) (~4.3kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js) (~8.0kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.18/ulog.lazy.min.js) (~9.1kB minified and gzipped)
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.18/full.min.js) (~5.7kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.18/full.min.js) (~14.2kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
@@ -398,8 +398,8 @@ ulog.use({
   outputs: {
     custom: function(ctx){
       return function(rec) {
-        rec.message.shift('Custom!!')
-        console[rec.level].apply(console, rec.message)
+        rec.msg.shift('Custom!!')
+        console[rec.level].apply(console, rec.msg)
       }
     }}
   }
@@ -427,11 +427,11 @@ configuration mechanism.
 The default format string on Node is:
 
 ```sh
-lvl name:20 message perf
+lvl name:20 msg perf
 ```
 
-This sacrifices the callstack for a colored and formatted `message` and having
-the `perf` measurements after the message i.s.o before it. The Node JS doesn't
+This sacrifices the callstack for a colored and formatted `msg` and having
+the `perf` measurements after the message i.s.o before it. Node JS doesn't
 output any file name / line number information anyway.
 
 On browsers, we want to spare the call stack, so there the default is:
@@ -440,7 +440,7 @@ On browsers, we want to spare the call stack, so there the default is:
 lvl name perf
 ```
 
-We don't include the `message`, but it will be appended as the last argument
+We don't include the `msg`, but it will be appended as the last argument
 automatically. The result is nicely formatted messages with the file name /
 line number entries in the browser debug console intact.
 
@@ -452,7 +452,7 @@ Formats available out of the box include:
 * [Format `cr`](#format-cr)
 * [Format `date`](#format-date)
 * [Format `lvl`](#format-lvl)
-* [Format `message`](#format-message)
+* [Format `msg`](#format-msg)
 * [Format `name`](#format-name)
 * [Format `perf`](#format-perf)
 * [Format `time`](#format-time)
@@ -500,7 +500,7 @@ Prints the level of the message as a single character:
 * `'>'` for debug messages
 * `'}'` for trace messages
 
-#### Format `message`
+#### Format `msg`
 Prints the message, formatted and colored.
 Using this format breaks the callstack as it is dynamic.
 
@@ -538,7 +538,7 @@ import formats from 'ulog/mods/formats'
 ulog.use({
   use: [ formats ],
   formats: {
-    custom: (ctx) => (rec) => (['custom'].concat(rec.message)),
+    custom: (ctx) => (rec) => (['custom'].concat(rec.msg)),
     random: (ctx, rec) => () => Math.random()
   }
 })
@@ -562,7 +562,7 @@ ulog.use({
     dynamicFormat: function(ctx) {
       // one-time init here
       return function(rec) {
-        // rec.message contains full message
+        // rec.msg contains full message
         return /* ... */
       }
     }
@@ -582,8 +582,8 @@ ulog.use({
     staticFormat: function(ctx, rec) {
       // one-time init here
       return function(){
-        // rec.message is undefined
-        // rec.name, rec.level etc is populated
+        // rec.msg is undefined
+        // rec.name, rec.level etc are populated
         return /* ... */
       }
     }
@@ -781,12 +781,12 @@ log_drain=my:*,-my:lib=noop
 
 ### Config option `log_format`
 
-Specify the format to use. Defaults to `lvl name:22 message perf` on Node JS and `lvl name perf` on browsers.
+Specify the format to use. Defaults to `lvl name:22 msg perf` on Node JS and `lvl name perf` on browsers.
 
 ```sh
-log_format=lvl name perf message;my:*=lvl name perf
+log_format=lvl name perf msg;my:*=lvl name perf
 ```
-This sets `lvl name perf message` as the default format, while assigning a different format string to all loggers starting with `my:`.
+This sets `lvl name perf msg` as the default format, while assigning a different format string to all loggers starting with `my:`.
 
 For more details, refer to the [section on formatting](#formatting)
 

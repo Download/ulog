@@ -1,6 +1,4 @@
-var grab = require('../../core/grab')
-
-/**
+﻿/**
  * Mod: props
  *
  * Enables properties on loggers that are backed by options on ulog.
@@ -21,7 +19,7 @@ var props = module.exports = {
 
   // // called when a logger needs to be enhanced
   ext: function(logger) {
-    var settings = grab(this, 'settings', {})
+    var settings = this.grab('settings', {})
     for (var name in settings) {
       if (settings[name].prop) {
         props.new.call(this, logger, name, settings[name].prop)
@@ -32,7 +30,7 @@ var props = module.exports = {
 
   // contribute props to log records
   record: function(logger, rec) {
-    var settings = grab(this, 'settings', {})
+    var settings = this.grab('settings', {})
     for (var name in settings) {
       if (settings[name].prop) {
         rec['log_' + name] = this.get(name, logger.name)

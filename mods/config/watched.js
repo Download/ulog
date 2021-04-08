@@ -1,8 +1,7 @@
-var grab = require('../../core/grab')
 var watches = require('./watches')
 
 module.exports = function(ulog){
-  var settings = grab(ulog, 'settings', {})
+  var settings = ulog.grab('settings', {})
   var watchers = watches(ulog)
   var watched = {}
   watchers.forEach(function(watcher){

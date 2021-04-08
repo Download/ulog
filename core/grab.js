@@ -1,4 +1,4 @@
-var merge = require('./merge')
+﻿var merge = require('./merge')
 
 module.exports = function(ulog, name, result) {
 	ulog.mods.reduce(function(r,mod){

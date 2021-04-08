@@ -21,6 +21,7 @@ test('mod: props', function (t) {
   t.test('props.ext(logger: Function)', function (t) {
     var ulogStub = sinon.stub()
     ulogStub.mods = []
+    ulogStub.grab = ulog.grab
     ulogStub.mods.push({ settings: { level: { prop: {} } } })
     sinon.spy(props, 'new')
     props.ext.call(ulogStub, function(){})

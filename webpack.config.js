@@ -19,7 +19,7 @@ module.exports = {
   },
   devtool: false,
   optimization: {
-    minimize: true,
+    minimize: false,
     minimizer: [
       new TerserPlugin({
         extractComments: false,

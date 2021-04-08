@@ -4,7 +4,8 @@
     <title>ulog tutorial</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="../style.css">
-    <script src="https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js"></script>
+    <script src="../ulog.min.js"></script>
+    <!-- script src="https://unpkg.com/ulog@2.0.0-beta.18/ulog.min.js"></script -->
     <script src="test.js"></script>
     <script src="my-lib.js"></script>
     <script src="my-other-lib.js"></script>
@@ -56,6 +57,14 @@
   </head>
   <body>
     <main>
+      <noscript>
+        <div class="alert">
+          <h2>Enable Javascript</h2>
+          <p>This demo requires Javascript.
+            Please enable Javascript and reload the page</p>
+        </div>
+      </noscript>
+
       <h1><img src="../ulog.png"> Tutorial</h1>
       <p>Follow the instructions to learn <code>ulog</code> as you read.</p>
       <p class="h4">Have fun!</p>
@@ -320,16 +329,16 @@
         <a href="https://www.npmjs.com/package/kurly/v/2.0.0-beta.2#static-tags"
         >static tags</a> the callstack will be preserved. For comparison,
         let's log some messages with a format that includes
-        <code>message</code>, a dynamic tag, to see the difference.</p>
-      <p>First, set the format to <code>lvl name message</code>:</p>
-      <p><button onclick="localStorage.setItem('log_format', 'lvl name message')">
+        <code>msg</code>, a dynamic tag, to see the difference.</p>
+      <p>First, set the format to <code>lvl name msg</code>:</p>
+      <p><button onclick="localStorage.setItem('log_format', 'lvl name msg')">
         <i>⚙</i>
-        <b>log_format=lvl name message</b>
+        <b>log_format=lvl name msg</b>
       </button></p>
       <p>Then, <a href="#test-callstack">test the callstack again</a>
         and compare:</p>
       <img src="callstack-mangled.jpg">
-      <p>Because <code>message</code> is a dynamic tag, <code>ulog</code> was
+      <p>Because <code>msg</code> is a dynamic tag, <code>ulog</code> was
         unable to preserve the callstack and the result is that now, the
         filename and line numbers all point to <code>ulog.lazy.min.js</code>,
         which is a lot less useful. But the message is now formatted and

@@ -15,7 +15,7 @@ module.exports = function(rec, fmt, msg, r){
     var len = Array.isArray(msg) ? msg.length : 1
     for (var i=0; i<len; i++) {
       var m = Array.isArray(msg) ? msg[i] : msg
-      r[0] += fmt.specifier || (typeof m == 'object' ? '%O ' : '%s ')
+      r[0] += fmt.specifier || (typeof m == 'object' ? '%O ' : m !== undefined ? '%s ' : '')
     }
     r[0] += (c && colorSpecifierAfter(c)) || ''
     r.push.apply(r, (c && colorArgument(c)) || [])

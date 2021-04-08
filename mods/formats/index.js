@@ -1,6 +1,6 @@
 var parse = require('kurly/parse')
 var pipe = require('kurly/pipe')
-var grab = require('../../core/grab')
+
 var console = require('../channels/console')
 var makeStatic = require('./utils').makeStatic
 var makeStaticPipe = require('./utils').makeStaticPipe
@@ -28,12 +28,14 @@ module.exports = {
 
   formats: {
     // add a bunch of formats
-    cr: function(ctx,rec){return function(){return '\r\n'}},
+    cr: require('./cr.js'),
     date: require('./date'),
+    json: require('./json'),
     lvl: require('./lvl'),
-    message: require('./message'),
+    msg: require('./msg'),
     name: require('./name'),
     perf: require('./perf'),
+    structured: require('./structured'),
     time: require('./time'),
     '*': require('./wildcard'),
   },
@@ -47,7 +49,7 @@ module.exports = {
     }
 
     function makePipe(ulog, logger, channel, level) {
-      var formats = grab(ulog, 'formats', {})
+      var formats = ulog.grab('formats', {})
       var ast = parse(logger.format, { optional: true })
       var rec = logger.channels[channel].recorders.reduce(function(rec, record){
         record.call(ulog, logger, rec)
@@ -69,22 +71,24 @@ module.exports = {
         }, [''])
         // apply alignment if needed
         applyAlignment(rec, args)
+        args = args.filter(function(arg){return arg !== undefined})
         // bind the output and arguments to the log method
         // this uses a devious trick to apply formatting without
         // actually replacing the original method, and thus
         // without mangling the call stack
-        return makeStaticPipe(output, method, rec, args)
+        return makeStaticPipe(output, method, rec, args.filter(defined))
       } else {
         return makeDynamicPipe(output, method, rec, line)
       }
   }
 
     function makeDynamicPipe(output, method, rec, line) {
+     var msg = hasFormat(line, 'msg')
+     var structured = hasFormat(line, 'structured')
      // set up a dynamic pipeline as a function
-     var containsMessage = line.reduce(function(r,node){return r || (node && node.name === 'message')}, false)
      return (function(rec){return function() {
         // arguments to this function are the message
-        rec.message = [].slice.call(arguments)
+        rec.msg = [].slice.call(arguments)
         // run through the pipeline, running all formatters
         var args = line
         .map(toTag)
@@ -93,7 +97,8 @@ module.exports = {
           var msg = typeof fmt == 'function' ? fmt(rec) : fmt
           return applyFormatting(rec, fmt, msg, r)
         }, [''])
-        if (! containsMessage) args.push.apply(args, rec.message)
+        args = args.filter(defined)
+        if (!structured && !msg) args.push.apply(args, rec.msg)
         // apply alignment if needed
         applyAlignment(rec, args)
         // pass the formatted arguments on to the original output method
@@ -106,6 +111,18 @@ module.exports = {
       node.tag
     )}
 
-    function skip(tag){return (typeof tag != 'string') || tag.trim().length}
+    function skip(tag){
+      return tag && ((typeof tag != 'string') || tag.trim().length)
+    }
+
+    function defined(x){
+      return x !== undefined
+    }
+
+    function hasFormat(line, name) {
+      return line.reduce(function(r,node){
+        return r || (node && node.name === name)
+      }, false)
+    }
   },
 }

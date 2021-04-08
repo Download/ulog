@@ -4,6 +4,8 @@ img { max-width: 100%; }
 
 /* theming */
 :root {
+
+  /** PROSE */
   --root-font-family: "Roboto";
 
   --root-font-size:     16px;
@@ -16,8 +18,6 @@ img { max-width: 100%; }
   --h3-font-size:       min(max(1.25rem,   calc(1.1rem + 1.75vw)),  2.37rem);
   --h2-font-size:       min(max(1.5rem,   calc(1.3rem + 2.05vw)),  2.8rem);
   --h1-font-size:       min(max(1.75rem,   calc(1.58rem + 2.5vw)),  3.4rem);
-
-  --main-max-width:     min(max( 30rem, calc(20rem + 50vw)), 50rem);
 
   --body-font-weight:   normal;
   --p-font-weight:      normal;
@@ -102,7 +102,15 @@ img { max-width: 100%; }
   --h2-line-height:     1.3;
   --h1-line-height:     1.25;
   --button-line-height: 24px;
+
+  /** LAYOUT */
+  --main-max-width:     min(max( 30rem, calc(20rem + 50vw)), 50rem);
+  --header-max-width:   var(--main-max-width);
+  --footer-max-width:   var(--main-max-width);
 }
+
+
+/** PROSE */
 
 html {
   font-family: var(--root-font-family);
@@ -111,8 +119,6 @@ html {
 
 body,
 .body   {font-size: var(--body-font-size);   font-weight: var(--body-font-weight);   margin: var(--body-margin);   padding: var(--body-padding);   color: var(--body-color);   line-height: var(--body-line-height)}
-main,
-.main   {max-width: var(--main-max-width); margin: 0 auto;}
 p,  .p  {font-size: var(--p-font-size);      font-weight: var(--p-font-weight);      margin: var(--p-margin);      padding: var(--p-padding);      color: var(--p-color);      line-height: var(--p-line-height)}
 h6, .h6 {font-size: var(--h6-font-size);     font-weight: var(--h6-font-weight);     margin: var(--h6-margin);     padding: var(--h6-padding);     color: var(--h6-color);     line-height: var(--h6-line-height)}
 h5, .h5 {font-size: var(--h5-font-size);     font-weight: var(--h5-font-weight);     margin: var(--h5-margin);     padding: var(--h5-padding);     color: var(--h5-color);     line-height: var(--h5-line-height)}
@@ -153,3 +159,24 @@ h1 > .img,
   margin: 0px var(--button-margin-r) calc(0px - 0.33 * var(--h1-font-size)) 0px;
 }
 
+
+/** LAYOUT */
+
+main,
+.main   {max-width: var(--main-max-width); margin: 0 auto;}
+
+header,
+.header   {max-width: var(--header-max-width); margin: 0 auto;}
+
+footer,
+.footer   {max-width: var(--footer-max-width); margin: 0 auto;}
+
+
+/** STYLE */
+.alert {
+  background: #f5ccc5;
+}
+
+.alert h2 {
+  color: #550000;
+}

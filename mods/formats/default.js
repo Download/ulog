@@ -1,1 +1,1 @@
-module.exports = "lvl name:20 message perf"
+module.exports = "lvl name:20 msg perf"

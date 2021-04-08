@@ -1,10 +1,8 @@
-var grab = require('../../core/grab')
-// var args = require('./args')
-// var env = require('./env')
 var read = require('./read')
 var update = require('./update')
 var notify = require('./notify')
 var watch = require('./watch')
+
 var config = module.exports = {
   use: [
     require('../settings'),
@@ -25,7 +23,7 @@ var config = module.exports = {
       config.update(this)
     }
     if (!result) {
-      var settings = grab(this, 'settings', {})
+      var settings = this.grab('settings', {})
       name = settings[name] && settings[name].config || name
       result = this.config[name]
     }
