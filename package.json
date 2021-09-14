@@ -53,19 +53,19 @@
     "prepare": "npm run test -S && npm run clean -S && npm run build -S"
   },
   "dependencies": {
-    "anylogger": "^1.0.10",
+    "anylogger": "^1.0.11",
     "kurly": "^2.0.0-beta.3"
   },
   "devDependencies": {
     "gzip-size": "^6.0.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "sinon": "^9.2.4",
+    "sinon": "^11.1.2",
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
-    "tape": "^5.1.1",
-    "webpack": "^5.21.2",
-    "webpack-cli": "^4.5.0"
+    "tape": "^5.3.1",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
   },
   "peerDependencies": {
     "anylogger": "^1.0.10"
