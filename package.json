@@ -35,8 +35,7 @@
     "./mods/config/watch.js": "./mods/config/watch.browser.js",
     "./mods/levels/default.js": "./mods/levels/default.browser.js",
     "./mods/formats/aligned.js": "./mods/formats/aligned.browser.js",
-    "./mods/formats/default.js": "./mods/formats/default.browser.js",
-    "./mods/formats/utils.js": "./mods/formats/utils.browser.js"
+    "./mods/formats/default.js": "./mods/formats/default.browser.js"
   },
   "keywords": [
     "ulog",

@@ -151,7 +151,7 @@ can download it from here.
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.18/full.min.js) (~5.7kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.18/full.min.js) (~5.6kB minified and gzipped)
 
 > Full bundle, no lazy loading
 

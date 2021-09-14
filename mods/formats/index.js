@@ -2,8 +2,7 @@ var parse = require('kurly/parse')
 var pipe = require('kurly/pipe')
 var grab = require('../../core/grab')
 var console = require('../channels/console')
-var makeStatic = require('./utils').makeStatic
-var makeStaticPipe = require('./utils').makeStaticPipe
+var firefox = require('../colors/utils').firefox
 var applyFormatting = require('./apply-formatting')
 var applyAlignment = require('./apply-alignment')
 
@@ -64,9 +63,8 @@ module.exports = {
         .map(toTag)
         .filter(skip)
         .reduce(function(r,fmt){
-          var msg = makeStatic(fmt)
-          return applyFormatting(rec, fmt, msg, r)
-        }, [''])
+           return applyFormatting(rec, fmt, fmt, r)}
+         , [''])
         // apply alignment if needed
         applyAlignment(rec, args)
         // bind the output and arguments to the log method
@@ -77,7 +75,19 @@ module.exports = {
       } else {
         return makeDynamicPipe(output, method, rec, line)
       }
-  }
+    }
+
+    function makeStaticPipe(output, method, rec, args) {
+      return Object.defineProperty({}, 'out', {
+        get: function(){
+          return method.bind.apply(method,
+            [output].concat(firefox && (rec.level === 'trace') ? [] : args.map(function(arg){
+              return typeof arg == 'function' ? arg() : arg
+            })
+          ))
+        }
+      }).out
+    }
 
     function makeDynamicPipe(output, method, rec, line) {
      // set up a dynamic pipeline as a function
@@ -101,11 +111,12 @@ module.exports = {
       }})(rec)
     }
 
-    function toTag(node) {return (
-      !node || !node.tag ? node :
-      node.tag
-    )}
+    function toTag(node) {
+      return !node || !node.tag ? node : node.tag
+    }
 
-    function skip(tag){return (typeof tag != 'string') || tag.trim().length}
+    function skip(tag){
+      return (typeof tag != 'string') || tag.trim().length
+    }
   },
 }
