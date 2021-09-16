@@ -7,12 +7,18 @@ var notify = require('./notify')
 var watch = require('./watch')
 var config = module.exports = {
   use: [
-    require('../settings'),
+    require('../settings')
   ],
 
   settings: {
     config: {
       config: 'log_config'
+    },
+    pollTime: {
+      config: 'poll_time',
+      prop: {
+        default: 350
+      }
     }
   },
 
@@ -42,5 +48,9 @@ var config = module.exports = {
 
   set: function(name) {
     if (name === 'log_config') config.update(this)
+  },
+
+  after: function () {
+    config.update(this);
   }
 }
