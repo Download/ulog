@@ -1,1 +1,0 @@
-module.exports = (typeof console != 'undefined') && console

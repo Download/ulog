@@ -1,0 +1,95 @@
+import test from 'tape';
+import sinonLib from 'sinon'
+import ulog from '../../core/core.js';
+import cfg from '../cfg/cfg.js';
+import lvl from './index.js';
+
+const sinon = sinonLib.createSandbox();
+
+test('mod: levels', function (t: any) {
+  t.equal(typeof lvl, 'object', 'is an object');
+  t.ok('use' in lvl, 'has a property `use`');
+  t.ok('cfg' in lvl, 'has a property `cfg`');
+  t.ok('props' in lvl, 'has a property `props`');
+  t.equal(typeof lvl.ext, 'function', 'has a method `ext()');
+  t.test('lvl.use', function (t: any) {
+    //    t.deepEqual(lvl.use, [ outputs ], 'contains a dependency on `outputs`')
+    t.end();
+  });
+
+  t.test('levels.use', function(t: any){
+//    t.deepEqual(levels.use, [ outputs ], 'contains a dependency on `outputs`')
+    t.end()
+  })
+
+  t.test('lvl.cfg', function (t: any) {
+    t.equal(typeof lvl.cfg, 'object', 'is an object');
+    t.ok('debug' in lvl.cfg, 'contains a `debug` setting');
+    t.equal((typeof lvl.cfg.debug == 'object') &&
+      lvl.cfg.debug.impliedValue, 'debug',
+      'the `debug` setting has an implied value of "debug"'
+    );
+    t.ok('log' in lvl.cfg, 'contains a `log` setting');
+    t.equal(lvl.cfg.log, 'info',
+      'the `log` setting has a default value of "info"'
+    );
+    t.ok('log_output' in lvl.cfg, 'contains a `log_output` setting');
+    t.equal(lvl.cfg.log_output, 'console', 'the `log_output` setting has a default value of "info');
+    t.ok('log_drain' in lvl.cfg, 'contains a `log_drain` setting');
+    t.equal(lvl.cfg.log_drain, 'noop', 'the `log_drain` setting has a default value of "noop');
+    //    t.equal(typeof lvl.settings.level.prop.set, 'function', 'the `level` prop has a `set` handler')
+    t.end();
+  });
+
+  t.test('lvl.props', function (t: any) {
+    t.equal(typeof lvl.props, 'object', 'is an object');
+    t.ok('level' in lvl.props, 'contains a prop `level`');
+    t.equal(typeof lvl.props.level.get, 'function', 'the `level` prop has a `get` handler');
+    t.ok('output' in lvl.props, 'contains a prop `output`');
+    t.equal(typeof lvl.props.output.get, 'function', 'the `output` prop has a `get` handler');
+    t.ok('drain' in lvl.props, 'contains a prop `drain`');
+    t.equal(typeof lvl.props.drain.get, 'function', 'the `drain` prop has a `get` handler');
+    //    t.equal(typeof lvl.settings.level.prop.set, 'function', 'the `level` prop has a `set` handler')
+    t.end();
+  });
+
+  t.test('levels.ext(logger: Function)', function (t: any) {
+    ulog.use(levels)
+    var logger = ulog('test')
+    t.equal(logger.NONE, 0, 'creates a property `NONE`')
+    for (const lvl in ulog.levels) {
+      var prop = lvl.toUpperCase()
+      t.equal(logger[prop], ulog.levels[lvl], 'creates a property `' + prop + '`')
+    }
+    t.equal(logger.ALL, 7, 'creates a property `ALL`')
+    t.equal(logger.error, logger.channels.output.fns.error, 'log methods that are within the logger\'s level lead to output')
+    t.equal(logger.log, logger.channels.drain.fns.log, 'log methods that are outside the logger\'s level lead to the drain')
+
+    ulog.mods.splice(0, ulog.mods.length)
+    delete ulog().test
+    t.end()
+  })
+
+  t.test('ulog.use(levels)', function(t: any){
+    ulog.use(levels)
+    t.ok(ulog.mods.indexOf(levels) !== -1, 'adds the `levels` mod')
+    var logger = ulog('test')
+    t.ok('level' in logger, 'adds a property `level` to loggers')
+    t.equal(typeof logger.level, 'number', 'property `level` is a number')
+    t.ok(!Number.isNaN(logger.level), 'property `level` is not NaN')
+    logger.level = logger.LOG
+    t.equal(logger.level, logger.LOG, 'property `level` can be assigned a level number')
+    logger.level = 'info'
+    t.equal(logger.level, logger.INFO, 'property `level` can be assigned a level name')
+    logger.level = '' + logger.INFO
+    t.equal(logger.level, logger.INFO, 'property `level` can be assigned a level number as a string')
+    ulog.set('debug', 'test')
+    t.equal(logger.level, logger.DEBUG, 'property `level` correctly reflects it when a logger is in debug mode')
+    ulog.mods.splice(0, ulog.mods.length)
+    delete ulog().test
+    t.end()
+  })
+
+  t.end()
+})
+

@@ -1,20 +1,24 @@
-var path = require('path')
-var dir = path.resolve(__dirname)
-const TerserPlugin = require("terser-webpack-plugin");
+import path from 'path'
+import TerserPlugin from "terser-webpack-plugin"
+import { fileURLToPath } from 'url';
+const dir = path.resolve(fileURLToPath(new URL('.', import.meta.url)))
 
-module.exports = {
+const configuration = {
   node: false,
   context: dir,
   entry: {
     ulog: './ulog.bundle.js',
     full: './full.bundle.js',
   },
+  externals: {
+    anylogger: 'anylogger',
+  },
   output: {
     path: dir,
     filename: '[name].min.js',
     environment: {
       // The environment supports arrow functions ('() => { ... }').
-      arrowFunction: false,
+      arrowFunction: true,
     }
   },
   devtool: false,
@@ -27,3 +31,5 @@ module.exports = {
     ],
   },
 }
+
+export default configuration

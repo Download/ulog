@@ -1,9 +1,13 @@
-var fs = require('fs')
-var path = require('path')
+import fs from 'node:fs'
+import path from 'node:path'
+import * as url from 'node:url';
 
-var gzipSize = require('gzip-size')
+import { gzipSizeSync } from 'gzip-size'
 // be cool and use ulog to print the logging in the build of ulog :)
-var ulog = require('./')
+import ulog from 'ulog'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 var log = ulog('ulog:build')
 
 var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
@@ -12,23 +16,23 @@ var v = pkg.version
 ;(function(){
   var file = path.resolve(__dirname, pkg.unpkg)
   log('Reading ' + file)
-  data = fs.readFileSync(file, 'utf8')
+  let data = fs.readFileSync(file, 'utf8')
   log('Estimating gzipped size')
-  var gzip = (gzipSize.sync(data) / 1024).toFixed(1)
+  var gzip = (gzipSizeSync(data) / 1024).toFixed(1)
   log.info(`${pkg.unpkg} (~${(data.length / 1024).toFixed(1)} kB, ${gzip} kB gzipped)`)
 
   file = path.resolve(__dirname, 'ulog.lazy.min.js')
   log('Reading ' + file)
   data = fs.readFileSync(file, 'utf8')
   log('Estimating gzipped size')
-  var lazy = (gzipSize.sync(data) / 1024).toFixed(1)
+  var lazy = (gzipSizeSync(data) / 1024).toFixed(1)
   log.info(`ulog.lazy.min.js (~${(data.length / 1024).toFixed(1)} kB, ${lazy} kB gzipped)`)
 
   file = path.resolve(__dirname, 'full.min.js')
   log('Reading ' + file)
   data = fs.readFileSync(file, 'utf8')
   log('Estimating gzipped size')
-  var full = (gzipSize.sync(data) / 1024).toFixed(1)
+  var full = (gzipSizeSync(data) / 1024).toFixed(1)
   log.info(`full.min.js (~${(data.length / 1024).toFixed(1)} kB, ${full} kB gzipped)`)
 
   file = path.resolve(__dirname, 'README.md')

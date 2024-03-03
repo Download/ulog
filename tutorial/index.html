@@ -4,14 +4,15 @@
     <title>ulog tutorial</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="../style.css">
-    <script src="https://unpkg.com/ulog@2.0.0-beta.19/ulog.min.js"></script>
+    <script src="https://unpkg.com/anylogger@1.1.0-beta.5/anylogger.min.js"></script>
+    <script src="../ulog.min.js"></script>
     <script src="test.js"></script>
     <script src="my-lib.js"></script>
     <script src="my-other-lib.js"></script>
     <script>
       function test(){
-        for (var logger in ulog()) {
-          for (var level in ulog.levels) {
+        for (var logger in anylogger.all) {
+          for (var level in anylogger.levels) {
             anylogger(logger)[level]('This is a' + ((level == 'info') || (level == 'error') ? 'n' : '') + ' ' + level.toUpperCase() + ' message')
           }
         }
@@ -29,7 +30,7 @@
       }
 
       function remove(name) {
-        delete anylogger()[name]
+        delete anylogger.all[name]
         update()
       }
 
@@ -38,7 +39,7 @@
         while (list.firstChild) {
           list.removeChild(list.firstChild)
         }
-        for (var name in anylogger()) {
+        for (var name in anylogger.all) {
           var item = document.createElement('li')
           item.innerHTML = '<tt>' + name + '</tt> <button onclick="remove(\'' + name + '\')" title="remove">x</button>'
           list.appendChild(item)

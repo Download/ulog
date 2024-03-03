@@ -1,4 +1,4 @@
-# ulog <sub><sup>v2.0.0-beta.19</sup></sub>
+# ulog <sub><sup>v2.0.0-beta.20</sup></sub>
 ### The Universal Logger
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
@@ -8,39 +8,37 @@
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
 
-![logo](https://unpkg.com/ulog@2.0.0-beta.19/ulog.png)
+![logo](https://unpkg.com/ulog@2.0.0-beta.20/ulog.png)
 
 
 ## The logger for javascript applications
 
 `ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.19/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.20/screenshot.jpg)
 
 
 ## Features
 
 Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug) and [`loglevel`](https://npmjs.com/package/loglevel) and adds some of it's own!
 
-| Feature                                     | &nbsp; debug &nbsp; |      loglevel       | &nbsp; ulog &nbsp; |
-| ------------------------------------------- | ------------------- | ------------------- | ------------------ |
-| [Footprint](#footprint)                     |        3.2 kB       |        1.4 kB       |        2.7 kB      |
-| [Debug mode](#debug-mode)                   |         ✓           |          ✓ (1)      |          ✓         |
-| [Levels](#levels)                           |                     |          ✓          |          ✓         |
-| [Configurable](#configure)                  |         ✓           |          ✓ (2)      |          ✓         |
-| [Dynamic config](#dynamic-config)           |                     |                     |           ✓        |
-| [Channels](#channels)                       |                     |                     |           ✓        |
-| [Outputs](#outputs)                         |                     |                     |           ✓        |
-| [Custom outputs](#custom-outputs)           |                     |                     |           ✓        |
-| [Formatting](#formatting)                   |         ✓           |                     |           ✓        |
-| [Preserves callstack](#preserves-callstack) |                     |          ✓          |           ✓        |
-| [Configurable format](#configurable-format) |                     |                     |           ✓        |
-| [Custom formats](#custom-formats)           |                     |                     |           ✓        |
-| [Colors](#colors)                           |         ✓           |                     |           ✓        |
-| [Alignment](#alignment)                     |                     |                     |           ✓        |
-| [Add-ons / Mods](#mods)                     |                     |          ✓          |           ✓        |
-| [Lazy loading](#lazy-loading)               |                     |                     |           ✓        |
-| [Anylogger support](#anylogger-support)     |         ✓ (3)       |          ✓ (3)      |           ✓        |
+| Feature                                     |  debug  | loglevel |   ulog  |
+| ------------------------------------------- | ------- | -------- | ------- |
+| [Footprint](#footprint)                     |  3.2 kB |  1.4 kB  |  2.7 kB |
+| [Debug mode](#debug-mode)                   |   ✓     |   ✓ (1)  |    ✓    |
+| [Levels](#levels)                           |         |   ✓      |    ✓    |
+| [Configurable](#configure)                  |   ✓     |   ✓ (2)  |    ✓    |
+| [Outputs](#outputs)                         |         |          |    ✓    |
+| [Custom outputs](#custom-outputs)           |         |          |    ✓    |
+| [Formatting](#formatting)                   |   ✓     |          |    ✓    |
+| [Preserves callstack](#preserves-callstack) |         |   ✓      |    ✓    |
+| [Configurable format](#configurable-format) |         |          |    ✓    |
+| [Custom formats](#custom-formats)           |         |          |    ✓    |
+| [Colors](#colors)                           |   ✓     |          |    ✓    |
+| [Alignment](#alignment)                     |         |          |    ✓    |
+| [Add-ons / Mods](#mods)                     |         |   ✓      |    ✓    |
+| [Lazy loading](#lazy-loading)               |         |          |    ✓    |
+| [Anylogger support](#anylogger-support)     |   ✓ (3) |   ✓ (3)  |    ✓    |
 
 (1) emulated with levels
 (2) in browser only
@@ -130,7 +128,7 @@ log('Logging is easy')
 If you want, you can import `ulog` with a script tag:
 
 ```html
-<script src="https://unpkg.com/ulog@2.0.0-beta.19/ulog.min.js"></script>
+<script src="https://unpkg.com/ulog@2.0.0-beta.20/ulog.min.js"></script>
 <!-- publishes to `self.anylogger` and `self.ulog`. -->
 <!-- lazy loads ulog.lazy.min.js on demand. -->
 <script src="myscript.js"></script>
@@ -146,12 +144,12 @@ log('Logging is easy!')
 If you want the file for the browser to include in your project yourself, you
 can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.19/ulog.min.js) (~2.7kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.19/ulog.lazy.min.js) (~4.3kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.min.js) (~1.8kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.lazy.min.js) (~4.1kB minified and gzipped)
 
 > `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.19/full.min.js) (~5.6kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.20/full.min.js) (~3.9kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
@@ -299,56 +297,35 @@ const log = anylogger('my-app')
 log('Hi!') // is output because logger is in debug mode
 ```
 
-## Channels
-
-In `ulog`, logging is always sent to exactly one channel. By default,
-two channels exist: `output`, for messages of loggers that are in
-debug mode, or that are at an enabled level, and `drain`, for those
-messages that are filtered away.
-
-By using a separate channel for the drain, we can override the default behavior
-of using noops for all log levels that are outside of the active levels. We
-could for example send *all* logging to a database and only later filter it,
-when we display it for example.
-
-A channel has one or more configurable [outputs](#outputs) that can optionally
-apply [formatting](#formatting) to the message.
-
-
 ## Outputs
 
 In `ulog`, where messages are going is completely configurable at runtime.
 You can even configure where discarded messages are going.
 
-By default all log methods on a logger are associated with one of two channels,
+All log methods on a logger are associated with one of two channels,
 `output` and `drain`. To configure the outputs for these channels, two
 config options are available:
 
 * [config option `log_output`](#config-option-log_output), defaults to `'console'`
-* [config option `log_drain`](#config-option-log_drain), defaults to `'drain'`
+* [config option `log_drain`](#config-option-log_drain), defaults to `'noop'`
 
 When the logger is created, each log method is sent either to the `output`
 channel, or to the `drain` channel, based on the current log level for that
 logger and whether that logger is in debug mode.
 
-To configure the output for a logger, we assign the name of the output to use
-to the relevant logger:
+To configure the output channel, we assign the name of the output to use
+to the relevant config:
 
 ```sh
-log_output=console
+log_output="console"
 ```
 
 This setting can include expressions to target individual loggers, just like
 the `debug` and `log` settings:
 
 ```sh
-log_output=console;noisy-lib:*=noop
+log_output="console; noisy-lib:*=noop"
 ```
-
-The value part is actually a kurly format string. The same syntax can be used
-here as for [configuring formatting](#configuring-formatting). If more than
-one output is specified, a multiplex function will be inserted that dispatches
-the logging to all specified outputs.
 
 By default, the following outputs are included:
 
@@ -359,7 +336,11 @@ what allows us to leave the call stack intact in the browser developer tools.
 
 ### Output `noop`
 
-This is just an object with a noop `log` function
+This is just a log object that discards all calls
+
+### Output `drain`
+
+Like `noop`, but logs a debug message for every call
 
 ### Custom outputs
 
@@ -370,43 +351,22 @@ outputs by making `ulog` use a mod with an `outputs` key:
 *index.js*
 ```js
 import ulog from 'ulog'
+
 ulog.use({
   outputs: {
     custom: {
-      log: function(){
-        var args = [].slice.call(arguments)
-        args.shift('Custom!!')
-        console.log.apply(console, args)
-      },
-      info: function(){
-        var args = [].slice.call(arguments)
-        args.shift('Custom!!')
-        console.info.apply(console, args)
-      }
+      error(...args) { /* custom code */ },
+      warn(...args) { /* custom code */ },
+      info(...args) { /* custom code */ },
+      log(...args) { /* custom code */ },
+      debug(...args) { /* custom code */ },
+      trace(...args) { /* custom code */ },
     }
   }
 })
 ```
 
-An output can either be an object with `log`, `info`, `warn` etc methods as shown
-above, or a [kurly](https://npmjs.com/package/kurly) tag:
-
-*index.js*
-```js
-import ulog from 'ulog'
-ulog.use({
-  outputs: {
-    custom: function(ctx){
-      return function(rec) {
-        rec.message.shift('Custom!!')
-        console[rec.level].apply(console, rec.message)
-      }
-    }}
-  }
-})
-```
-
-This way you can add outputs that send log messages to memory, a file, localStorage, a database etc etc.
+This way you can add outputs that send log messages to memory, a file, localStorage, a database, over the network, etc etc.
 
 
 ## Formatting
@@ -427,11 +387,11 @@ configuration mechanism.
 The default format string on Node is:
 
 ```sh
-lvl name:20 message perf
+lvl name message perf
 ```
 
 This sacrifices the callstack for a colored and formatted `message` and having
-the `perf` measurements after the message i.s.o before it. The Node JS doesn't
+the `perf` measurements after the message i.s.o before it. Node JS doesn't
 output any file name / line number information anyway.
 
 On browsers, we want to spare the call stack, so there the default is:
@@ -483,22 +443,41 @@ are used as formats, the call stack can remain unharmed.
 
 ### Included formats
 
-Except for the `message` format, all included formats are static.
+Except for the `message` format, all included formats are static. Meaning they
+don't mangle the call stack, but also don't have access to the message. The
+`message` format must be dynamic, because it needs access to the message.
+
+More about static vs dynamic formats later, in the
+[Custom formats](#custom-formats) section.
 
 #### Format `cr`
 Prints a 'carriage return line feed'
 
+This allows you to easily set a multi-line format:
+
+```sh
+log_format="lvl name perf cr"
+```
+
+This will print the message on the next line.
+
 #### Format `date`
 Prints the date the message was logged as `yyyy/MM/dd`.
 
+Combined with `time`, this can give you the full date time.
+
 #### Format `lvl`
 Prints the level of the message as a single character:
+
 * `'x'` for error messages
 * `'!'` for warning messages
 * `'i'` for info messages
 * `'-'` for log messages
 * `'>'` for debug messages
 * `'}'` for trace messages
+
+To get the full level name, you can use `level`, which will be
+caught and handled correctly by the `wildcard` format.
 
 #### Format `message`
 Prints the message, formatted and colored.
@@ -508,13 +487,15 @@ Using this format breaks the callstack as it is dynamic.
 Prints the logger name
 
 #### Format `perf`
-Prints the time difference between two invocations to the same logger, only if this difference is larger than 1ms. Produces output that looks like `+62ms`.
+Prints the time difference between two invocations to the same logger, only if
+this difference is larger than 1ms. Produces output that looks like `62ms`.
+If the time difference becomes large, switches to larger units. E.g. `12.4s`.
 
 #### Format `time`
 Prints the time the message was logged as `hh:mm`.
 
-#### Fallback format
-Any unrecognized tags are being interpreted by the fallback format. This just
+#### Format `wildcard`
+Any unrecognized tags are being interpreted by the wildcard format. This just
 returns the field on the log record whose name matches. For example suppose
 we'd write `level`. This is an unrecognized tag so the wildcard formatter is
 used, which just returns the `level` field from the log record. If no field
@@ -539,7 +520,7 @@ ulog.use({
   use: [ formats ],
   formats: {
     custom: (ctx) => (rec) => (['custom'].concat(rec.message)),
-    random: (ctx, rec) => () => Math.random()
+    random: (ctx, rec) => () => String(Math.random())
   }
 })
 ```
@@ -553,15 +534,31 @@ These tags then become available in the format string.
 Formats come in two flavors:
 
 #### Dynamic formats
-Dynamic formats have full access to the message. But they do mess up the call stack. A dynamic format has this signature:
+Dynamic formats have full access to the message.
+But they do mess up the call stack.
+
+> The reason dynamic formats interfere with the call stack is that in order to
+> get access to the message, we have to *wrap* the console log function with
+> our own function. This wrapping results in the wrapping function being the
+> caller from the console's perspective. And thus the filename and line number
+> of this function are shown in the debug console.
+
+A dynamic format has this signature:
+
+```ts
+  (ctx: FormatContext) => (rec: DynamicFormatRecord) => string || string[]
+```
+
+Here is how you would add a dynamic format:
 
 ```js
+import ulog from 'ulog'
+
 ulog.use({
-  use: [ require('ulog/mods/formats') ],
   formats: {
-    dynamicFormat: function(ctx) {
+    dynamicFormat(ctx) {
       // one-time init here
-      return function(rec) {
+      return (rec) => {
         // rec.message contains full message
         return /* ... */
       }
@@ -575,9 +572,12 @@ Static formats do not have access to the message. But they do not break the call
 
 Static formats have this signature:
 
+```ts
+  (ctx: FormatContext, rec: StaticFormatRecord) => () => string || string[]
+```
+
 ```js
 ulog.use({
-  use: [ require('ulog/mods/formats') ],
   formats: {
     staticFormat: function(ctx, rec) {
       // one-time init here
@@ -613,12 +613,12 @@ messages at these higher levels are indented a bit more than the other
 messages, making the logging harder to read. This can be clearly seen in the
 screenshot from `ulog` v2.0.0-beta-11, which did not yet have alignment:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.19/screenshot-beta.11.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.20/screenshot-beta.11.jpg)
 
 `ulog` now automatically adds some formatting that negates the extra indentation
 the messages at these higher levels get, so all messages are nicely aligned:
 
-![screenshot](https://unpkg.com/ulog@2.0.0-beta.19/screenshot.jpg)
+![screenshot](https://unpkg.com/ulog@2.0.0-beta.20/screenshot.jpg)
 
 You can control alignment with [config option `log_align`](#config-option-log_align).
 
@@ -626,11 +626,8 @@ You can control alignment with [config option `log_align`](#config-option-log_al
 ## Configure
 
 `ulog` features a simple, yet powerful and flexible configuration mechanism. On
-Node JS, we can configure `ulog` via program arguments, environment variables
-or a configuration file. On browsers, we use querystring arguments or
-localStorage. On both platforms, the configuration is monitored and changes to
-it are picked up by `ulog` at runtime without the need to restart the
-application.
+Node JS, we can configure `ulog` via environment variables. On browsers, we use
+localStorage or querystring arguments.
 
 `ulog`'s configuration mechanism is an extension to that of
 [`debug`](https://npmjs.com/package/debug) and is compatible with it. `debug`
@@ -644,7 +641,6 @@ We configure `ulog` by adjusting configuration options.
 
 * [`log`](#config_option_log): The main setting to control logger's levels with
 * [`debug`](#config_option_debug): For compatibility with `debug`
-* [`log_config`](#config_option_log_config): To specify the configuration file (Node JS only)
 * [`log_output`](#config_option_log_output): To configure where logging should go
 * [`log_drain`](#config_option_log_drain): To configure where logs should drain
 * [`log_format`](#config_option_log_format): To configure the format for log messages
@@ -658,57 +654,50 @@ We configure `ulog` by adjusting configuration options.
 ```sh
 DEBUG=test,my:*,-my:lib
 ```
-The format is basically a comma-separated list of logger names, using the asterisk as a wildcard character and optionally negating the expression by preceding it with a minus sign. So the expression above includes `test` and `my:*` loggers, except for `my:lib` which is excluded.
+The format is basically a comma-separated list of logger names, using the
+asterisk as a wildcard character and optionally negating the expression by
+preceding it with a minus sign. So the expression above includes `test` and
+`my:*` loggers, except for `my:lib` which is excluded.
 
-`ulog` extends this configuration mechanism. With `debug`, you can only turn loggers on and off, but `ulog` allows for a much more varied range of options. This is achieved by extending the configuration syntax so it also accepts the value applicable for the loggers matching the expression. Also we allow a semicolon-separated list of such expression=value pairs. For example, to set the logger `test` to debug and `my:*` loggers except for `my:lib` to info, we could write:
+`ulog` extends this configuration mechanism. With `debug`, you can only turn
+loggers on and off, but `ulog` allows for a much more varied range of options.
+This is achieved by extending the configuration syntax so it also accepts the
+value applicable for the loggers matching the expression. Also we allow a
+semicolon-separated list of such expression=value pairs. For example, to set
+the logger `test` to debug and `my:*` loggers except for `my:lib` to info, we
+could write:
 
 ```sh
-log=test=debug;my:*,-my:lib=info
+log="test=debug; my:*,-my:lib=info"
 ```
 
 If an option only contains a value, `ulog` implicitly adds `*` as the expression. So we can write:
 ```sh
-log=info
+log="info"
 ```
 and it's equivalent to
 ```sh
-log=*=info
+log="*=info"
 ```
 We can even combine this. So we could write:
 ```sh
-log=info;my:*=debug
+log="info; my:*=debug"
 ```
-and it will set the level for all loggers to info, except for the ones starting with `my:`, which are set to debug.
-
-A special case is the config option [debug](#config_option_debug), which is designed to be compatible with `debug` so code using `ulog` will react to that setting in the same way.
+and it will set the level for all loggers to info, except for the ones starting
+with `my:`, which are set to debug.
 
 Most of the config options support this syntax.
 
-### Via program arguments
-
-On Node JS we can pass log configuration options as program arguments:
-
-```sh
-node ./myapp log=debug
-```
-This should be helpful when making CLI applications. These strongly rely on console messages, but are also often used in scripted setups where we would actually want to suppress that logging. Don't go and build in all kinds of custom methods to configure the logging but just use `ulog` and rely on it's powerful configuration mechanism instead.
+A special case is the config option [debug](#config_option_debug), which is
+designed to be compatible with `debug` so code using `ulog` will react to that
+setting in the same way.
 
 ### Via environment variables
 
 On Node JS we can pass log configuration options via environment variables:
 
 ```sh
-log=debug node ./myapp
-```
-
-### Via a config file
-
-On Node JS we can place our log configuration in a file that will be read at startup and monitored for changes at runtime:
-
-*./log.config*
-
-```
-log=debug
+log="debug" node ./myapp
 ```
 
 ### Via querystring parameters
@@ -721,28 +710,18 @@ https://example.com/page?log=debug
 
 ### Via localStorage
 
-In browsers, we can place our log configuration in localStorage and it will be read at startup and monitored for changes at runtime:
+In browsers, we can place our log configuration in localStorage:
 
 ```js
 localStorage.setItem('log', 'debug')
 ```
-
-### Dynamic config
-
-`ulog`'s configuration mechanism watches the configuration for changes while
-the program is running and reacts to them in real-time. No more restarting your
-application just to change some log level! On Node JS, `ulog` watches a
-configuration file. Use
-[Config option `log_format`](#config-option-log_format) to specify the
-location. In browsers, `ulog` monitors `localStorage` for changes.
-
 
 ### Config option `log`
 
 Configure the levels loggers should be filtered at.
 
 ```sh
-log=test=debug;my:*,-my:lib=info
+log="test=debug; my:*,-my:lib=info"
 ```
 
 ### Config option `debug`
@@ -750,43 +729,40 @@ log=test=debug;my:*,-my:lib=info
 Enables debug mode for the selected loggers.
 
 ```sh
-debug=test,my:*,-my:lib
+debug="test,my:*,-my:lib"
 ```
 This option is compatible with that of `debug`.
-
-### Config option `log_config`
-
-Specify the path to the log configuration file, absolute or relative to the current working directory. Node JS only. Default to `./log.config`. This option does not support expressions.
-
-```sh
-log_config=./my.log.config
-```
 
 ### Config option `log_output`
 
 Specify the name of the output logs should be written to. Defaults to `'console'`.
 
 ```sh
-log_output=my:*,-my:lib=console
+log_output="console; noisy-lib=noop"
 ```
 
 ### Config option `log_drain`
 
 Specify the name of the output logs should be drained to. Defaults to `noop`.
-When log messages are filtered out, they are sent to the drain instead of to the normal output. The default `noop` output is just a noop, but you could override this to send them to a separate file for example.
+When log messages are filtered out, they are sent to the drain instead of to
+the normal output. The default `noop` output is just a noop, but you could
+override this to send them to a separate file for example.
 
 ```sh
-log_drain=my:*,-my:lib=noop
+log_drain="noop"
 ```
 
 ### Config option `log_format`
 
-Specify the format to use. Defaults to `lvl name:22 message perf` on Node JS and `lvl name perf` on browsers.
+Specify the format to use. Defaults to `lvl name message perf` on Node JS and
+`lvl name perf` on browsers.
 
 ```sh
-log_format=lvl name perf message;my:*=lvl name perf
+log_format="lvl name message; my:*=lvl name message perf"
 ```
-This sets `lvl name perf message` as the default format, while assigning a different format string to all loggers starting with `my:`.
+
+This sets `lvl name message` as the default format, while assigning a different
+format string to all loggers starting with `my:`.
 
 For more details, refer to the [section on formatting](#formatting)
 
@@ -796,7 +772,13 @@ For more details, refer to the [section on formatting](#formatting)
 Specify whether colors should be enabled. Defaults to `on`.
 
 ```sh
-log_color=off
+log_color="off"
+```
+
+One neat trick is to colorize only a few loggers, to make them stand out:
+
+```sh
+log_color="off; my:*=on"
 ```
 
 ### Config option `log_align`
@@ -811,10 +793,11 @@ log_align=off
 ## Mods
 
 `ulog` is completely modular, consisting of a microscopically small core and a
-whole bunch of mods. The mods are small pieces of functionality, designed to
-be usable stand-alone or in combination with each other. All functionality that
+bunch of mods. The mods are small pieces of functionality, designed to be
+usable stand-alone or in combination with each other. All functionality that
 `ulog` adds to `anylogger`, it adds in the form of mods. All, except for the
-ability to add mods itself, in the form of method `ulog.use`, that is in core.
+ability to add mods itself, in the form of method `ulog.use`, that is in core
+and one helper function, `grab`, to grab config from mods.
 
 To add a mod, call `ulog.use` with either an individual mod
 
@@ -835,51 +818,54 @@ ulog.use([
 
 A mod is an object that can define many things declaratively:
 
-* That it extends some core functionality
 * That it uses other mods
-* That it adds settings
+* That it adds config settings
 * That it adds properties to loggers
-* That it adds outputs / formats / other components
-* That it watches some config option
+* That it adds outputs
+* That it adds formats
+* Anything else you build
 
 As an example, here is a mod that does most of these things:
 
 ```js
-var boolean = require('ulog/mods/props/boolean')
+import ulog from 'ulog'
+import cfg from 'ulog/mods/cfg'
 
 ulog.use({
-  use: [ require('./some/mod/we/use') ],
-  extend: { someProp: 'addedToUlog' },
-  settings: {
+  use: [ cfg ],
+  cfg: {
+    // override the default of an existing config setting
+    log_output: 'file',
+    // add a new config setting with default value
+    log_cool: 'on',
+  },
+  props: {
+    // add a property `cool` to every logger
     cool: {
-      config: 'log_cool'
-      prop: boolean(),
+      // provide the getter.
+      // get `log_cool` for the current logger and coerce to bool
+      get: (logger) => cfg.get('log_cool', logger.name) == 'on'
     }
   },
+  // add the `file` output that we made the default
   outputs: {
-    file: {
-      log: function(){
-        console.info.apply(console, ['file'].concat([].slice.call(arguments)))
-      }
-    }
+    // you can write any code that returns a LogObject and call it here
+    file: myFileOutput('my/file/name')
   },
+  // you can add custom formats just as easy
   formats: {
-    random: function(ctx, rec){
-      return function(){
-        return Math.random()
-      }
+    // create a static format that prints a random number
+    random(ctx, rec){
+      return () => String(Math.random())
     }
-  },
-  watch: {
-    'debug': function(){
-      console.info('debug setting changed')
-    }
+    // you can later use the custom format in the format string
+    // e.g. log_format="lvl name random"
   }
 })
 ```
 
 Interestingly, most of these features of mods are being added by mods. For
-example the ability to add settings is added by the `settings` mod. Studying
+example the ability to add config settings is added by the `cfg` mod. Studying
 the way `ulog`'s featureset is built from mods by reading the source code of
 the included mods is the best way to learn about writing mods for now.
 
@@ -893,52 +879,50 @@ your bundler to code-split.
 
 ### Lazy-loading with Webpack
 
-Have a look at [ulog.bundle.js](https://github.com/Download/ulog/blob/master/ulog.bundle.js)
+Have a look at
+[ulog.bundle.ts](https://github.com/Download/ulog/blob/master/ulog.bundle.ts)
 for an example of doing lazy loading with [Webpack](https://webpack.js.org/).
 
-Basically it only loads `ulog/base` and then configures a watch that loads the
-remaining mods on-demand. It's using Webpack-specific API `require.ensure` for
-this. Other bundlers support it in similar ways.
+Basically it only loads `ulog/core` and then checks whether any of the
+config options `debug` and `log` are set. Only if one of these is set
+does it actually load the remaining mods on-demand.
+
+It is using the standardized dynamic import construct so this code should work
+with other bundlers as well. The only Webpack-specific thing in this code is
+the comment that specifies the chunk name, used here to specify the filename
+`ulog.lazy.min.js`.
 
 ```js
-var ulog = require('ulog/base')
+import ulog from 'ulog/core'
+import env from 'ulog/mods/cfg/env'
 
-// add a mod to ulog to load logging on-demand
-ulog.use({
-  watch: {
-    // watch for changes in these config keys
-    'debug,log':
-    // when changes happen, load the other mods if needed
-    function(){
-      // webpack specific API to lazy load modules
-      require.ensure(
-        // ensure these modules are loaded
-        [ 'ulog/mods/lazy' ],
-        // then execute this function, notice require being overridden
-        function(require){
-          // use the overridden require to lazy load the modules
-          if (ulog.use(require('ulog/mods/lazy'))) {
-            // re-initialize the loggers if mods were added
-            ulog.ext()
-          }
-        },
-        'ulog.lazy' // chunkname webpack will use: ulog.lazy.min.js
-      )
-    },
-  }
-})
+// just making sure ulog is available as global in the script version
+(window as any).ulog = ulog;
+
+if (env.get('log') || env.get('debug')) {
+  import(
+    /* webpackChunkName: 'ulog.lazy' */
+    'ulog/mods/fmt'
+  )
+  .then(({ default: fmt }) => {
+    ulog.use(fmt)
+    for (const logger in ulog.all) {
+      ulog.ext(ulog(logger))
+    }
+  })
+}
 ```
-
-If you have successfully lazy-loaded `ulog` with other bundlers, please drop a
-comment in the [issue tracker](https://github.com/ulog/issues), or create a
-PR to add a section about it here in the README.
-
 
 ## Decoupling code from `debug`
 
-As I said before, `debug` is excellent for debug logging and there are tens of thousands of packages using it. The downside of this is that you will more or less get `debug` shoved through your throat if you include any of these libraries because they are *tighly coupled* to it. But we can uncouple them with the magic of bundlers like Webpack.
+As I said before, `debug` is excellent for debug logging and there are tens of
+thousands of packages using it. The downside of this is that you will more or
+less get `debug` shoved through your throat if you include any of these
+libraries because they are *tighly coupled* to it. But we can uncouple them
+with the magic of bundlers like Webpack.
 
-To replace `debug` with `anylogger` everywhere, you can use this Webpack alias to make all modules that use `debug` switch to `anylogger` instead:
+To replace `debug` with `anylogger` everywhere, you can use this Webpack
+alias to make all modules that use `debug` switch to `anylogger` instead:
 
 ```js
 {
@@ -950,17 +934,21 @@ To replace `debug` with `anylogger` everywhere, you can use this Webpack alias t
 }
 ```
 
-This works because the anylogger API is backwards compatible with that of `debug`. And because `ulog` has native `anylogger` support, once you import `ulog` in your entry point, all those libraries that were using `debug` start to use `ulog` automagically!
+This works because the anylogger API is backwards compatible with that of
+`debug`. And because `ulog` has native `anylogger` support, once you import
+`ulog` in your entry point, all those libraries that were using `debug` start
+to use `ulog` automagically!
 
 
 ## Performance considerations
 
-By default, the logging methods on the `log` object that correspond to a log level
-which is higher than the currently set level, are replaced by no-op methods. As such,
-you generally don't have to worry about the performance overhead of leaving
-the log statements in the production code. There is one exception to this rule
-though. If preparing the message itself is a costly operation, you may want to
-surround the log code with an `if (log.enabledFor(level))` statement:
+By default, the logging methods on the `log` object that correspond to a log
+level which is higher than the currently set level, are replaced by no-op
+methods. As such, you generally don't have to worry about the performance
+overhead of leaving the log statements in the production code. There is one
+exception to this rule though. If preparing the message itself is a costly
+operation, you may want to surround the log code with an
+`if (log.enabledFor(level))` statement:
 
 ```js
 if (log.enabledFor('info')) {
@@ -991,9 +979,10 @@ Credits go to:
 
 ## Copyright
 
-Copyright 2021 by [Stijn de Witt](https://stijndewitt.com).
+Copyright 2024 by [Stijn de Witt](https://stijndewitt.com).
 
 
 ## License
 
-Licensed under the [MIT](https://opensource.org/licenses/MIT) Open Source license.
+Licensed under the [MIT](https://opensource.org/licenses/MIT)
+Open Source license.
