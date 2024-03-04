@@ -3,7 +3,6 @@
 
 [![npm](https://img.shields.io/npm/v/ulog.svg)](https://npmjs.com/package/ulog)
 [![license](https://img.shields.io/npm/l/ulog.svg)](https://opensource.org/licenses/MIT)
-[![travis](https://img.shields.io/travis/Download/ulog.svg)](https://travis-ci.org/Download/ulog)
 ![mind BLOWN](https://img.shields.io/badge/mind-BLOWN-ff69b4.svg)
 
 <sup><sub><sup><sub>.</sub></sup></sub></sup>
@@ -13,14 +12,18 @@
 
 ## The logger for javascript applications
 
-`ulog` is *the* logger for Javascript applications. It's universal, meaning it runs everywhere. You can use `ulog` in your Express server application running on Node JS just as well as in your React single page application running in the browser. It just works.
+`ulog` is *the* logger for Javascript applications. It's universal, meaning it
+runs everywhere. You can use `ulog` in your Express server application running
+on Node JS just as well as in your React single page application running in the
+browser. It just works.
 
 ![screenshot](https://unpkg.com/ulog@2.0.0-beta.20/screenshot.jpg)
 
 
 ## Features
 
-Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug) and [`loglevel`](https://npmjs.com/package/loglevel) and adds some of it's own!
+Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug)
+and [`loglevel`](https://npmjs.com/package/loglevel) and adds some of it's own!
 
 | Feature                                     |  debug  | loglevel |   ulog  |
 | ------------------------------------------- | ------- | -------- | ------- |
@@ -40,9 +43,9 @@ Ulog marries the feature sets from [`debug`](https://npmjs.com/package/debug) an
 | [Lazy loading](#lazy-loading)               |         |          |    ✓    |
 | [Anylogger support](#anylogger-support)     |   ✓ (3) |   ✓ (3)  |    ✓    |
 
-(1) emulated with levels
-(2) in browser only
-(3) via an adapter
+1. emulated with levels
+2. in browser only
+3. via an adapter
 
 ## Try it
 
@@ -51,29 +54,29 @@ Have a look at the interactive
 fastest way to get a quick taste of `ulog`.
 
 
-## Compare it
-
-Want to check how `ulog` measures up to it's competitors? Check out these
-loggers side-by-side:
-
-* [`ulog` vs `debug`](https://ulog.js.org/vs/debug.html)
-* [`ulog` vs `loglevel`](https://ulog.js.org/vs/loglevel.html)
-
-
 ## Install
+
+In application projects, use:
 
 ```sh
 npm i -S anylogger ulog
 ```
 
+For libraries, see the instructions [for libraries](#the-logger-for-libraries).
+
 ### Add to entry point
-In the entry point of your application import `ulog`:
+In the entry point of your application import `anylogger` and `ulog` and use
+the *adapter* to make sure anylogger is using `ulog`:
 
 *index.js*
 ```js
-import "ulog"
+import adapter from 'ulog/adapter'
+import anylogger from 'anylogger'
+import ulog from 'ulog'
+adapter(anylogger, ulog)
 ```
 
+> You only need to do this in the entry point of your application
 
 ## Use
 
@@ -85,7 +88,9 @@ const log = anylogger('my-app')
 log('Logging is easy!')
 ```
 
-This way, your code is decoupled from `ulog` and if you ever want to switch to another logging library, you will be able to do so without having to change any of that code.
+This way, your code is decoupled from `ulog` and if you ever want to switch to
+another logging library, you will be able to do so without having to change any
+of that code.
 
 ##### Anylogger support
 > [`anylogger`](https://npmjs.com/package/anylogger) is a logging facade that
@@ -96,21 +101,51 @@ This way, your code is decoupled from `ulog` and if you ever want to switch to a
 
 ## The logger for libraries
 
-When we write a library, we install `ulog` as a development dependency so the library remains decoupled from `ulog`.
+`ulog` is *the* logger for libraries!
+
+If you are building a library to be published on NPM, you should use only the
+`anylogger` API, making sure your library will work with the most popular
+logging libraries out there.
+
+You then install `ulog` as a development dependency so your library remains
+*decoupled* from `ulog`. This way you get `ulog`s features, without forcing
+the client of your library to use it.
 
 ### Install ulog as a dev dependency
 
-Install `anylogger` as a regular dependency and `ulog` as a dev dependency:
+Install `anylogger` and `ulog` as dev dependencies:
 
 ```sh
-npm install --save anylogger && npm install --save-dev ulog
+npm install --save-dev anylogger ulog
 ```
+
+Add `anylogger` to `peerDependencies`:
+
+```json
+  "peerDependencies": {
+    "anylogger": "1.x || >=1.1.0-beta || >=1.2.0-beta || >=1.3.0-beta || >=1.4.0-beta || >=1.5.0-beta || >=1.6.0-beta || >=1.7.0-beta || >=1.8.0-beta || >=1.9.0-beta"
+  },
+```
+
+> Listing the betas makes your library compatible with any future beta releases
+> of anylogger as well. This is a quirk in how NPM handles beta ranges. If you
+> don't like the long list, you can just use `"1.x"`
+
+By adding `anylogger` as a peer dependency, you ensure that it will be
+installed in the client project and that your library will use the anylogger
+that comes with the project in stead of bundling it with your library.
 
 In our tests:
 
 *test.js*
 ```js
-import `ulog`
+import adapter from 'ulog/adapter'
+import anylogger from 'anylogger'
+import ulog from `ulog`
+adapter(anylogger, ulog)
+// ..
+const log = anylogger('my:logger')
+log.info('Ulog is easy!')
 ```
 
 In our library code:
@@ -122,15 +157,17 @@ const log = anylogger('my-lib')
 log('Logging is easy')
 ```
 
+Note how in the library code we never import `ulog`, thus remaining decoupled.
+
 
 ## Script tag
 
 If you want, you can import `ulog` with a script tag:
 
 ```html
+<script src="https://unpkg.com/anylogger@1.1.0-beta.5/anylogger.min.js"></script>
 <script src="https://unpkg.com/ulog@2.0.0-beta.20/ulog.min.js"></script>
-<!-- publishes to `self.anylogger` and `self.ulog`. -->
-<!-- lazy loads ulog.lazy.min.js on demand. -->
+<!-- any other scripts using anylogger will also start to use ulog :) -->
 <script src="myscript.js"></script>
 ```
 *myscript.js*
@@ -141,15 +178,19 @@ log('Logging is easy!')
 
 ## Download
 
-If you want the file for the browser to include in your project yourself, you
-can download it from here.
+If you want the minified file for the browser to include in your project
+yourself, you can download it from here.
 
-* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.min.js) (~1.8kB minified and gzipped)
-* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.lazy.min.js) (~4.1kB minified and gzipped)
+* [ulog.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.min.js)
+  (~1.8kB minified and gzipped)
+* [ulog.lazy.min.js](https://unpkg.com/ulog@2.0.0-beta.20/ulog.lazy.min.js)
+  (~4.1kB minified and gzipped)
 
-> `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to include both files in your download
+> `ulog.min.js` lazy loads `ulog.lazy.min.js` on demand, so make sure to
+> include both files in your download
 
-* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.20/full.min.js) (~3.9kB minified and gzipped)
+* [full.min.js](https://unpkg.com/ulog@2.0.0-beta.20/full.min.js)
+  (~4.0kB minified and gzipped)
 
 > Full bundle, no lazy loading
 
@@ -162,16 +203,48 @@ inefficient and hard to manage. Also see the section on
 
 The two most popular logging libraries on NPM at the moment are [`debug`](https://npmjs.com/package/debug) and [`loglevel`](https://npmjs.com/package/loglevel). They are both great loggers, but neither of them completely satisfied my requirements for a logging library.
 
-`debug` allows for namespaced debug logging, where each logger has a name. Whether these loggers output debug logging is configurable, though not dynamic, requiring a restart before changes take effect. It's simplicity makes `debug` an excellent choice for debug logging (as it's name implies), but it lacks support for log levels, so if you want to log error messages for example, you end up needing another library for that. It offers nicely formatted (and even colored!) log messages, but because of that mangles the call stack, which is a huge downside in the browser imho. It's not very extensible, basically being a monolith.
+`debug` allows for namespaced debug logging, where each logger has a name.
+Whether these loggers output debug logging is configurable via an environment
+variable. It's simplicity makes `debug` an excellent choice for debug logging
+(as it's name implies), but it lacks support for log levels, so if you want to
+log error messages for example, you end up needing another library for that. It
+offers nicely formatted (and even colored!) log messages, but because of that
+mangles the call stack, which is a huge downside in the browser imho. It's not
+very extensible, basically being a monolith.
 
-`loglevel` also supports namespaced logging and it does offer log levels. It's configurable via localStorage but not via environment variables and just like `debug` requires a restart before configuration changes take effect. By default, it leaves your call stack alone, making the filename/line number entries in the browser console that much more useful. It does not offer alternative log destinations or formatters out of the box. It can be extended via plugins and there are some good plugins out there, but it's base feature set is coded as a monolith, so you cannot easily remove features. You probably won't have to though as it weighs only 1.4kB.
+`loglevel` also supports namespaced logging and it does offer log levels. It's
+configurable via localStorage but not via environment variables. By default, it
+leaves your call stack alone, making the filename/line number entries in the
+browser console that much more useful. It does not offer alternative log
+destinations or formatters out of the box, but it can be extended via plugins
+and there are some good plugins out there. It weighs only 1.4kB.
 
-Both these loggers lack the ability to configure the logger from the querystring, which I found to be a very desirable feature for web development as it allows you to create a URL that has the log config embedded, which you can then send to other developers or users etc. E.g: `https://example.com/page?log=debug`.
+Both these loggers lack the ability to configure the logger from the
+querystring, which I found to be a very desirable feature for web development
+as it allows you to create a URL that has the log config embedded, which you
+can then send to other developers or users etc.
+E.g: `https://example.com/page?log=debug`.
 
-What I want is a logging library that combines the best aspects of both these loggers and adds the features that I miss in both.
-`ulog` is my attempt at building this library. It's base API is compatible with that of `debug` and `loglevel` and with the console, making it a drop-in replacement for all of these in many cases. It has a configuration mechanism that is compatible with that of `debug`, but that is more powerful and is monitored for changes at runtime. It accepts configuration from the querystring allowing you to craft URLs with log config embedded in it. It has powerful, configurable formatting included by default and it does this without mangling the call stack, so the filename/line number entries in the browser console remain unharmed. You can specify where the log output should go and where it should drain. It's completely modular, so you can not only easily add features through 'mods', but you can actually even drop features you don't need by not loading the mods those features are in. It has native `anylogger` support, decoupling the client code from the logger. And it supports lazy loading so we can get all those great features without bloating our bundle.
+What I want is a logging library that combines the best aspects of both these
+loggers and adds the features that I miss in both. `ulog` is my attempt at
+building this library. It's base API is compatible with that of `debug` and
+`loglevel` and with the console, making it a drop-in replacement for all of
+these in many cases. It has a configuration mechanism that is compatible with
+that of `debug`, but that is more powerful and flexible. It accepts
+configuration from the querystring allowing you to craft URLs with log config
+embedded in it. It has powerful, configurable formatting included by default
+and it does this without mangling the call stack, so the filename/line number
+entries in the browser console remain unharmed. You can specify where the log
+output should go and where it should drain. It's completely modular, so you can
+not only easily add features through 'mods', but you can actually even drop
+features you don't need by not loading the mods those features are in. It has
+native `anylogger` support, decoupling the client code from the logger. And it
+supports lazy loading so we can get all those great features without bloating
+our bundle.
 
-I hope you will give `ulog` a try. If you have feedback on it, or found an issue, please let me know on the [issue tracker](https://github.com/download/ulog/issues).
+I hope you will give `ulog` a try. If you have feedback on it, or found
+an issue, please let me know on the
+[issue tracker](https://github.com/download/ulog/issues).
 
 
 ## API
@@ -179,48 +252,57 @@ I hope you will give `ulog` a try. If you have feedback on it, or found an issue
 `ulog` is very natural to use:
 
 ```js
-var log = require('anylogger')('my-module') // same as with `debug`
-log('A log message')                        // same as with `debug`
-log('info', 'An info message')              // not possible with `debug`
-log('warn', 'A warning message')            // not possible with `debug`
-log.info('Starting...')                     // same as with `loglevel` or console
-log.log('Yeah!')                            // same as with console
+import anylogger from 'anylogger'
+const log = anylogger('my-module')
+log('A log message')
+log('info', 'An info message')
+log('warn', 'A warning message')
+log.info('Starting...')
+log.log('Yeah!')
 log.error('Something went wrong', new Error('Oh no!'))
 if (log.enabledFor('warn')) {
   log.warn(expensiveArguments())
 }
 ```
-> Note that in the code above, we import `anylogger` and not `ulog`. This way the client code is decoupled from the logger.
+> Note that in the code above, we import `anylogger` and not `ulog`. This way
+> the client code is decoupled from the logger.
 
-`ulog` inherits it's API from `anylogger`. If you are able to restrict yourself to the [Anylogger API](https://www.npmjs.com/package/anylogger#anylogger-api), your code will be framework independent and will work with any supported logging library.
+`ulog` inherits it's API from `anylogger`. If you are able to restrict yourself
+to the [Anylogger API](https://www.npmjs.com/package/anylogger#anylogger-api),
+your code will work with any supported logging library.
 
-Note that any logging code written for either `debug`, `loglevel` or the console should be able to do it's logging just like it did before, but now using a `ulog` logger instead. This backward compatibility should make migrating from any of these to `ulog` very easy. And because this is just the `anylogger` API, you should even be able to migrate back to `debug` or `loglevel` without any changes at all, by just including the right adapter in your entry point. Of course once you get used to `ulog`, you will never want to go back! :p
+Note that any logging code written for either `debug`, `loglevel` or the
+console should be able to do it's logging just like it did before, but now
+using a `ulog` logger instead. This backward compatibility should make
+migrating from any of these to `ulog` very easy. And because this is just the
+`anylogger` API, you should even be able to migrate back to `debug` or
+`loglevel` without any changes at all, by just including the right adapter
+in your entry point. Of course once you get used to `ulog`, you will never
+want to go back! :p
 
 
 ## Levels
 
-`anylogger` defines 6 logging levels, which correspond with the natively available
-logging functions on the console. `ulog` creates constants for these levels on all loggers:
+`anylogger` defines 6 logging levels, which correspond with the natively
+available logging functions on the console:
 
 ```js
-log.ERROR // 1
-log.WARN  // 2
-log.INFO  // 3
-log.LOG   // 4
-log.DEBUG // 5
-log.TRACE // 6
-```
-
-In addition, `ulog` adds constants for pseudo-levels that enable or completely disable all logging:
-
-```js
-log.ALL   // 7
-log.NONE  // 0
+anylogger.levels = {
+  error: 1,
+  warn: 2,
+  info: 3,
+  log: 4,
+  debug: 5,
+  trace: 6,
+}
 ```
 
 ### `log.enabledFor`
 
-`anylogger` defines `log.enabledFor` and `ulog` implements it by checking the logger's current log level and whether it's in debug mode. Normally, you should not have to use this method, unless you are doing some expensive calculations only to write log output. In such a case you can write:
+`anylogger` defines `log.enabledFor` and `ulog` implements it by checking the
+logger's current log level and whether it's in debug mode. Normally, you should
+not have to use this method, unless you are doing some expensive calculations
+only to write log output. In such a case you can write:
 
 ```js
 import anylogger from 'anylogger'
@@ -232,22 +314,19 @@ if (log.enabledFor('info')) {
 
 ### `log.level`
 
-`ulog` adds a property `level` to each logger that is a numeric representation of the current log level.
+`ulog` adds a property `level` to each logger that is a numeric representation
+of the current log level.
 
 ```js
-if (log.level >= log.INFO) {
+if (log.level >= anylogger.levels.info) {
 	log.info('This message will be logged')
 }
-log.level = log.WARN
-log.info('This info message will NOT be logged.')
-log.warn('This warning message WILL be logged.')
-log.level = log.NONE
-log.error('Logging is completely disabled.')
 ```
 
-> In general, code should not set the log level directly, but instead should rely on the host environment for the log level. See the section on [configuring ulog](#configure).
+> To check the log level, `enabledFor` is preferred over the `level` property
+> as it is within the `anylogger` API.
 
-> To check the log level, `enabledFor` is preferred over the `level` property as it is within the `anylogger` API.
+Also see the section on [configuring ulog](#configure).
 
 ### Default log level
 
@@ -266,7 +345,8 @@ In the browser the log level defaults to `warn`. This means `info`
 messages will be excluded, but for most users these messages won't be
 relevant anyway.
 
-> Attention! Chromium-based browsers have their own level filter and by default, debug messages are filtered away.
+> Attention! Chromium-based browsers have their own level filter and by
+> default, debug messages are filtered away.
 
 
 ## Footprint
